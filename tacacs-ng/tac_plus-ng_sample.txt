@@ -1,0 +1,160 @@
+#!../../../sbin/tac_plus-ng
+id = spawnd {
+  listen = {
+    address = 0.0.0.0
+    port = 49
+}
+  # Optional: IPv6 support
+  # listen = { address = :: port = 49 }
+  spawn = {
+    instances min = 1
+    instances max = 10
+    }
+  background = no
+}
+id = tac_plus-ng {
+  log accesslog { destination = /var/log/tac_plus/%Y/access-%m-%d-%Y.txt }
+  log accountinglog { destination = /var/log/tac_plus/%Y/accounting-%m-%d-%Y.txt }
+  log authenticationlog { destination = /var/log/tac_plus/%Y/authentication-%m-%d-%Y.txt }
+  access log = accesslog
+  accounting log = accountinglog
+  authentication log = authenticationlog
+  mavis module = external {
+    # Set environment variables for LDAP connection
+    setenv LDAP_SERVER_TYPE = "freeipa"
+    setenv LDAP_HOSTS = "ldaps://172.25.210.217
+    :636"
+    setenv LDAP_BASE = "dc=infiniband,dc=vn"
+    setenv LDAP_USER = "uid=app_tacacs,cn=users,cn=accounts,dc=infiniband,dc=vn"
+    setenv LDAP_PASSWD = "app_tacacs_password"
+    setenv REQUIRE_TACACS_GROUP_PREFIX = 0
+    setenv LDAP_FILTER = "(&(objectClass=inetorgperson)(uid=%s))"
+    setenv TACACS_GROUP_PREFIX = "tacacs_"
+    # Optional: setenv REQUIRE_TACACS_GROUP_PREFIX = 0
+    # Do NOT set USE_TLS unless you are sure; see notes below
+    exec = /usr/local/lib/mavis/mavis_tacplus-ng_ldap.pl
+  }
+  # Use mavis for all authentication backends
+  login backend = mavis
+  user backend = mavis
+  pap backend = mavis
+  # Define access policies
+  host = Lab_lau9 {
+    address = 172.25.0.0/16
+    key = "Dah2aadoav9awae0tus7"
+  }
+
+  host = VNPT_TT_Farm1 {
+    address = 10.2.0.0/16
+    key = "CHANGE_Dah2aadoav9awae0tus7"
+  }
+  host = VNPT_TT_Farm2 {
+    address = 172.16.0.0/16
+    key = "CHANGE_Dah2aadoav9awae0tus7"
+  }
+    host = VNPT_NTL_Farm1 {
+    address = 10.16.0.0/16
+    key = "CHANGE_Dah2aadoav9awae0tus7"
+  }
+  host = VNPT_NTL_Farm2 {
+    address = 172.19.0.0/16
+    key = "CHANGE_Dah2aadoav9awae0tus7"
+  }
+  group tacacs_read_only
+  group tacacs_super_user
+  group tacacs_console_cloud
+  group tacacs_network_api
+
+  user thangpa {
+   password login = mavis
+   member = tacacs_super_user
+  }
+  user hungnt3 {
+   password login = mavis
+   member = tacacs_super_user
+  }
+   user hieudc {
+   password login = mavis
+   member = tacacs_super_user
+  }
+  user luandn1 {
+   password login = mavis
+   member = tacacs_read_only
+  }
+  user app_backup_oxidized {
+   password login = mavis
+   member = tacacs_read_only
+  }
+  user app_telemetry {
+   password login = mavis
+   member = tacacs_read_only
+  }
+  user console_cloud {
+   password login = mavis
+   member = tacacs_console_cloud
+  }
+
+  profile tacacs_super_user_profile {
+    script {
+      if (service == junos-exec) {
+        set local-user-name = tacacs_super_user
+        permit
+      }
+      deny
+    }
+  }
+
+  profile tacacs_read_only_profile {
+   script {
+     if (service == junos-exec) {
+       set local-user-name = tacacs_read_only
+       set deny-commands = "(^configure .*)|(^scp .*)|(^op .*)|(^telnet .*)|(^request .*)"
+       permit
+     }
+     deny
+   }
+}
+  profile tacacs_console_cloud_profile {
+   script {
+     if (service == junos-exec) {
+       set local-user-name = tacacs_console_cloud
+       set deny-commands = "(^scp .*)|(^op .*)|(^telnet .*)|(^request .*)"
+       permit
+     }
+     deny
+   }
+}
+  profile tacacs_network_api_profile {
+   script {
+     if (service == junos-exec) {
+       set local-user-name = tacacs_network_api
+       permit
+     }
+     deny
+   }
+}
+  ruleset {
+    rule Juniper_rule {
+      enabled = yes
+      script {
+        if (group == tacacs_super_user) {
+          profile = tacacs_super_user_profile
+          permit
+        }
+        if (group == tacacs_read_only) {
+          profile = tacacs_read_only_profile
+          permit
+        }
+        if (group == tacacs_console_cloud) {
+          profile = tacacs_console_cloud_profile
+          permit
+        }
+        if (group == tacacs_network_api) {
+          profile = tacacs_network_api_profile
+          permit
+        }
+        deny
+      }
+    }
+  }
+}
