@@ -4,7 +4,7 @@ from typing import Any
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import col, delete, func, select
 
-from backend.app.crud import users
+from app.crud import users
 from app.api.deps import (
     CurrentUser,
     SessionDep,

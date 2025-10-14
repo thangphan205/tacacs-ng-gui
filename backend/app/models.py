@@ -254,8 +254,16 @@ class HostsPublic(SQLModel):
 
 
 class TacacsGroupUserBase(SQLModel):
-    group_user_name: str = Field(index=True, max_length=255)
+    group_name: str = Field(index=True, max_length=255)
     description: Optional[str] = None
+
+
+class TacacsGroupUserCreate(TacacsGroupUserBase):
+    pass
+
+
+class TacacsGroupUserUpdate(TacacsGroupUserBase):
+    pass
 
 
 # Database model, database table inferred from class name
@@ -275,9 +283,18 @@ class TacacsGroupUsersPublic(SQLModel):
 
 # -- Tacacs User Table ---
 class TacacsUserBase(SQLModel):
-    passwork_login: str = Field(index=True, max_length=255)
+    username: str = Field(index=True, unique=True, max_length=255)
+    password_type: str = Field(index=True, max_length=255)
     member: str = Field(index=True, max_length=255)
     description: Optional[str] = None
+
+
+class TacacsUserCreate(TacacsUserBase):
+    password: str | None = Field(default=None, min_length=8, max_length=40)
+
+
+class TacacsUserUpdate(TacacsUserBase):
+    password: str | None = Field(default=None, min_length=8, max_length=40)
 
 
 # Database model, database table inferred from class name
