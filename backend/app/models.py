@@ -117,44 +117,36 @@ class NewPassword(SQLModel):
 # --- TACACS+ Configuration Tables ---
 
 
-class SpawndBase(SQLModel):
+class TacacsNGBase(SQLModel):
     ipv4_enabled: bool = Field(default=True)
-    ipv4_address: Optional[str] = None  # None means bind to all interfaces
+    ipv4_address: str = Field(default="0.0.0.0")
     ipv4_port: int = Field(default=49)
     ipv6_enabled: bool = Field(default=False)
-    ipv6_address: Optional[str] = None  # None means bind to all interfaces
+    ipv6_address: str = Field(default="::")
     ipv6_port: int = Field(default=49)
     instances_min: int = Field(default=1)
     instances_max: int = Field(default=10)
-    backgroudd: bool = Field(default=False)
-
-
-# Database model, database table inferred from class name
-class Spawnd(SpawndBase, table=True):
-    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
-
-
-# Properties to return via API, id is always required
-class SpawndPublic(SpawndBase):
-    id: uuid.UUID
-
-
-class SpawndsPublic(SQLModel):
-    data: list[SpawndPublic]
-    count: int
-
-
-class TacacsNGBase(SQLModel):
-    access_logfile: str = Field(default="/var/log/tac_plus/%Y/access-%m-%d-%Y.txt")
-    accounting_logfile: str = Field(
+    background: str = Field(default="no")
+    access_logfile_destination: str = Field(
+        default="/var/log/tac_plus/%Y/access-%m-%d-%Y.txt"
+    )
+    accounting_logfile_destination: str = Field(
         default="/var/log/tac_plus/%Y/accounting-%m-%d-%Y.txt"
     )
-    authentication_logfile: str = Field(
+    authentication_logfile_destination: str = Field(
         default="/var/log/tac_plus/%Y/authentication-%m-%d-%Y.txt"
     )
     login_backend: str = Field(default="mavis")
     user_backend: str = Field(default="mavis")
     pap_backend: str = Field(default="mavis")
+
+
+class TacacsNGCreate(TacacsNGBase):
+    pass
+
+
+class TacacsNGUpdate(TacacsNGBase):
+    pass
 
 
 # Database model, database table inferred from class name
@@ -177,43 +169,19 @@ class MavisBase(SQLModel):
     ldap_hosts: str = Field(default="ldaps://ldap-server")
     ldap_base: str = Field(default="dc=example,dc=com")
     ldap_user: str = Field(default="cn=admin,dc=example,dc=com")
-    ldap_password: str = Field(default="admin_password")
+    ldap_passwd: str = Field(default="admin_password")
     ldap_filter: str = Field(default="(objectClass=person)")
     ldap_timeout: int = Field(default=5)
-    ldap_tls: bool = Field(default=True)
-    ldap_tls_require_cert: str = Field(default="demand")  # or 'allow', 'never'
-    ldap_tls_cacertfile: Optional[str] = Field(
-        default="/etc/ssl/certs/ca-certificates.crt"
-    )
-    ldap_tls_cacertdir: Optional[str] = None
-    ldap_tls_certfile: Optional[str] = None
-    ldap_tls_keyfile: Optional[str] = None
-    group_attribute: str = Field(default="memberOf")
-    group_attribute_is_dn: bool = Field(default=True)
-    group_name_attribute: str = Field(default="cn")
-    user_name_attribute: str = Field(default="uid")
-    user_fullname_attribute: str = Field(default="cn")
-    user_email_attribute: str = Field(default="mail")
-    user_password_attribute: str = Field(default="userPassword")
-    posix_user_attribute: str = Field(default="uidNumber")
-    posix_group_attribute: str = Field(default="gidNumber")
-    posix_homedir_attribute: str = Field(default="homeDirectory")
-    posix_shell_attribute: str = Field(default="loginShell")
-    ad_domain: Optional[str] = None
-    ad_use_sasl: bool = Field(default=False)
-    ad_sasl_user: Optional[str] = None
-    ad_sasl_realm: Optional[str] = None
-    ad_sasl_password: Optional[str] = None
-    ad_use_kerberos: bool = Field(default=False)
-    ad_kerberos_keytab: Optional[str] = None
-    ad_kerberos_realm: Optional[str] = None
-    ad_kerberos_kdc: Optional[str] = None
-    cache_enabled: bool = Field(default=True)
-    cache_ttl: int = Field(default=300)
-    cache_negative_ttl: int = Field(default=60)
-    default_profile: str = Field(default="default_profile")
-    superuser_group: str = Field(default="tacacs_super_user")
-    debug: bool = Field(default=False)
+    require_tacacs_group_prefix: int = Field(default=0)
+    tacacs_group_prefix: str = Field(default="tacacs_")
+
+
+class MavisCreate(MavisBase):
+    pass
+
+
+class MavisUpdate(MavisBase):
+    pass
 
 
 # Database model, database table inferred from class name
@@ -232,10 +200,18 @@ class MavisesPublic(SQLModel):
 
 
 class HostBase(SQLModel):
-    hostname: str = Field(index=True, max_length=255)
+    name: str = Field(index=True, max_length=255)
     ipv4_address: Optional[str] = None
     ipv6_address: Optional[str] = None
     secret_key: str = Field(max_length=255)
+
+
+class HostCreate(HostBase):
+    pass
+
+
+class HostUpdate(HostBase):
+    pass
 
 
 # Database model, database table inferred from class name
@@ -287,19 +263,21 @@ class TacacsUserBase(SQLModel):
     password_type: str = Field(index=True, max_length=255)
     member: str = Field(index=True, max_length=255)
     description: Optional[str] = None
+    password: Optional[str] = None
 
 
 class TacacsUserCreate(TacacsUserBase):
-    password: str | None = Field(default=None, min_length=8, max_length=40)
+    password: str | None = Field(default=None, max_length=255)
 
 
 class TacacsUserUpdate(TacacsUserBase):
-    password: str | None = Field(default=None, min_length=8, max_length=40)
+    password: str | None = Field(default=None, max_length=255)
 
 
 # Database model, database table inferred from class name
 class TacacsUser(TacacsUserBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    password: str | None = Field(default=None, max_length=255)
 
 
 # Properties to return via API, id is always required
@@ -316,6 +294,14 @@ class TacacsUsersPublic(SQLModel):
 class ServiceBase(SQLModel):
     name: str = Field(index=True, max_length=255)
     description: Optional[str] = None
+
+
+class ServiceCreate(ServiceBase):
+    pass
+
+
+class ServiceUpdate(ServiceBase):
+    pass
 
 
 # Database model, database table inferred from class name
@@ -336,11 +322,20 @@ class ServicesPublic(SQLModel):
 # -- Begin Profile and Profile Script Tables --
 # -- Profile Table ---
 class ProfileBase(SQLModel):
+    name: str = Field(index=True, unique=True, max_length=255)
     condition: str = Field(index=True, max_length=255)
     key: str = Field(index=True, max_length=255)
     value: str = Field(index=True, max_length=255)
     action: str = Field(index=True, max_length=255)
     description: Optional[str] = None
+
+
+class ProfileCreate(ProfileBase):
+    pass
+
+
+class ProfileUpdate(ProfileBase):
+    pass
 
 
 # Database model, database table inferred from class name
@@ -370,6 +365,14 @@ class ProfileScriptBase(SQLModel):
     description: Optional[str] = None
 
 
+class ProfileScriptCreate(ProfileScriptBase):
+    profile_id: uuid.UUID = Field(foreign_key="profile.id", nullable=False)
+
+
+class ProfileScriptUpdate(ProfileScriptBase):
+    pass
+
+
 # Database model, database table inferred from class name
 class ProfileScript(ProfileScriptBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
@@ -394,6 +397,15 @@ class ProfileScriptSetBase(SQLModel):
     key: str = Field(index=True, max_length=255)
     value: str
     description: Optional[str] = None
+    profilescript_id: uuid.UUID = Field(foreign_key="profilescript.id", nullable=False)
+
+
+class ProfileScriptSetCreate(ProfileScriptSetBase):
+    pass
+
+
+class ProfileScriptSetUpdate(ProfileScriptSetBase):
+    pass
 
 
 # Database model, database table inferred from class name
@@ -423,21 +435,29 @@ class RulesetBase(SQLModel):
     description: Optional[str] = None
 
 
+class RulesetCreate(RulesetBase):
+    pass
+
+
+class RulesetUpdate(RulesetBase):
+    pass
+
+
 # Database model, database table inferred from class name
-class RuleSet(RulesetBase, table=True):
+class Ruleset(RulesetBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
-    ruleset_scripts: List["RuleSetScript"] = Relationship(
+    ruleset_scripts: List["RulesetScript"] = Relationship(
         back_populates="ruleset", cascade_delete=True
     )
 
 
 # Properties to return via API, id is always required
-class RuleSetPublic(RulesetBase):
+class RulesetPublic(RulesetBase):
     id: uuid.UUID
 
 
 class RulesetsPublic(SQLModel):
-    data: list[RuleSetPublic]
+    data: list[RulesetPublic]
     count: int
 
 
@@ -448,24 +468,33 @@ class RulesetScriptBase(SQLModel):
     profile_name: str = Field(index=True, max_length=255)
     action: str = Field(index=True, max_length=255)
     description: Optional[str] = None
+    ruleset_id: uuid.UUID = Field(foreign_key="ruleset.id", nullable=False)
+
+
+class RulesetScriptCreate(RulesetScriptBase):
+    pass
+
+
+class RulesetScriptUpdate(RulesetScriptBase):
+    pass
 
 
 # Database model, database table inferred from class name
-class RuleSetScript(RulesetScriptBase, table=True):
+class RulesetScript(RulesetScriptBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     ruleset_id: uuid.UUID = Field(
         foreign_key="ruleset.id", nullable=False, ondelete="CASCADE"
     )
-    ruleset: RuleSet | None = Relationship(back_populates="ruleset_scripts")
+    ruleset: Ruleset | None = Relationship(back_populates="ruleset_scripts")
 
 
 # Properties to return via API, id is always required
-class RuleSetScriptPublic(RulesetScriptBase):
+class RulesetScriptPublic(RulesetScriptBase):
     id: uuid.UUID
 
 
-class RuleSetScriptsPublic(SQLModel):
-    data: list[RuleSetScriptPublic]
+class RulesetScriptsPublic(SQLModel):
+    data: list[RulesetScriptPublic]
     count: int
 
 

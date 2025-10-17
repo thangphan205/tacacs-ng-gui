@@ -37,9 +37,9 @@ class Settings(BaseSettings):
     FRONTEND_HOST: str = "http://localhost:5173"
     ENVIRONMENT: Literal["local", "staging", "production"] = "local"
 
-    BACKEND_CORS_ORIGINS: Annotated[
-        list[AnyUrl] | str, BeforeValidator(parse_cors)
-    ] = []
+    BACKEND_CORS_ORIGINS: Annotated[list[AnyUrl] | str, BeforeValidator(parse_cors)] = (
+        []
+    )
 
     @computed_field  # type: ignore[prop-decorator]
     @property
@@ -114,6 +114,35 @@ class Settings(BaseSettings):
         )
 
         return self
+
+    # Tacacs-ng-gui specific settings
+    IPV4_ENABLED: bool = True
+    IPV4_ADDRESS: str = "0.0.0.0"
+    IPV4_PORT: int = 49
+    IPV6_ENABLED: bool = False
+    IPV6_ADDRESS: str = "::"
+    IPV6_PORT: int = 49
+    INSTANCES_MIN: int = 1
+    INSTANCES_MAX: int = 10
+    BACKGROUND: str = "no"
+
+    ACCESS_LOG_DESTINATION: str = "/var/log/tac_plus/%Y/access-%m-%d-%Y.txt"
+    ACCOUNTING_LOG_DESTINATION: str = "/var/log/tac_plus/%Y/accounting-%m-%d-%Y.txt"
+    AUTHENTICATION_LOG_DESTINATION: str = (
+        "/var/log/tac_plus/%Y/authentication-%m-%d-%Y.txt"
+    )
+    LOGIN_BACKEND: str = "mavis"
+    USER_BACKEND: str = "mavis"
+    PAP_BACKEND: str = "mavis"
+
+    LDAP_SERVER_TYPE: str = "freeipa"
+    LDAP_HOSTS: str = "ipa.example.com"
+    LDAP_BASE: str = "dc=example,dc=com"
+    LDAP_USER: str = "uid=app_tacacs,cn=users,cn=accounts,dc=example,dc=com"
+    LDAP_PASSWD: str = "changethis"
+    REQUIRE_TACACS_GROUP_PREFIX: int = 0
+    TACACS_GROUP_PREFIX: str = "tacacs_"
+    LDAP_FILTER: str = "(&(objectClass=inetorgperson)(uid=%s))"
 
 
 settings = Settings()  # type: ignore
