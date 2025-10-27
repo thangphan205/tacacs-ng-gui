@@ -9,6 +9,13 @@ import type { UserPublic } from "@/client"
 const items = [
   { icon: FiHome, title: "Dashboard", path: "/" },
   { icon: FiBriefcase, title: "Items", path: "/items" },
+  { icon: FiBriefcase, title: "Hosts", path: "/hosts" },
+  { icon: FiBriefcase, title: "Tacacs Groups", path: "/tacacs_groups" },
+  { icon: FiBriefcase, title: "Tacacs Users", path: "/tacacs_users" },
+  { icon: FiBriefcase, title: "Tacacs Services", path: "/tacacs_services" },
+  { icon: FiBriefcase, title: "Profiles", path: "/profiles" },
+  { icon: FiBriefcase, title: "Profiles Script", path: "/profilescripts" },
+  { icon: FiBriefcase, title: "Profiles Script Set", path: "/profilescriptsets" },
   { icon: FiSettings, title: "User Settings", path: "/settings" },
 ]
 

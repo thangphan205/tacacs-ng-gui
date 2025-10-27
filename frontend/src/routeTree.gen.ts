@@ -15,8 +15,15 @@ import { Route as RecoverPasswordRouteImport } from './routes/recover-password'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
+import { Route as LayoutTacacs_usersRouteImport } from './routes/_layout/tacacs_users'
+import { Route as LayoutTacacs_servicesRouteImport } from './routes/_layout/tacacs_services'
+import { Route as LayoutTacacs_groupsRouteImport } from './routes/_layout/tacacs_groups'
 import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
+import { Route as LayoutProfilescriptsetsRouteImport } from './routes/_layout/profilescriptsets'
+import { Route as LayoutProfilescriptsRouteImport } from './routes/_layout/profilescripts'
+import { Route as LayoutProfilesRouteImport } from './routes/_layout/profiles'
 import { Route as LayoutItemsRouteImport } from './routes/_layout/items'
+import { Route as LayoutHostsRouteImport } from './routes/_layout/hosts'
 import { Route as LayoutAdminRouteImport } from './routes/_layout/admin'
 
 const SignupRoute = SignupRouteImport.update({
@@ -48,14 +55,49 @@ const LayoutIndexRoute = LayoutIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutTacacs_usersRoute = LayoutTacacs_usersRouteImport.update({
+  id: '/tacacs_users',
+  path: '/tacacs_users',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutTacacs_servicesRoute = LayoutTacacs_servicesRouteImport.update({
+  id: '/tacacs_services',
+  path: '/tacacs_services',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutTacacs_groupsRoute = LayoutTacacs_groupsRouteImport.update({
+  id: '/tacacs_groups',
+  path: '/tacacs_groups',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutSettingsRoute = LayoutSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutProfilescriptsetsRoute = LayoutProfilescriptsetsRouteImport.update({
+  id: '/profilescriptsets',
+  path: '/profilescriptsets',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutProfilescriptsRoute = LayoutProfilescriptsRouteImport.update({
+  id: '/profilescripts',
+  path: '/profilescripts',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutProfilesRoute = LayoutProfilesRouteImport.update({
+  id: '/profiles',
+  path: '/profiles',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutItemsRoute = LayoutItemsRouteImport.update({
   id: '/items',
   path: '/items',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutHostsRoute = LayoutHostsRouteImport.update({
+  id: '/hosts',
+  path: '/hosts',
   getParentRoute: () => LayoutRoute,
 } as any)
 const LayoutAdminRoute = LayoutAdminRouteImport.update({
@@ -70,8 +112,15 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/admin': typeof LayoutAdminRoute
+  '/hosts': typeof LayoutHostsRoute
   '/items': typeof LayoutItemsRoute
+  '/profiles': typeof LayoutProfilesRoute
+  '/profilescripts': typeof LayoutProfilescriptsRoute
+  '/profilescriptsets': typeof LayoutProfilescriptsetsRoute
   '/settings': typeof LayoutSettingsRoute
+  '/tacacs_groups': typeof LayoutTacacs_groupsRoute
+  '/tacacs_services': typeof LayoutTacacs_servicesRoute
+  '/tacacs_users': typeof LayoutTacacs_usersRoute
   '/': typeof LayoutIndexRoute
 }
 export interface FileRoutesByTo {
@@ -80,8 +129,15 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/admin': typeof LayoutAdminRoute
+  '/hosts': typeof LayoutHostsRoute
   '/items': typeof LayoutItemsRoute
+  '/profiles': typeof LayoutProfilesRoute
+  '/profilescripts': typeof LayoutProfilescriptsRoute
+  '/profilescriptsets': typeof LayoutProfilescriptsetsRoute
   '/settings': typeof LayoutSettingsRoute
+  '/tacacs_groups': typeof LayoutTacacs_groupsRoute
+  '/tacacs_services': typeof LayoutTacacs_servicesRoute
+  '/tacacs_users': typeof LayoutTacacs_usersRoute
   '/': typeof LayoutIndexRoute
 }
 export interface FileRoutesById {
@@ -92,8 +148,15 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/_layout/admin': typeof LayoutAdminRoute
+  '/_layout/hosts': typeof LayoutHostsRoute
   '/_layout/items': typeof LayoutItemsRoute
+  '/_layout/profiles': typeof LayoutProfilesRoute
+  '/_layout/profilescripts': typeof LayoutProfilescriptsRoute
+  '/_layout/profilescriptsets': typeof LayoutProfilescriptsetsRoute
   '/_layout/settings': typeof LayoutSettingsRoute
+  '/_layout/tacacs_groups': typeof LayoutTacacs_groupsRoute
+  '/_layout/tacacs_services': typeof LayoutTacacs_servicesRoute
+  '/_layout/tacacs_users': typeof LayoutTacacs_usersRoute
   '/_layout/': typeof LayoutIndexRoute
 }
 export interface FileRouteTypes {
@@ -104,8 +167,15 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/admin'
+    | '/hosts'
     | '/items'
+    | '/profiles'
+    | '/profilescripts'
+    | '/profilescriptsets'
     | '/settings'
+    | '/tacacs_groups'
+    | '/tacacs_services'
+    | '/tacacs_users'
     | '/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -114,8 +184,15 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/admin'
+    | '/hosts'
     | '/items'
+    | '/profiles'
+    | '/profilescripts'
+    | '/profilescriptsets'
     | '/settings'
+    | '/tacacs_groups'
+    | '/tacacs_services'
+    | '/tacacs_users'
     | '/'
   id:
     | '__root__'
@@ -125,8 +202,15 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/_layout/admin'
+    | '/_layout/hosts'
     | '/_layout/items'
+    | '/_layout/profiles'
+    | '/_layout/profilescripts'
+    | '/_layout/profilescriptsets'
     | '/_layout/settings'
+    | '/_layout/tacacs_groups'
+    | '/_layout/tacacs_services'
+    | '/_layout/tacacs_users'
     | '/_layout/'
   fileRoutesById: FileRoutesById
 }
@@ -182,6 +266,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/tacacs_users': {
+      id: '/_layout/tacacs_users'
+      path: '/tacacs_users'
+      fullPath: '/tacacs_users'
+      preLoaderRoute: typeof LayoutTacacs_usersRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/tacacs_services': {
+      id: '/_layout/tacacs_services'
+      path: '/tacacs_services'
+      fullPath: '/tacacs_services'
+      preLoaderRoute: typeof LayoutTacacs_servicesRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/tacacs_groups': {
+      id: '/_layout/tacacs_groups'
+      path: '/tacacs_groups'
+      fullPath: '/tacacs_groups'
+      preLoaderRoute: typeof LayoutTacacs_groupsRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/settings': {
       id: '/_layout/settings'
       path: '/settings'
@@ -189,11 +294,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutSettingsRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/profilescriptsets': {
+      id: '/_layout/profilescriptsets'
+      path: '/profilescriptsets'
+      fullPath: '/profilescriptsets'
+      preLoaderRoute: typeof LayoutProfilescriptsetsRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/profilescripts': {
+      id: '/_layout/profilescripts'
+      path: '/profilescripts'
+      fullPath: '/profilescripts'
+      preLoaderRoute: typeof LayoutProfilescriptsRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/profiles': {
+      id: '/_layout/profiles'
+      path: '/profiles'
+      fullPath: '/profiles'
+      preLoaderRoute: typeof LayoutProfilesRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/items': {
       id: '/_layout/items'
       path: '/items'
       fullPath: '/items'
       preLoaderRoute: typeof LayoutItemsRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/hosts': {
+      id: '/_layout/hosts'
+      path: '/hosts'
+      fullPath: '/hosts'
+      preLoaderRoute: typeof LayoutHostsRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/admin': {
@@ -208,15 +341,29 @@ declare module '@tanstack/react-router' {
 
 interface LayoutRouteChildren {
   LayoutAdminRoute: typeof LayoutAdminRoute
+  LayoutHostsRoute: typeof LayoutHostsRoute
   LayoutItemsRoute: typeof LayoutItemsRoute
+  LayoutProfilesRoute: typeof LayoutProfilesRoute
+  LayoutProfilescriptsRoute: typeof LayoutProfilescriptsRoute
+  LayoutProfilescriptsetsRoute: typeof LayoutProfilescriptsetsRoute
   LayoutSettingsRoute: typeof LayoutSettingsRoute
+  LayoutTacacs_groupsRoute: typeof LayoutTacacs_groupsRoute
+  LayoutTacacs_servicesRoute: typeof LayoutTacacs_servicesRoute
+  LayoutTacacs_usersRoute: typeof LayoutTacacs_usersRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutAdminRoute: LayoutAdminRoute,
+  LayoutHostsRoute: LayoutHostsRoute,
   LayoutItemsRoute: LayoutItemsRoute,
+  LayoutProfilesRoute: LayoutProfilesRoute,
+  LayoutProfilescriptsRoute: LayoutProfilescriptsRoute,
+  LayoutProfilescriptsetsRoute: LayoutProfilescriptsetsRoute,
   LayoutSettingsRoute: LayoutSettingsRoute,
+  LayoutTacacs_groupsRoute: LayoutTacacs_groupsRoute,
+  LayoutTacacs_servicesRoute: LayoutTacacs_servicesRoute,
+  LayoutTacacs_usersRoute: LayoutTacacs_usersRoute,
   LayoutIndexRoute: LayoutIndexRoute,
 }
 

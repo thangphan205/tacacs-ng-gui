@@ -3,7 +3,118 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, PrivateCreateUserData, PrivateCreateUserResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse } from './types.gen';
+import type { HostsReadHostsData, HostsReadHostsResponse, HostsCreateHostData, HostsCreateHostResponse, HostsReadHostByIdData, HostsReadHostByIdResponse, HostsUpdateHostData, HostsUpdateHostResponse, HostsDeleteHostData, HostsDeleteHostResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, PrivateCreateUserData, PrivateCreateUserResponse, ProfilesReadProfilesData, ProfilesReadProfilesResponse, ProfilesCreateProfileData, ProfilesCreateProfileResponse, ProfilesReadProfileByIdData, ProfilesReadProfileByIdResponse, ProfilesUpdateProfileData, ProfilesUpdateProfileResponse, ProfilesDeleteProfileData, ProfilesDeleteProfileResponse, ProfilescriptsReadProfilescriptsData, ProfilescriptsReadProfilescriptsResponse, ProfilescriptsCreateProfilescriptData, ProfilescriptsCreateProfilescriptResponse, ProfilescriptsReadProfilescriptByIdData, ProfilescriptsReadProfilescriptByIdResponse, ProfilescriptsUpdateProfilescriptData, ProfilescriptsUpdateProfilescriptResponse, ProfilescriptsDeleteProfilescriptData, ProfilescriptsDeleteProfilescriptResponse, ProfilescriptsetsReadProfilescriptsetsData, ProfilescriptsetsReadProfilescriptsetsResponse, ProfilescriptsetsCreateProfilescriptsetData, ProfilescriptsetsCreateProfilescriptsetResponse, ProfilescriptsetsReadProfilescriptsetByIdData, ProfilescriptsetsReadProfilescriptsetByIdResponse, ProfilescriptsetsUpdateProfilescriptsetData, ProfilescriptsetsUpdateProfilescriptsetResponse, ProfilescriptsetsDeleteProfilescriptsetData, ProfilescriptsetsDeleteProfilescriptsetResponse, RulesetsReadRulesetsData, RulesetsReadRulesetsResponse, RulesetsCreateRulesetData, RulesetsCreateRulesetResponse, RulesetsReadRulesetByIdData, RulesetsReadRulesetByIdResponse, RulesetsUpdateRulesetData, RulesetsUpdateRulesetResponse, RulesetsDeleteRulesetData, RulesetsDeleteRulesetResponse, RulesetscriptsReadRulesetscriptsData, RulesetscriptsReadRulesetscriptsResponse, RulesetscriptsCreateRulesetscriptData, RulesetscriptsCreateRulesetscriptResponse, RulesetscriptsReadRulesetscriptByIdData, RulesetscriptsReadRulesetscriptByIdResponse, RulesetscriptsUpdateRulesetscriptData, RulesetscriptsUpdateRulesetscriptResponse, RulesetscriptsDeleteRulesetscriptData, RulesetscriptsDeleteRulesetscriptResponse, TacacsGetConfigResponse, TacacsSaveConfigResponse, TacacsGetAuthLogsData, TacacsGetAuthLogsResponse, TacacsGroupsReadTacacsGroupsData, TacacsGroupsReadTacacsGroupsResponse, TacacsGroupsCreateTacacsGroupData, TacacsGroupsCreateTacacsGroupResponse, TacacsGroupsReadTacacsGroupByIdData, TacacsGroupsReadTacacsGroupByIdResponse, TacacsGroupsUpdateTacacsGroupData, TacacsGroupsUpdateTacacsGroupResponse, TacacsGroupsDeleteTacacsGroupData, TacacsGroupsDeleteTacacsGroupResponse, TacacsServicesReadTacacsServicesData, TacacsServicesReadTacacsServicesResponse, TacacsServicesCreateTacacsServiceData, TacacsServicesCreateTacacsServiceResponse, TacacsServicesReadTacacsServiceByIdData, TacacsServicesReadTacacsServiceByIdResponse, TacacsServicesUpdateTacacsServiceData, TacacsServicesUpdateTacacsServiceResponse, TacacsServicesDeleteTacacsServiceData, TacacsServicesDeleteTacacsServiceResponse, TacacsUsersReadTacacsUsersData, TacacsUsersReadTacacsUsersResponse, TacacsUsersCreateTacacsUserData, TacacsUsersCreateTacacsUserResponse, TacacsUsersReadTacacsUserByIdData, TacacsUsersReadTacacsUserByIdResponse, TacacsUsersUpdateTacacsUserData, TacacsUsersUpdateTacacsUserResponse, TacacsUsersDeleteTacacsUserData, TacacsUsersDeleteTacacsUserResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse } from './types.gen';
+
+export class HostsService {
+    /**
+     * Read Hosts
+     * Retrieve hosts.
+     * @param data The data for the request.
+     * @param data.skip
+     * @param data.limit
+     * @returns HostsPublic Successful Response
+     * @throws ApiError
+     */
+    public static readHosts(data: HostsReadHostsData = {}): CancelablePromise<HostsReadHostsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/hosts/',
+            query: {
+                skip: data.skip,
+                limit: data.limit
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Create Host
+     * Create new host.
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns HostPublic Successful Response
+     * @throws ApiError
+     */
+    public static createHost(data: HostsCreateHostData): CancelablePromise<HostsCreateHostResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/hosts/',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Read Host By Id
+     * Get a specific host by id.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns HostPublic Successful Response
+     * @throws ApiError
+     */
+    public static readHostById(data: HostsReadHostByIdData): CancelablePromise<HostsReadHostByIdResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/hosts/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Update Host
+     * Update a host.
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.requestBody
+     * @returns HostPublic Successful Response
+     * @throws ApiError
+     */
+    public static updateHost(data: HostsUpdateHostData): CancelablePromise<HostsUpdateHostResponse> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/api/v1/hosts/{id}',
+            path: {
+                id: data.id
+            },
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Delete Host
+     * Delete an item.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns Message Successful Response
+     * @throws ApiError
+     */
+    public static deleteHost(data: HostsDeleteHostData): CancelablePromise<HostsDeleteHostResponse> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/v1/hosts/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+}
 
 export class ItemsService {
     /**
@@ -228,6 +339,944 @@ export class PrivateService {
             url: '/api/v1/private/users/',
             body: data.requestBody,
             mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+}
+
+export class ProfilesService {
+    /**
+     * Read Profiles
+     * Retrieve profiles.
+     * @param data The data for the request.
+     * @param data.skip
+     * @param data.limit
+     * @returns ProfilesPublic Successful Response
+     * @throws ApiError
+     */
+    public static readProfiles(data: ProfilesReadProfilesData = {}): CancelablePromise<ProfilesReadProfilesResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/profiles/',
+            query: {
+                skip: data.skip,
+                limit: data.limit
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Create Profile
+     * Create new profile.
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns ProfilePublic Successful Response
+     * @throws ApiError
+     */
+    public static createProfile(data: ProfilesCreateProfileData): CancelablePromise<ProfilesCreateProfileResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/profiles/',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Read Profile By Id
+     * Get a specific profile by id.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns ProfilePublic Successful Response
+     * @throws ApiError
+     */
+    public static readProfileById(data: ProfilesReadProfileByIdData): CancelablePromise<ProfilesReadProfileByIdResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/profiles/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Update Profile
+     * Update a profile.
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.requestBody
+     * @returns ProfilePublic Successful Response
+     * @throws ApiError
+     */
+    public static updateProfile(data: ProfilesUpdateProfileData): CancelablePromise<ProfilesUpdateProfileResponse> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/v1/profiles/{id}',
+            path: {
+                id: data.id
+            },
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Delete Profile
+     * Delete an item.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns Message Successful Response
+     * @throws ApiError
+     */
+    public static deleteProfile(data: ProfilesDeleteProfileData): CancelablePromise<ProfilesDeleteProfileResponse> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/v1/profiles/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+}
+
+export class ProfilescriptsService {
+    /**
+     * Read Profilescripts
+     * Retrieve profilescripts.
+     * @param data The data for the request.
+     * @param data.skip
+     * @param data.limit
+     * @returns ProfileScriptsPublic Successful Response
+     * @throws ApiError
+     */
+    public static readProfilescripts(data: ProfilescriptsReadProfilescriptsData = {}): CancelablePromise<ProfilescriptsReadProfilescriptsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/profilescripts/',
+            query: {
+                skip: data.skip,
+                limit: data.limit
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Create Profilescript
+     * Create new profilescript.
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns ProfileScriptPublic Successful Response
+     * @throws ApiError
+     */
+    public static createProfilescript(data: ProfilescriptsCreateProfilescriptData): CancelablePromise<ProfilescriptsCreateProfilescriptResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/profilescripts/',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Read Profilescript By Id
+     * Get a specific profilescript by id.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns ProfileScriptPublic Successful Response
+     * @throws ApiError
+     */
+    public static readProfilescriptById(data: ProfilescriptsReadProfilescriptByIdData): CancelablePromise<ProfilescriptsReadProfilescriptByIdResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/profilescripts/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Update Profilescript
+     * Update a profilescript.
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.requestBody
+     * @returns ProfileScriptPublic Successful Response
+     * @throws ApiError
+     */
+    public static updateProfilescript(data: ProfilescriptsUpdateProfilescriptData): CancelablePromise<ProfilescriptsUpdateProfilescriptResponse> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/v1/profilescripts/{id}',
+            path: {
+                id: data.id
+            },
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Delete Profilescript
+     * Delete an item.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns Message Successful Response
+     * @throws ApiError
+     */
+    public static deleteProfilescript(data: ProfilescriptsDeleteProfilescriptData): CancelablePromise<ProfilescriptsDeleteProfilescriptResponse> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/v1/profilescripts/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+}
+
+export class ProfilescriptsetsService {
+    /**
+     * Read Profilescriptsets
+     * Retrieve profilescriptsets.
+     * @param data The data for the request.
+     * @param data.skip
+     * @param data.limit
+     * @returns ProfileScriptSetsPublic Successful Response
+     * @throws ApiError
+     */
+    public static readProfilescriptsets(data: ProfilescriptsetsReadProfilescriptsetsData = {}): CancelablePromise<ProfilescriptsetsReadProfilescriptsetsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/profilescriptsets/',
+            query: {
+                skip: data.skip,
+                limit: data.limit
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Create Profilescriptset
+     * Create new profilescriptset.
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns ProfileScriptSetPublic Successful Response
+     * @throws ApiError
+     */
+    public static createProfilescriptset(data: ProfilescriptsetsCreateProfilescriptsetData): CancelablePromise<ProfilescriptsetsCreateProfilescriptsetResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/profilescriptsets/',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Read Profilescriptset By Id
+     * Get a specific profilescriptset by id.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns ProfileScriptSetPublic Successful Response
+     * @throws ApiError
+     */
+    public static readProfilescriptsetById(data: ProfilescriptsetsReadProfilescriptsetByIdData): CancelablePromise<ProfilescriptsetsReadProfilescriptsetByIdResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/profilescriptsets/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Update Profilescriptset
+     * Update a profilescriptset.
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.requestBody
+     * @returns ProfileScriptSetPublic Successful Response
+     * @throws ApiError
+     */
+    public static updateProfilescriptset(data: ProfilescriptsetsUpdateProfilescriptsetData): CancelablePromise<ProfilescriptsetsUpdateProfilescriptsetResponse> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/v1/profilescriptsets/{id}',
+            path: {
+                id: data.id
+            },
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Delete Profilescriptset
+     * Delete an item.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns Message Successful Response
+     * @throws ApiError
+     */
+    public static deleteProfilescriptset(data: ProfilescriptsetsDeleteProfilescriptsetData): CancelablePromise<ProfilescriptsetsDeleteProfilescriptsetResponse> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/v1/profilescriptsets/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+}
+
+export class RulesetsService {
+    /**
+     * Read Rulesets
+     * Retrieve rulesets.
+     * @param data The data for the request.
+     * @param data.skip
+     * @param data.limit
+     * @returns RulesetsPublic Successful Response
+     * @throws ApiError
+     */
+    public static readRulesets(data: RulesetsReadRulesetsData = {}): CancelablePromise<RulesetsReadRulesetsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/rulesets/',
+            query: {
+                skip: data.skip,
+                limit: data.limit
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Create Ruleset
+     * Create new ruleset.
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns RulesetPublic Successful Response
+     * @throws ApiError
+     */
+    public static createRuleset(data: RulesetsCreateRulesetData): CancelablePromise<RulesetsCreateRulesetResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/rulesets/',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Read Ruleset By Id
+     * Get a specific ruleset by id.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns RulesetPublic Successful Response
+     * @throws ApiError
+     */
+    public static readRulesetById(data: RulesetsReadRulesetByIdData): CancelablePromise<RulesetsReadRulesetByIdResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/rulesets/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Update Ruleset
+     * Update a ruleset.
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.requestBody
+     * @returns RulesetPublic Successful Response
+     * @throws ApiError
+     */
+    public static updateRuleset(data: RulesetsUpdateRulesetData): CancelablePromise<RulesetsUpdateRulesetResponse> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/v1/rulesets/{id}',
+            path: {
+                id: data.id
+            },
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Delete Ruleset
+     * Delete an item.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns Message Successful Response
+     * @throws ApiError
+     */
+    public static deleteRuleset(data: RulesetsDeleteRulesetData): CancelablePromise<RulesetsDeleteRulesetResponse> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/v1/rulesets/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+}
+
+export class RulesetscriptsService {
+    /**
+     * Read Rulesetscripts
+     * Retrieve rulesetscripts.
+     * @param data The data for the request.
+     * @param data.skip
+     * @param data.limit
+     * @returns RulesetScriptsPublic Successful Response
+     * @throws ApiError
+     */
+    public static readRulesetscripts(data: RulesetscriptsReadRulesetscriptsData = {}): CancelablePromise<RulesetscriptsReadRulesetscriptsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/rulesetscripts/',
+            query: {
+                skip: data.skip,
+                limit: data.limit
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Create Rulesetscript
+     * Create new rulesetscript.
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns RulesetScriptPublic Successful Response
+     * @throws ApiError
+     */
+    public static createRulesetscript(data: RulesetscriptsCreateRulesetscriptData): CancelablePromise<RulesetscriptsCreateRulesetscriptResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/rulesetscripts/',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Read Rulesetscript By Id
+     * Get a specific rulesetscript by id.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns RulesetScriptPublic Successful Response
+     * @throws ApiError
+     */
+    public static readRulesetscriptById(data: RulesetscriptsReadRulesetscriptByIdData): CancelablePromise<RulesetscriptsReadRulesetscriptByIdResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/rulesetscripts/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Update Rulesetscript
+     * Update a rulesetscript.
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.requestBody
+     * @returns RulesetScriptPublic Successful Response
+     * @throws ApiError
+     */
+    public static updateRulesetscript(data: RulesetscriptsUpdateRulesetscriptData): CancelablePromise<RulesetscriptsUpdateRulesetscriptResponse> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/v1/rulesetscripts/{id}',
+            path: {
+                id: data.id
+            },
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Delete Rulesetscript
+     * Delete an item.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns Message Successful Response
+     * @throws ApiError
+     */
+    public static deleteRulesetscript(data: RulesetscriptsDeleteRulesetscriptData): CancelablePromise<RulesetscriptsDeleteRulesetscriptResponse> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/v1/rulesetscripts/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+}
+
+export class TacacsService {
+    /**
+     * Get Config
+     * Đọc và trả về nội dung tệp cấu hình TACACS+ hiện tại.
+     * @returns unknown Successful Response
+     * @throws ApiError
+     */
+    public static getConfig(): CancelablePromise<TacacsGetConfigResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/tacacs/config'
+        });
+    }
+    
+    /**
+     * Save Config
+     * Ghi nội dung mới vào tệp cấu hình TACACS+ và tự động kích hoạt
+     * quá trình reload cấu hình trong container tacacs_ng thông qua SIGHUP.
+     * @returns unknown Successful Response
+     * @throws ApiError
+     */
+    public static saveConfig(): CancelablePromise<TacacsSaveConfigResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/tacacs/config/save'
+        });
+    }
+    
+    /**
+     * Get Auth Logs
+     * Đọc N dòng cuối cùng của tệp nhật ký xác thực TACACS+.
+     * @param data The data for the request.
+     * @param data.lines
+     * @returns unknown Successful Response
+     * @throws ApiError
+     */
+    public static getAuthLogs(data: TacacsGetAuthLogsData = {}): CancelablePromise<TacacsGetAuthLogsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/tacacs/logs/auth',
+            query: {
+                lines: data.lines
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+}
+
+export class TacacsGroupsService {
+    /**
+     * Read Tacacs Groups
+     * Retrieve groups.
+     * @param data The data for the request.
+     * @param data.skip
+     * @param data.limit
+     * @returns TacacsGroupsPublic Successful Response
+     * @throws ApiError
+     */
+    public static readTacacsGroups(data: TacacsGroupsReadTacacsGroupsData = {}): CancelablePromise<TacacsGroupsReadTacacsGroupsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/tacacs_groups/',
+            query: {
+                skip: data.skip,
+                limit: data.limit
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Create Tacacs Group
+     * Create new group.
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns TacacsGroupPublic Successful Response
+     * @throws ApiError
+     */
+    public static createTacacsGroup(data: TacacsGroupsCreateTacacsGroupData): CancelablePromise<TacacsGroupsCreateTacacsGroupResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/tacacs_groups/',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Read Tacacs Group By Id
+     * Get a specific user by id.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns TacacsGroupPublic Successful Response
+     * @throws ApiError
+     */
+    public static readTacacsGroupById(data: TacacsGroupsReadTacacsGroupByIdData): CancelablePromise<TacacsGroupsReadTacacsGroupByIdResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/tacacs_groups/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Update Tacacs Group
+     * Update a group.
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.requestBody
+     * @returns TacacsGroupPublic Successful Response
+     * @throws ApiError
+     */
+    public static updateTacacsGroup(data: TacacsGroupsUpdateTacacsGroupData): CancelablePromise<TacacsGroupsUpdateTacacsGroupResponse> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/v1/tacacs_groups/{id}',
+            path: {
+                id: data.id
+            },
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Delete Tacacs Group
+     * Delete an item.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns Message Successful Response
+     * @throws ApiError
+     */
+    public static deleteTacacsGroup(data: TacacsGroupsDeleteTacacsGroupData): CancelablePromise<TacacsGroupsDeleteTacacsGroupResponse> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/v1/tacacs_groups/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+}
+
+export class TacacsServicesService {
+    /**
+     * Read Tacacs Services
+     * Retrieve tacacs_services.
+     * @param data The data for the request.
+     * @param data.skip
+     * @param data.limit
+     * @returns TacacsServicesPublic Successful Response
+     * @throws ApiError
+     */
+    public static readTacacsServices(data: TacacsServicesReadTacacsServicesData = {}): CancelablePromise<TacacsServicesReadTacacsServicesResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/tacacs_services/',
+            query: {
+                skip: data.skip,
+                limit: data.limit
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Create Tacacs Service
+     * Create new tacacs_service.
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns TacacsServicePublic Successful Response
+     * @throws ApiError
+     */
+    public static createTacacsService(data: TacacsServicesCreateTacacsServiceData): CancelablePromise<TacacsServicesCreateTacacsServiceResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/tacacs_services/',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Read Tacacs Service By Id
+     * Get a specific tacacs_service by id.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns TacacsServicePublic Successful Response
+     * @throws ApiError
+     */
+    public static readTacacsServiceById(data: TacacsServicesReadTacacsServiceByIdData): CancelablePromise<TacacsServicesReadTacacsServiceByIdResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/tacacs_services/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Update Tacacs Service
+     * Update a tacacs_service.
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.requestBody
+     * @returns TacacsServicePublic Successful Response
+     * @throws ApiError
+     */
+    public static updateTacacsService(data: TacacsServicesUpdateTacacsServiceData): CancelablePromise<TacacsServicesUpdateTacacsServiceResponse> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/v1/tacacs_services/{id}',
+            path: {
+                id: data.id
+            },
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Delete Tacacs Service
+     * Delete an item.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns Message Successful Response
+     * @throws ApiError
+     */
+    public static deleteTacacsService(data: TacacsServicesDeleteTacacsServiceData): CancelablePromise<TacacsServicesDeleteTacacsServiceResponse> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/v1/tacacs_services/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+}
+
+export class TacacsUsersService {
+    /**
+     * Read Tacacs Users
+     * Retrieve users.
+     * @param data The data for the request.
+     * @param data.skip
+     * @param data.limit
+     * @returns TacacsUsersPublic Successful Response
+     * @throws ApiError
+     */
+    public static readTacacsUsers(data: TacacsUsersReadTacacsUsersData = {}): CancelablePromise<TacacsUsersReadTacacsUsersResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/tacacs_users/',
+            query: {
+                skip: data.skip,
+                limit: data.limit
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Create Tacacs User
+     * Create new user.
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns TacacsUserPublic Successful Response
+     * @throws ApiError
+     */
+    public static createTacacsUser(data: TacacsUsersCreateTacacsUserData): CancelablePromise<TacacsUsersCreateTacacsUserResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/tacacs_users/',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Read Tacacs User By Id
+     * Get a specific user by id.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns TacacsUserPublic Successful Response
+     * @throws ApiError
+     */
+    public static readTacacsUserById(data: TacacsUsersReadTacacsUserByIdData): CancelablePromise<TacacsUsersReadTacacsUserByIdResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/tacacs_users/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Update Tacacs User
+     * Update a user.
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.requestBody
+     * @returns TacacsUserPublic Successful Response
+     * @throws ApiError
+     */
+    public static updateTacacsUser(data: TacacsUsersUpdateTacacsUserData): CancelablePromise<TacacsUsersUpdateTacacsUserResponse> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/v1/tacacs_users/{id}',
+            path: {
+                id: data.id
+            },
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Delete Tacacs User
+     * Delete an item.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns Message Successful Response
+     * @throws ApiError
+     */
+    public static deleteTacacsUser(data: TacacsUsersDeleteTacacsUserData): CancelablePromise<TacacsUsersDeleteTacacsUserResponse> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/v1/tacacs_users/{id}',
+            path: {
+                id: data.id
+            },
             errors: {
                 422: 'Validation Error'
             }

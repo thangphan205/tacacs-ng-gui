@@ -69,6 +69,183 @@ export const HTTPValidationErrorSchema = {
     title: 'HTTPValidationError'
 } as const;
 
+export const HostCreateSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Name'
+        },
+        ipv4_address: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Ipv4 Address'
+        },
+        ipv6_address: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Ipv6 Address'
+        },
+        secret_key: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Secret Key'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        }
+    },
+    type: 'object',
+    required: ['name', 'secret_key'],
+    title: 'HostCreate'
+} as const;
+
+export const HostPublicSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Name'
+        },
+        ipv4_address: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Ipv4 Address'
+        },
+        ipv6_address: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Ipv6 Address'
+        },
+        secret_key: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Secret Key'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        }
+    },
+    type: 'object',
+    required: ['name', 'secret_key', 'id'],
+    title: 'HostPublic'
+} as const;
+
+export const HostUpdateSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Name'
+        },
+        ipv4_address: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Ipv4 Address'
+        },
+        ipv6_address: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Ipv6 Address'
+        },
+        secret_key: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Secret Key'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        }
+    },
+    type: 'object',
+    required: ['name', 'secret_key'],
+    title: 'HostUpdate'
+} as const;
+
+export const HostsPublicSchema = {
+    properties: {
+        data: {
+            items: {
+                '$ref': '#/components/schemas/HostPublic'
+            },
+            type: 'array',
+            title: 'Data'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['data', 'count'],
+    title: 'HostsPublic'
+} as const;
+
 export const ItemCreateSchema = {
     properties: {
         title: {
@@ -235,6 +412,1090 @@ export const PrivateUserCreateSchema = {
     type: 'object',
     required: ['email', 'password', 'full_name'],
     title: 'PrivateUserCreate'
+} as const;
+
+export const ProfileCreateSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Name'
+        },
+        condition: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Condition'
+        },
+        key: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Key'
+        },
+        value: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Value'
+        },
+        action: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Action'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        }
+    },
+    type: 'object',
+    required: ['name', 'condition', 'key', 'value', 'action'],
+    title: 'ProfileCreate'
+} as const;
+
+export const ProfilePublicSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Name'
+        },
+        condition: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Condition'
+        },
+        key: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Key'
+        },
+        value: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Value'
+        },
+        action: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Action'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        }
+    },
+    type: 'object',
+    required: ['name', 'condition', 'key', 'value', 'action', 'id'],
+    title: 'ProfilePublic'
+} as const;
+
+export const ProfileScriptCreateSchema = {
+    properties: {
+        condition: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Condition'
+        },
+        key: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Key'
+        },
+        value: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Value'
+        },
+        action: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Action'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        },
+        profile_id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Profile Id'
+        }
+    },
+    type: 'object',
+    required: ['condition', 'key', 'value', 'action', 'profile_id'],
+    title: 'ProfileScriptCreate'
+} as const;
+
+export const ProfileScriptPublicSchema = {
+    properties: {
+        condition: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Condition'
+        },
+        key: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Key'
+        },
+        value: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Value'
+        },
+        action: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Action'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        },
+        profile_id: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'uuid'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Profile Id'
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        }
+    },
+    type: 'object',
+    required: ['condition', 'key', 'value', 'action', 'id'],
+    title: 'ProfileScriptPublic'
+} as const;
+
+export const ProfileScriptSetCreateSchema = {
+    properties: {
+        key: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Key'
+        },
+        value: {
+            type: 'string',
+            title: 'Value'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        },
+        profilescript_id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Profilescript Id'
+        }
+    },
+    type: 'object',
+    required: ['key', 'value', 'profilescript_id'],
+    title: 'ProfileScriptSetCreate'
+} as const;
+
+export const ProfileScriptSetPublicSchema = {
+    properties: {
+        key: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Key'
+        },
+        value: {
+            type: 'string',
+            title: 'Value'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        },
+        profilescript_id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Profilescript Id'
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        }
+    },
+    type: 'object',
+    required: ['key', 'value', 'profilescript_id', 'id'],
+    title: 'ProfileScriptSetPublic'
+} as const;
+
+export const ProfileScriptSetUpdateSchema = {
+    properties: {
+        key: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Key'
+        },
+        value: {
+            type: 'string',
+            title: 'Value'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        },
+        profilescript_id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Profilescript Id'
+        }
+    },
+    type: 'object',
+    required: ['key', 'value', 'profilescript_id'],
+    title: 'ProfileScriptSetUpdate'
+} as const;
+
+export const ProfileScriptSetsPublicSchema = {
+    properties: {
+        data: {
+            items: {
+                '$ref': '#/components/schemas/ProfileScriptSetPublic'
+            },
+            type: 'array',
+            title: 'Data'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['data', 'count'],
+    title: 'ProfileScriptSetsPublic'
+} as const;
+
+export const ProfileScriptUpdateSchema = {
+    properties: {
+        condition: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Condition'
+        },
+        key: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Key'
+        },
+        value: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Value'
+        },
+        action: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Action'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        },
+        profile_id: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'uuid'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Profile Id'
+        }
+    },
+    type: 'object',
+    required: ['condition', 'key', 'value', 'action'],
+    title: 'ProfileScriptUpdate'
+} as const;
+
+export const ProfileScriptsPublicSchema = {
+    properties: {
+        data: {
+            items: {
+                '$ref': '#/components/schemas/ProfileScriptPublic'
+            },
+            type: 'array',
+            title: 'Data'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['data', 'count'],
+    title: 'ProfileScriptsPublic'
+} as const;
+
+export const ProfileUpdateSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Name'
+        },
+        condition: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Condition'
+        },
+        key: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Key'
+        },
+        value: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Value'
+        },
+        action: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Action'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        }
+    },
+    type: 'object',
+    required: ['name', 'condition', 'key', 'value', 'action'],
+    title: 'ProfileUpdate'
+} as const;
+
+export const ProfilesPublicSchema = {
+    properties: {
+        data: {
+            items: {
+                '$ref': '#/components/schemas/ProfilePublic'
+            },
+            type: 'array',
+            title: 'Data'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['data', 'count'],
+    title: 'ProfilesPublic'
+} as const;
+
+export const RulesetCreateSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Name'
+        },
+        enabled: {
+            type: 'boolean',
+            title: 'Enabled',
+            default: true
+        },
+        action: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Action'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        }
+    },
+    type: 'object',
+    required: ['name', 'action'],
+    title: 'RulesetCreate'
+} as const;
+
+export const RulesetPublicSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Name'
+        },
+        enabled: {
+            type: 'boolean',
+            title: 'Enabled',
+            default: true
+        },
+        action: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Action'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        }
+    },
+    type: 'object',
+    required: ['name', 'action', 'id'],
+    title: 'RulesetPublic'
+} as const;
+
+export const RulesetScriptCreateSchema = {
+    properties: {
+        condition: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Condition'
+        },
+        group_name: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Group Name'
+        },
+        profile_name: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Profile Name'
+        },
+        action: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Action'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        },
+        ruleset_id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Ruleset Id'
+        }
+    },
+    type: 'object',
+    required: ['condition', 'group_name', 'profile_name', 'action', 'ruleset_id'],
+    title: 'RulesetScriptCreate'
+} as const;
+
+export const RulesetScriptPublicSchema = {
+    properties: {
+        condition: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Condition'
+        },
+        group_name: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Group Name'
+        },
+        profile_name: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Profile Name'
+        },
+        action: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Action'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        },
+        ruleset_id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Ruleset Id'
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        }
+    },
+    type: 'object',
+    required: ['condition', 'group_name', 'profile_name', 'action', 'ruleset_id', 'id'],
+    title: 'RulesetScriptPublic'
+} as const;
+
+export const RulesetScriptUpdateSchema = {
+    properties: {
+        condition: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Condition'
+        },
+        group_name: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Group Name'
+        },
+        profile_name: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Profile Name'
+        },
+        action: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Action'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        },
+        ruleset_id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Ruleset Id'
+        }
+    },
+    type: 'object',
+    required: ['condition', 'group_name', 'profile_name', 'action', 'ruleset_id'],
+    title: 'RulesetScriptUpdate'
+} as const;
+
+export const RulesetScriptsPublicSchema = {
+    properties: {
+        data: {
+            items: {
+                '$ref': '#/components/schemas/RulesetScriptPublic'
+            },
+            type: 'array',
+            title: 'Data'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['data', 'count'],
+    title: 'RulesetScriptsPublic'
+} as const;
+
+export const RulesetUpdateSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Name'
+        },
+        enabled: {
+            type: 'boolean',
+            title: 'Enabled',
+            default: true
+        },
+        action: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Action'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        }
+    },
+    type: 'object',
+    required: ['name', 'action'],
+    title: 'RulesetUpdate'
+} as const;
+
+export const RulesetsPublicSchema = {
+    properties: {
+        data: {
+            items: {
+                '$ref': '#/components/schemas/RulesetPublic'
+            },
+            type: 'array',
+            title: 'Data'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['data', 'count'],
+    title: 'RulesetsPublic'
+} as const;
+
+export const TacacsGroupCreateSchema = {
+    properties: {
+        group_name: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Group Name'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        }
+    },
+    type: 'object',
+    required: ['group_name'],
+    title: 'TacacsGroupCreate'
+} as const;
+
+export const TacacsGroupPublicSchema = {
+    properties: {
+        group_name: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Group Name'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        }
+    },
+    type: 'object',
+    required: ['group_name', 'id'],
+    title: 'TacacsGroupPublic'
+} as const;
+
+export const TacacsGroupUpdateSchema = {
+    properties: {
+        group_name: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Group Name'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        }
+    },
+    type: 'object',
+    required: ['group_name'],
+    title: 'TacacsGroupUpdate'
+} as const;
+
+export const TacacsGroupsPublicSchema = {
+    properties: {
+        data: {
+            items: {
+                '$ref': '#/components/schemas/TacacsGroupPublic'
+            },
+            type: 'array',
+            title: 'Data'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['data', 'count'],
+    title: 'TacacsGroupsPublic'
+} as const;
+
+export const TacacsServiceCreateSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Name'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        }
+    },
+    type: 'object',
+    required: ['name'],
+    title: 'TacacsServiceCreate'
+} as const;
+
+export const TacacsServicePublicSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Name'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        }
+    },
+    type: 'object',
+    required: ['name', 'id'],
+    title: 'TacacsServicePublic'
+} as const;
+
+export const TacacsServiceUpdateSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Name'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        }
+    },
+    type: 'object',
+    required: ['name'],
+    title: 'TacacsServiceUpdate'
+} as const;
+
+export const TacacsServicesPublicSchema = {
+    properties: {
+        data: {
+            items: {
+                '$ref': '#/components/schemas/TacacsServicePublic'
+            },
+            type: 'array',
+            title: 'Data'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['data', 'count'],
+    title: 'TacacsServicesPublic'
+} as const;
+
+export const TacacsUserCreateSchema = {
+    properties: {
+        username: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Username'
+        },
+        password_type: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Password Type'
+        },
+        member: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Member'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        },
+        password: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Password'
+        }
+    },
+    type: 'object',
+    required: ['username', 'password_type', 'member'],
+    title: 'TacacsUserCreate'
+} as const;
+
+export const TacacsUserPublicSchema = {
+    properties: {
+        username: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Username'
+        },
+        password_type: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Password Type'
+        },
+        member: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Member'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        },
+        password: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Password'
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        }
+    },
+    type: 'object',
+    required: ['username', 'password_type', 'member', 'id'],
+    title: 'TacacsUserPublic'
+} as const;
+
+export const TacacsUserUpdateSchema = {
+    properties: {
+        username: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Username'
+        },
+        password_type: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Password Type'
+        },
+        member: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Member'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        },
+        password: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Password'
+        }
+    },
+    type: 'object',
+    required: ['username', 'password_type', 'member'],
+    title: 'TacacsUserUpdate'
+} as const;
+
+export const TacacsUsersPublicSchema = {
+    properties: {
+        data: {
+            items: {
+                '$ref': '#/components/schemas/TacacsUserPublic'
+            },
+            type: 'array',
+            title: 'Data'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['data', 'count'],
+    title: 'TacacsUsersPublic'
 } as const;
 
 export const TokenSchema = {

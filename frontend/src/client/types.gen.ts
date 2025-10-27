@@ -9,6 +9,36 @@ export type Body_login_login_access_token = {
     client_secret?: (string | null);
 };
 
+export type HostCreate = {
+    name: string;
+    ipv4_address?: (string | null);
+    ipv6_address?: (string | null);
+    secret_key: string;
+    description?: (string | null);
+};
+
+export type HostPublic = {
+    name: string;
+    ipv4_address?: (string | null);
+    ipv6_address?: (string | null);
+    secret_key: string;
+    description?: (string | null);
+    id: string;
+};
+
+export type HostsPublic = {
+    data: Array<HostPublic>;
+    count: number;
+};
+
+export type HostUpdate = {
+    name: string;
+    ipv4_address?: (string | null);
+    ipv6_address?: (string | null);
+    secret_key: string;
+    description?: (string | null);
+};
+
 export type HTTPValidationError = {
     detail?: Array<ValidationError>;
 };
@@ -49,6 +79,231 @@ export type PrivateUserCreate = {
     password: string;
     full_name: string;
     is_verified?: boolean;
+};
+
+export type ProfileCreate = {
+    name: string;
+    condition: string;
+    key: string;
+    value: string;
+    action: string;
+    description?: (string | null);
+};
+
+export type ProfilePublic = {
+    name: string;
+    condition: string;
+    key: string;
+    value: string;
+    action: string;
+    description?: (string | null);
+    id: string;
+};
+
+export type ProfileScriptCreate = {
+    condition: string;
+    key: string;
+    value: string;
+    action: string;
+    description?: (string | null);
+    profile_id: string;
+};
+
+export type ProfileScriptPublic = {
+    condition: string;
+    key: string;
+    value: string;
+    action: string;
+    description?: (string | null);
+    profile_id?: (string | null);
+    id: string;
+};
+
+export type ProfileScriptSetCreate = {
+    key: string;
+    value: string;
+    description?: (string | null);
+    profilescript_id: string;
+};
+
+export type ProfileScriptSetPublic = {
+    key: string;
+    value: string;
+    description?: (string | null);
+    profilescript_id: string;
+    id: string;
+};
+
+export type ProfileScriptSetsPublic = {
+    data: Array<ProfileScriptSetPublic>;
+    count: number;
+};
+
+export type ProfileScriptSetUpdate = {
+    key: string;
+    value: string;
+    description?: (string | null);
+    profilescript_id: string;
+};
+
+export type ProfileScriptsPublic = {
+    data: Array<ProfileScriptPublic>;
+    count: number;
+};
+
+export type ProfileScriptUpdate = {
+    condition: string;
+    key: string;
+    value: string;
+    action: string;
+    description?: (string | null);
+    profile_id?: (string | null);
+};
+
+export type ProfilesPublic = {
+    data: Array<ProfilePublic>;
+    count: number;
+};
+
+export type ProfileUpdate = {
+    name: string;
+    condition: string;
+    key: string;
+    value: string;
+    action: string;
+    description?: (string | null);
+};
+
+export type RulesetCreate = {
+    name: string;
+    enabled?: boolean;
+    action: string;
+    description?: (string | null);
+};
+
+export type RulesetPublic = {
+    name: string;
+    enabled?: boolean;
+    action: string;
+    description?: (string | null);
+    id: string;
+};
+
+export type RulesetScriptCreate = {
+    condition: string;
+    group_name: string;
+    profile_name: string;
+    action: string;
+    description?: (string | null);
+    ruleset_id: string;
+};
+
+export type RulesetScriptPublic = {
+    condition: string;
+    group_name: string;
+    profile_name: string;
+    action: string;
+    description?: (string | null);
+    ruleset_id: string;
+    id: string;
+};
+
+export type RulesetScriptsPublic = {
+    data: Array<RulesetScriptPublic>;
+    count: number;
+};
+
+export type RulesetScriptUpdate = {
+    condition: string;
+    group_name: string;
+    profile_name: string;
+    action: string;
+    description?: (string | null);
+    ruleset_id: string;
+};
+
+export type RulesetsPublic = {
+    data: Array<RulesetPublic>;
+    count: number;
+};
+
+export type RulesetUpdate = {
+    name: string;
+    enabled?: boolean;
+    action: string;
+    description?: (string | null);
+};
+
+export type TacacsGroupCreate = {
+    group_name: string;
+    description?: (string | null);
+};
+
+export type TacacsGroupPublic = {
+    group_name: string;
+    description?: (string | null);
+    id: string;
+};
+
+export type TacacsGroupsPublic = {
+    data: Array<TacacsGroupPublic>;
+    count: number;
+};
+
+export type TacacsGroupUpdate = {
+    group_name: string;
+    description?: (string | null);
+};
+
+export type TacacsServiceCreate = {
+    name: string;
+    description?: (string | null);
+};
+
+export type TacacsServicePublic = {
+    name: string;
+    description?: (string | null);
+    id: string;
+};
+
+export type TacacsServicesPublic = {
+    data: Array<TacacsServicePublic>;
+    count: number;
+};
+
+export type TacacsServiceUpdate = {
+    name: string;
+    description?: (string | null);
+};
+
+export type TacacsUserCreate = {
+    username: string;
+    password_type: string;
+    member: string;
+    description?: (string | null);
+    password?: (string | null);
+};
+
+export type TacacsUserPublic = {
+    username: string;
+    password_type: string;
+    member: string;
+    description?: (string | null);
+    password?: (string | null);
+    id: string;
+};
+
+export type TacacsUsersPublic = {
+    data: Array<TacacsUserPublic>;
+    count: number;
+};
+
+export type TacacsUserUpdate = {
+    username: string;
+    password_type: string;
+    member: string;
+    description?: (string | null);
+    password?: (string | null);
 };
 
 export type Token = {
@@ -106,6 +361,38 @@ export type ValidationError = {
     msg: string;
     type: string;
 };
+
+export type HostsReadHostsData = {
+    limit?: number;
+    skip?: number;
+};
+
+export type HostsReadHostsResponse = (HostsPublic);
+
+export type HostsCreateHostData = {
+    requestBody: HostCreate;
+};
+
+export type HostsCreateHostResponse = (HostPublic);
+
+export type HostsReadHostByIdData = {
+    id: string;
+};
+
+export type HostsReadHostByIdResponse = (HostPublic);
+
+export type HostsUpdateHostData = {
+    id: string;
+    requestBody: HostUpdate;
+};
+
+export type HostsUpdateHostResponse = (HostPublic);
+
+export type HostsDeleteHostData = {
+    id: string;
+};
+
+export type HostsDeleteHostResponse = (Message);
 
 export type ItemsReadItemsData = {
     limit?: number;
@@ -170,6 +457,272 @@ export type PrivateCreateUserData = {
 };
 
 export type PrivateCreateUserResponse = (UserPublic);
+
+export type ProfilesReadProfilesData = {
+    limit?: number;
+    skip?: number;
+};
+
+export type ProfilesReadProfilesResponse = (ProfilesPublic);
+
+export type ProfilesCreateProfileData = {
+    requestBody: ProfileCreate;
+};
+
+export type ProfilesCreateProfileResponse = (ProfilePublic);
+
+export type ProfilesReadProfileByIdData = {
+    id: string;
+};
+
+export type ProfilesReadProfileByIdResponse = (ProfilePublic);
+
+export type ProfilesUpdateProfileData = {
+    id: string;
+    requestBody: ProfileUpdate;
+};
+
+export type ProfilesUpdateProfileResponse = (ProfilePublic);
+
+export type ProfilesDeleteProfileData = {
+    id: string;
+};
+
+export type ProfilesDeleteProfileResponse = (Message);
+
+export type ProfilescriptsReadProfilescriptsData = {
+    limit?: number;
+    skip?: number;
+};
+
+export type ProfilescriptsReadProfilescriptsResponse = (ProfileScriptsPublic);
+
+export type ProfilescriptsCreateProfilescriptData = {
+    requestBody: ProfileScriptCreate;
+};
+
+export type ProfilescriptsCreateProfilescriptResponse = (ProfileScriptPublic);
+
+export type ProfilescriptsReadProfilescriptByIdData = {
+    id: string;
+};
+
+export type ProfilescriptsReadProfilescriptByIdResponse = (ProfileScriptPublic);
+
+export type ProfilescriptsUpdateProfilescriptData = {
+    id: string;
+    requestBody: ProfileScriptUpdate;
+};
+
+export type ProfilescriptsUpdateProfilescriptResponse = (ProfileScriptPublic);
+
+export type ProfilescriptsDeleteProfilescriptData = {
+    id: string;
+};
+
+export type ProfilescriptsDeleteProfilescriptResponse = (Message);
+
+export type ProfilescriptsetsReadProfilescriptsetsData = {
+    limit?: number;
+    skip?: number;
+};
+
+export type ProfilescriptsetsReadProfilescriptsetsResponse = (ProfileScriptSetsPublic);
+
+export type ProfilescriptsetsCreateProfilescriptsetData = {
+    requestBody: ProfileScriptSetCreate;
+};
+
+export type ProfilescriptsetsCreateProfilescriptsetResponse = (ProfileScriptSetPublic);
+
+export type ProfilescriptsetsReadProfilescriptsetByIdData = {
+    id: string;
+};
+
+export type ProfilescriptsetsReadProfilescriptsetByIdResponse = (ProfileScriptSetPublic);
+
+export type ProfilescriptsetsUpdateProfilescriptsetData = {
+    id: string;
+    requestBody: ProfileScriptSetUpdate;
+};
+
+export type ProfilescriptsetsUpdateProfilescriptsetResponse = (ProfileScriptSetPublic);
+
+export type ProfilescriptsetsDeleteProfilescriptsetData = {
+    id: string;
+};
+
+export type ProfilescriptsetsDeleteProfilescriptsetResponse = (Message);
+
+export type RulesetsReadRulesetsData = {
+    limit?: number;
+    skip?: number;
+};
+
+export type RulesetsReadRulesetsResponse = (RulesetsPublic);
+
+export type RulesetsCreateRulesetData = {
+    requestBody: RulesetCreate;
+};
+
+export type RulesetsCreateRulesetResponse = (RulesetPublic);
+
+export type RulesetsReadRulesetByIdData = {
+    id: string;
+};
+
+export type RulesetsReadRulesetByIdResponse = (RulesetPublic);
+
+export type RulesetsUpdateRulesetData = {
+    id: string;
+    requestBody: RulesetUpdate;
+};
+
+export type RulesetsUpdateRulesetResponse = (RulesetPublic);
+
+export type RulesetsDeleteRulesetData = {
+    id: string;
+};
+
+export type RulesetsDeleteRulesetResponse = (Message);
+
+export type RulesetscriptsReadRulesetscriptsData = {
+    limit?: number;
+    skip?: number;
+};
+
+export type RulesetscriptsReadRulesetscriptsResponse = (RulesetScriptsPublic);
+
+export type RulesetscriptsCreateRulesetscriptData = {
+    requestBody: RulesetScriptCreate;
+};
+
+export type RulesetscriptsCreateRulesetscriptResponse = (RulesetScriptPublic);
+
+export type RulesetscriptsReadRulesetscriptByIdData = {
+    id: string;
+};
+
+export type RulesetscriptsReadRulesetscriptByIdResponse = (RulesetScriptPublic);
+
+export type RulesetscriptsUpdateRulesetscriptData = {
+    id: string;
+    requestBody: RulesetScriptUpdate;
+};
+
+export type RulesetscriptsUpdateRulesetscriptResponse = (RulesetScriptPublic);
+
+export type RulesetscriptsDeleteRulesetscriptData = {
+    id: string;
+};
+
+export type RulesetscriptsDeleteRulesetscriptResponse = (Message);
+
+export type TacacsGetConfigResponse = (unknown);
+
+export type TacacsSaveConfigResponse = (unknown);
+
+export type TacacsGetAuthLogsData = {
+    lines?: number;
+};
+
+export type TacacsGetAuthLogsResponse = (unknown);
+
+export type TacacsGroupsReadTacacsGroupsData = {
+    limit?: number;
+    skip?: number;
+};
+
+export type TacacsGroupsReadTacacsGroupsResponse = (TacacsGroupsPublic);
+
+export type TacacsGroupsCreateTacacsGroupData = {
+    requestBody: TacacsGroupCreate;
+};
+
+export type TacacsGroupsCreateTacacsGroupResponse = (TacacsGroupPublic);
+
+export type TacacsGroupsReadTacacsGroupByIdData = {
+    id: string;
+};
+
+export type TacacsGroupsReadTacacsGroupByIdResponse = (TacacsGroupPublic);
+
+export type TacacsGroupsUpdateTacacsGroupData = {
+    id: string;
+    requestBody: TacacsGroupUpdate;
+};
+
+export type TacacsGroupsUpdateTacacsGroupResponse = (TacacsGroupPublic);
+
+export type TacacsGroupsDeleteTacacsGroupData = {
+    id: string;
+};
+
+export type TacacsGroupsDeleteTacacsGroupResponse = (Message);
+
+export type TacacsServicesReadTacacsServicesData = {
+    limit?: number;
+    skip?: number;
+};
+
+export type TacacsServicesReadTacacsServicesResponse = (TacacsServicesPublic);
+
+export type TacacsServicesCreateTacacsServiceData = {
+    requestBody: TacacsServiceCreate;
+};
+
+export type TacacsServicesCreateTacacsServiceResponse = (TacacsServicePublic);
+
+export type TacacsServicesReadTacacsServiceByIdData = {
+    id: string;
+};
+
+export type TacacsServicesReadTacacsServiceByIdResponse = (TacacsServicePublic);
+
+export type TacacsServicesUpdateTacacsServiceData = {
+    id: string;
+    requestBody: TacacsServiceUpdate;
+};
+
+export type TacacsServicesUpdateTacacsServiceResponse = (TacacsServicePublic);
+
+export type TacacsServicesDeleteTacacsServiceData = {
+    id: string;
+};
+
+export type TacacsServicesDeleteTacacsServiceResponse = (Message);
+
+export type TacacsUsersReadTacacsUsersData = {
+    limit?: number;
+    skip?: number;
+};
+
+export type TacacsUsersReadTacacsUsersResponse = (TacacsUsersPublic);
+
+export type TacacsUsersCreateTacacsUserData = {
+    requestBody: TacacsUserCreate;
+};
+
+export type TacacsUsersCreateTacacsUserResponse = (TacacsUserPublic);
+
+export type TacacsUsersReadTacacsUserByIdData = {
+    id: string;
+};
+
+export type TacacsUsersReadTacacsUserByIdResponse = (TacacsUserPublic);
+
+export type TacacsUsersUpdateTacacsUserData = {
+    id: string;
+    requestBody: TacacsUserUpdate;
+};
+
+export type TacacsUsersUpdateTacacsUserResponse = (TacacsUserPublic);
+
+export type TacacsUsersDeleteTacacsUserData = {
+    id: string;
+};
+
+export type TacacsUsersDeleteTacacsUserResponse = (Message);
 
 export type UsersReadUsersData = {
     limit?: number;
