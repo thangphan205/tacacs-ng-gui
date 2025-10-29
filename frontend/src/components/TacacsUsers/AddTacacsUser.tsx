@@ -3,8 +3,10 @@ import {
   DialogActionTrigger,
   DialogTitle,
   Input,
+  Select,
   Text,
   VStack,
+  createListCollection,
 } from "@chakra-ui/react"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
@@ -28,12 +30,14 @@ import { Field } from "../ui/field"
 
 const AddTacacsUser = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [isSelectMavis, setIsSelectMavis] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast } = useCustomToast()
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors, isValid, isSubmitting },
   } = useForm<TacacsUserCreate>({
     mode: "onBlur",
@@ -54,7 +58,25 @@ const AddTacacsUser = () => {
   const { data: data_groups } = useQuery({
     ...getTacacsGroupsQueryOptions(),
   })
-  console.log(data_groups);
+
+  let items_tacacs_groups = createListCollection<{ value: string; label: string }>({ items: [] });
+  if (data_groups && data_groups.data.length > 0) {
+    data_groups.data.forEach((group) => {
+      items_tacacs_groups.items.push({
+        value: group.group_name,
+        label: group.group_name,
+      });
+    });
+  }
+  const items_password_type = createListCollection<{ value: string; label: string }>({
+    items: [
+      { value: 'clear', label: 'clear' },
+      { value: 'crypt', label: 'crypt' },
+      { value: 'pbkdf2', label: 'pbkdf2' },
+      { value: 'mavis', label: 'mavis' },
+    ],
+  });
+
   const mutation = useMutation({
     mutationFn: (data: TacacsUserCreate) =>
       TacacsUsersService.createTacacsUser({ requestBody: data }),
@@ -74,6 +96,7 @@ const AddTacacsUser = () => {
   const onSubmit: SubmitHandler<TacacsUserCreate> = (data) => {
     mutation.mutate(data)
   }
+
 
   return (
     <DialogRoot
@@ -116,19 +139,40 @@ const AddTacacsUser = () => {
                 errorText={errors.password_type?.message}
                 label="password_type"
               >
-                <Input
-                  {...register("password_type", {
-                    required: "password_type is required.",
-                  })}
-                  placeholder="password_type"
-                  type="text"
-                />
+                <Select.Root
+                  collection={items_password_type}
+                  onSelect={(selection) => {
+                    setValue("password_type", selection.value);
+                    if (selection.value === "mavis") {
+                      // setValue("password", "");
+                      setIsSelectMavis(true);
+                    }
+                  }}
+                  size="sm"
+                >
+                  <Select.Trigger>
+                    <Select.ValueText placeholder="Select password type" />
+                  </Select.Trigger>
+                  <Select.Positioner>
+                    <Select.Content>
+                      <Select.ItemGroup>
+                        {["clear", "mavis", "crypt", "pbkdf2"].map((type) => (
+                          <Select.Item key={type} item={type}>
+                            {type}
+                            <Select.ItemIndicator />
+                          </Select.Item>
+                        ))}
+                      </Select.ItemGroup>
+                    </Select.Content>
+                  </Select.Positioner>
+                </Select.Root>
               </Field>
               <Field
                 required
                 invalid={!!errors.password}
                 errorText={errors.password?.message}
                 label="password"
+                disabled={isSelectMavis}
               >
                 <Input
                   {...register("password", {
@@ -144,13 +188,31 @@ const AddTacacsUser = () => {
                 errorText={errors.member?.message}
                 label="member"
               >
-                <Input
-                  {...register("member", {
-                    required: "member is required.",
-                  })}
-                  placeholder="member"
-                  type="text"
-                />
+                <Select.Root
+                  collection={items_tacacs_groups}
+                  size="sm"
+                  multiple
+                  onValueChange={(selection) => {
+                    setValue("member", selection.value.join(","));
+                  }}
+
+                >
+                  <Select.Trigger>
+                    <Select.ValueText placeholder="Select Tacacs Groups" />
+                  </Select.Trigger>
+                  <Select.Positioner>
+                    <Select.Content>
+                      <Select.ItemGroup>
+                        {items_tacacs_groups.items.map((item) => (
+                          <Select.Item key={item.value} item={item.value}>
+                            {item.label}
+                            <Select.ItemIndicator />
+                          </Select.Item>
+                        ))}
+                      </Select.ItemGroup>
+                    </Select.Content>
+                  </Select.Positioner>
+                </Select.Root>
               </Field>
               <Field
                 invalid={!!errors.description}
@@ -188,7 +250,7 @@ const AddTacacsUser = () => {
         </form>
         <DialogCloseTrigger />
       </DialogContent>
-    </DialogRoot>
+    </DialogRoot >
   )
 }
 

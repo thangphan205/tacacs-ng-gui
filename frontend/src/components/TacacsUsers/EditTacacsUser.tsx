@@ -1,17 +1,19 @@
 import {
   Button,
   ButtonGroup,
+  createListCollection,
   DialogActionTrigger,
   Input,
+  Select,
   Text,
   VStack,
 } from "@chakra-ui/react"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
 import { type SubmitHandler, useForm } from "react-hook-form"
 import { FaExchangeAlt } from "react-icons/fa"
 
-import { type ApiError, type TacacsUserPublic, TacacsUsersService } from "@/client"
+import { type ApiError, TacacsGroupsService, type TacacsUserPublic, TacacsUsersService } from "@/client"
 import useCustomToast from "@/hooks/useCustomToast"
 import { handleError } from "@/utils"
 import {
@@ -40,12 +42,14 @@ interface TacacsUserUpdateForm {
 
 const EditTacacsUser = ({ tacacs_user }: EditTacacsUserProps) => {
   const [isOpen, setIsOpen] = useState(false)
+  const [isSelectMavis, setIsSelectMavis] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast } = useCustomToast()
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<TacacsUserUpdateForm>({
     mode: "onBlur",
@@ -58,7 +62,33 @@ const EditTacacsUser = ({ tacacs_user }: EditTacacsUserProps) => {
       member: tacacs_user.member ?? undefined,
     },
   })
-
+  function getTacacsGroupsQueryOptions() {
+    return {
+      queryFn: () =>
+        TacacsGroupsService.readTacacsGroups(),
+      queryKey: ["tacacs_groups",],
+    }
+  }
+  const { data: data_groups } = useQuery({
+    ...getTacacsGroupsQueryOptions(),
+  })
+  let items_tacacs_groups = createListCollection<{ value: string; label: string }>({ items: [] });
+  if (data_groups && data_groups.data.length > 0) {
+    data_groups.data.forEach((group) => {
+      items_tacacs_groups.items.push({
+        value: group.group_name,
+        label: group.group_name,
+      });
+    });
+  }
+  const items_password_type = createListCollection<{ value: string; label: string }>({
+    items: [
+      { value: 'clear', label: 'clear' },
+      { value: 'crypt', label: 'crypt' },
+      { value: 'pbkdf2', label: 'pbkdf2' },
+      { value: 'mavis', label: 'mavis' },
+    ],
+  });
   const mutation = useMutation({
     mutationFn: (data: TacacsUserUpdateForm) =>
       TacacsUsersService.updateTacacsUser({ id: tacacs_user.id, requestBody: data }),
@@ -121,13 +151,34 @@ const EditTacacsUser = ({ tacacs_user }: EditTacacsUserProps) => {
                 errorText={errors.password_type?.message}
                 label="password_type"
               >
-                <Input
-                  {...register("password_type", {
-                    required: "password_type is required.",
-                  })}
-                  placeholder="password_type"
-                  type="text"
-                />
+                <Select.Root
+                  defaultValue={[items_password_type.items.find(item => item.value === tacacs_user.password_type)?.value].filter(Boolean) as string[]}
+                  collection={items_password_type}
+                  onSelect={(selection) => {
+                    setValue("password_type", selection.value);
+                    if (selection.value === "mavis") {
+                      setIsSelectMavis(true);
+                    }
+                  }}
+
+                  size="sm"
+                >
+                  <Select.Trigger>
+                    <Select.ValueText placeholder="Select password type" />
+                  </Select.Trigger>
+                  <Select.Positioner>
+                    <Select.Content>
+                      <Select.ItemGroup>
+                        {["clear", "mavis", "crypt", "pbkdf2"].map((type) => (
+                          <Select.Item key={type} item={type}>
+                            {type}
+                            <Select.ItemIndicator />
+                          </Select.Item>
+                        ))}
+                      </Select.ItemGroup>
+                    </Select.Content>
+                  </Select.Positioner>
+                </Select.Root>
               </Field>
               <Field
                 required
@@ -141,6 +192,7 @@ const EditTacacsUser = ({ tacacs_user }: EditTacacsUserProps) => {
                   })}
                   placeholder="password"
                   type="password"
+                  disabled={isSelectMavis}
                 />
               </Field>
               <Field
@@ -149,13 +201,37 @@ const EditTacacsUser = ({ tacacs_user }: EditTacacsUserProps) => {
                 errorText={errors.member?.message}
                 label="member"
               >
-                <Input
-                  {...register("member", {
-                    required: "member is required.",
-                  })}
-                  placeholder="member"
-                  type="text"
-                />
+                <Select.Root
+                  collection={items_tacacs_groups}
+                  defaultValue={tacacs_user.member ? tacacs_user.member.split(",") : []}
+                  size="sm"
+                  multiple
+                  onValueChange={(selection) => {
+                    setValue("member", selection.value.join(","));
+                  }}
+                >
+                  <Select.Control>
+                    <Select.Trigger>
+                      <Select.ValueText placeholder="Select Tacacs Groups" />
+                    </Select.Trigger>
+                    <Select.IndicatorGroup>
+                      <Select.ClearTrigger onChange={() => { setValue("member", ""); }} />
+                      <Select.Indicator />
+                    </Select.IndicatorGroup>
+                  </Select.Control>
+                  <Select.Positioner>
+                    <Select.Content>
+                      <Select.ItemGroup>
+                        {items_tacacs_groups.items.map((item) => (
+                          <Select.Item key={item.value} item={item.value}>
+                            {item.label}
+                            <Select.ItemIndicator />
+                          </Select.Item>
+                        ))}
+                      </Select.ItemGroup>
+                    </Select.Content>
+                  </Select.Positioner>
+                </Select.Root>
               </Field>
               <Field
                 invalid={!!errors.description}
@@ -190,8 +266,10 @@ const EditTacacsUser = ({ tacacs_user }: EditTacacsUserProps) => {
         </form>
         <DialogCloseTrigger />
       </DialogContent>
-    </DialogRoot>
+    </DialogRoot >
   )
 }
 
 export default EditTacacsUser
+
+

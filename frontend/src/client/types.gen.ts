@@ -83,18 +83,12 @@ export type PrivateUserCreate = {
 
 export type ProfileCreate = {
     name: string;
-    condition: string;
-    key: string;
-    value: string;
     action: string;
     description?: (string | null);
 };
 
 export type ProfilePublic = {
     name: string;
-    condition: string;
-    key: string;
-    value: string;
     action: string;
     description?: (string | null);
     id: string;
@@ -106,7 +100,7 @@ export type ProfileScriptCreate = {
     value: string;
     action: string;
     description?: (string | null);
-    profile_id: string;
+    profile_id?: (string | null);
 };
 
 export type ProfileScriptPublic = {
@@ -167,23 +161,20 @@ export type ProfilesPublic = {
 
 export type ProfileUpdate = {
     name: string;
-    condition: string;
-    key: string;
-    value: string;
     action: string;
     description?: (string | null);
 };
 
 export type RulesetCreate = {
     name: string;
-    enabled?: boolean;
+    enabled?: string;
     action: string;
     description?: (string | null);
 };
 
 export type RulesetPublic = {
     name: string;
-    enabled?: boolean;
+    enabled?: string;
     action: string;
     description?: (string | null);
     id: string;
@@ -191,8 +182,8 @@ export type RulesetPublic = {
 
 export type RulesetScriptCreate = {
     condition: string;
-    group_name: string;
-    profile_name: string;
+    key: string;
+    value: string;
     action: string;
     description?: (string | null);
     ruleset_id: string;
@@ -200,12 +191,39 @@ export type RulesetScriptCreate = {
 
 export type RulesetScriptPublic = {
     condition: string;
-    group_name: string;
-    profile_name: string;
+    key: string;
+    value: string;
     action: string;
     description?: (string | null);
     ruleset_id: string;
     id: string;
+};
+
+export type RulesetScriptSetCreate = {
+    key: string;
+    value: string;
+    description?: (string | null);
+    rulesetscript_id: string;
+};
+
+export type RulesetScriptSetPublic = {
+    key: string;
+    value: string;
+    description?: (string | null);
+    rulesetscript_id: string;
+    id: string;
+};
+
+export type RulesetScriptSetsPublic = {
+    data: Array<RulesetScriptSetPublic>;
+    count: number;
+};
+
+export type RulesetScriptSetUpdate = {
+    key: string;
+    value: string;
+    description?: (string | null);
+    rulesetscript_id: string;
 };
 
 export type RulesetScriptsPublic = {
@@ -215,8 +233,8 @@ export type RulesetScriptsPublic = {
 
 export type RulesetScriptUpdate = {
     condition: string;
-    group_name: string;
-    profile_name: string;
+    key: string;
+    value: string;
     action: string;
     description?: (string | null);
     ruleset_id: string;
@@ -229,7 +247,7 @@ export type RulesetsPublic = {
 
 export type RulesetUpdate = {
     name: string;
-    enabled?: boolean;
+    enabled?: string;
     action: string;
     description?: (string | null);
 };
@@ -617,6 +635,38 @@ export type RulesetscriptsDeleteRulesetscriptData = {
 };
 
 export type RulesetscriptsDeleteRulesetscriptResponse = (Message);
+
+export type RulesetscriptsetsReadRulesetscriptsetsData = {
+    limit?: number;
+    skip?: number;
+};
+
+export type RulesetscriptsetsReadRulesetscriptsetsResponse = (RulesetScriptSetsPublic);
+
+export type RulesetscriptsetsCreateProfilescriptsetData = {
+    requestBody: RulesetScriptSetCreate;
+};
+
+export type RulesetscriptsetsCreateProfilescriptsetResponse = (RulesetScriptSetPublic);
+
+export type RulesetscriptsetsReadProfilescriptsetByIdData = {
+    id: string;
+};
+
+export type RulesetscriptsetsReadProfilescriptsetByIdResponse = (RulesetScriptSetPublic);
+
+export type RulesetscriptsetsUpdateProfilescriptsetData = {
+    id: string;
+    requestBody: RulesetScriptSetUpdate;
+};
+
+export type RulesetscriptsetsUpdateProfilescriptsetResponse = (RulesetScriptSetPublic);
+
+export type RulesetscriptsetsDeleteProfilescriptsetData = {
+    id: string;
+};
+
+export type RulesetscriptsetsDeleteProfilescriptsetResponse = (Message);
 
 export type TacacsGetConfigResponse = (unknown);
 

@@ -89,9 +89,6 @@ function ProfilesTable() {
           <Table.Row>
             <Table.ColumnHeader w="sm">ID</Table.ColumnHeader>
             <Table.ColumnHeader w="sm">Name</Table.ColumnHeader>
-            <Table.ColumnHeader w="sm">Condition</Table.ColumnHeader>
-            <Table.ColumnHeader w="sm">Key</Table.ColumnHeader>
-            <Table.ColumnHeader w="sm">Value</Table.ColumnHeader>
             <Table.ColumnHeader w="sm">Action</Table.ColumnHeader>
             <Table.ColumnHeader w="sm">Description</Table.ColumnHeader>
             <Table.ColumnHeader w="sm">Actions</Table.ColumnHeader>
@@ -105,15 +102,6 @@ function ProfilesTable() {
               </Table.Cell>
               <Table.Cell truncate maxW="sm">
                 {profile.name}
-              </Table.Cell>
-              <Table.Cell truncate maxW="sm">
-                {profile.condition}
-              </Table.Cell>
-              <Table.Cell truncate maxW="sm">
-                {profile.key}
-              </Table.Cell>
-              <Table.Cell truncate maxW="sm">
-                {profile.value}
               </Table.Cell>
               <Table.Cell truncate maxW="sm">
                 {profile.action}

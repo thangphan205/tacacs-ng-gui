@@ -421,21 +421,6 @@ export const ProfileCreateSchema = {
             maxLength: 255,
             title: 'Name'
         },
-        condition: {
-            type: 'string',
-            maxLength: 255,
-            title: 'Condition'
-        },
-        key: {
-            type: 'string',
-            maxLength: 255,
-            title: 'Key'
-        },
-        value: {
-            type: 'string',
-            maxLength: 255,
-            title: 'Value'
-        },
         action: {
             type: 'string',
             maxLength: 255,
@@ -454,7 +439,7 @@ export const ProfileCreateSchema = {
         }
     },
     type: 'object',
-    required: ['name', 'condition', 'key', 'value', 'action'],
+    required: ['name', 'action'],
     title: 'ProfileCreate'
 } as const;
 
@@ -464,21 +449,6 @@ export const ProfilePublicSchema = {
             type: 'string',
             maxLength: 255,
             title: 'Name'
-        },
-        condition: {
-            type: 'string',
-            maxLength: 255,
-            title: 'Condition'
-        },
-        key: {
-            type: 'string',
-            maxLength: 255,
-            title: 'Key'
-        },
-        value: {
-            type: 'string',
-            maxLength: 255,
-            title: 'Value'
         },
         action: {
             type: 'string',
@@ -503,7 +473,7 @@ export const ProfilePublicSchema = {
         }
     },
     type: 'object',
-    required: ['name', 'condition', 'key', 'value', 'action', 'id'],
+    required: ['name', 'action', 'id'],
     title: 'ProfilePublic'
 } as const;
 
@@ -541,13 +511,20 @@ export const ProfileScriptCreateSchema = {
             title: 'Description'
         },
         profile_id: {
-            type: 'string',
-            format: 'uuid',
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'uuid'
+                },
+                {
+                    type: 'null'
+                }
+            ],
             title: 'Profile Id'
         }
     },
     type: 'object',
-    required: ['condition', 'key', 'value', 'action', 'profile_id'],
+    required: ['condition', 'key', 'value', 'action'],
     title: 'ProfileScriptCreate'
 } as const;
 
@@ -807,21 +784,6 @@ export const ProfileUpdateSchema = {
             maxLength: 255,
             title: 'Name'
         },
-        condition: {
-            type: 'string',
-            maxLength: 255,
-            title: 'Condition'
-        },
-        key: {
-            type: 'string',
-            maxLength: 255,
-            title: 'Key'
-        },
-        value: {
-            type: 'string',
-            maxLength: 255,
-            title: 'Value'
-        },
         action: {
             type: 'string',
             maxLength: 255,
@@ -840,7 +802,7 @@ export const ProfileUpdateSchema = {
         }
     },
     type: 'object',
-    required: ['name', 'condition', 'key', 'value', 'action'],
+    required: ['name', 'action'],
     title: 'ProfileUpdate'
 } as const;
 
@@ -871,9 +833,9 @@ export const RulesetCreateSchema = {
             title: 'Name'
         },
         enabled: {
-            type: 'boolean',
+            type: 'string',
             title: 'Enabled',
-            default: true
+            default: 'yes'
         },
         action: {
             type: 'string',
@@ -905,9 +867,9 @@ export const RulesetPublicSchema = {
             title: 'Name'
         },
         enabled: {
-            type: 'boolean',
+            type: 'string',
             title: 'Enabled',
-            default: true
+            default: 'yes'
         },
         action: {
             type: 'string',
@@ -943,15 +905,15 @@ export const RulesetScriptCreateSchema = {
             maxLength: 255,
             title: 'Condition'
         },
-        group_name: {
+        key: {
             type: 'string',
             maxLength: 255,
-            title: 'Group Name'
+            title: 'Key'
         },
-        profile_name: {
+        value: {
             type: 'string',
             maxLength: 255,
-            title: 'Profile Name'
+            title: 'Value'
         },
         action: {
             type: 'string',
@@ -976,7 +938,7 @@ export const RulesetScriptCreateSchema = {
         }
     },
     type: 'object',
-    required: ['condition', 'group_name', 'profile_name', 'action', 'ruleset_id'],
+    required: ['condition', 'key', 'value', 'action', 'ruleset_id'],
     title: 'RulesetScriptCreate'
 } as const;
 
@@ -987,15 +949,15 @@ export const RulesetScriptPublicSchema = {
             maxLength: 255,
             title: 'Condition'
         },
-        group_name: {
+        key: {
             type: 'string',
             maxLength: 255,
-            title: 'Group Name'
+            title: 'Key'
         },
-        profile_name: {
+        value: {
             type: 'string',
             maxLength: 255,
-            title: 'Profile Name'
+            title: 'Value'
         },
         action: {
             type: 'string',
@@ -1025,8 +987,134 @@ export const RulesetScriptPublicSchema = {
         }
     },
     type: 'object',
-    required: ['condition', 'group_name', 'profile_name', 'action', 'ruleset_id', 'id'],
+    required: ['condition', 'key', 'value', 'action', 'ruleset_id', 'id'],
     title: 'RulesetScriptPublic'
+} as const;
+
+export const RulesetScriptSetCreateSchema = {
+    properties: {
+        key: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Key'
+        },
+        value: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Value'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        },
+        rulesetscript_id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Rulesetscript Id'
+        }
+    },
+    type: 'object',
+    required: ['key', 'value', 'rulesetscript_id'],
+    title: 'RulesetScriptSetCreate'
+} as const;
+
+export const RulesetScriptSetPublicSchema = {
+    properties: {
+        key: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Key'
+        },
+        value: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Value'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        },
+        rulesetscript_id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Rulesetscript Id'
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        }
+    },
+    type: 'object',
+    required: ['key', 'value', 'rulesetscript_id', 'id'],
+    title: 'RulesetScriptSetPublic'
+} as const;
+
+export const RulesetScriptSetUpdateSchema = {
+    properties: {
+        key: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Key'
+        },
+        value: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Value'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        },
+        rulesetscript_id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Rulesetscript Id'
+        }
+    },
+    type: 'object',
+    required: ['key', 'value', 'rulesetscript_id'],
+    title: 'RulesetScriptSetUpdate'
+} as const;
+
+export const RulesetScriptSetsPublicSchema = {
+    properties: {
+        data: {
+            items: {
+                '$ref': '#/components/schemas/RulesetScriptSetPublic'
+            },
+            type: 'array',
+            title: 'Data'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['data', 'count'],
+    title: 'RulesetScriptSetsPublic'
 } as const;
 
 export const RulesetScriptUpdateSchema = {
@@ -1036,15 +1124,15 @@ export const RulesetScriptUpdateSchema = {
             maxLength: 255,
             title: 'Condition'
         },
-        group_name: {
+        key: {
             type: 'string',
             maxLength: 255,
-            title: 'Group Name'
+            title: 'Key'
         },
-        profile_name: {
+        value: {
             type: 'string',
             maxLength: 255,
-            title: 'Profile Name'
+            title: 'Value'
         },
         action: {
             type: 'string',
@@ -1069,7 +1157,7 @@ export const RulesetScriptUpdateSchema = {
         }
     },
     type: 'object',
-    required: ['condition', 'group_name', 'profile_name', 'action', 'ruleset_id'],
+    required: ['condition', 'key', 'value', 'action', 'ruleset_id'],
     title: 'RulesetScriptUpdate'
 } as const;
 
@@ -1100,9 +1188,9 @@ export const RulesetUpdateSchema = {
             title: 'Name'
         },
         enabled: {
-            type: 'boolean',
+            type: 'string',
             title: 'Enabled',
-            default: true
+            default: 'yes'
         },
         action: {
             type: 'string',

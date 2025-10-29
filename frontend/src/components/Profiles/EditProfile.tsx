@@ -32,9 +32,6 @@ interface EditProfileProps {
 
 interface ProfileUpdateForm {
   name: string
-  condition: string
-  key: string
-  value: string
   action: string
   description?: string
 }
@@ -53,6 +50,8 @@ const EditProfile = ({ profile }: EditProfileProps) => {
     criteriaMode: "all",
     defaultValues: {
       ...profile,
+      name: profile.name ?? undefined,
+      action: profile.action ?? undefined,
       description: profile.description ?? undefined,
     },
   })
@@ -114,29 +113,15 @@ const EditProfile = ({ profile }: EditProfileProps) => {
               </Field>
               <Field
                 required
-                invalid={!!errors.key}
-                errorText={errors.key?.message}
-                label="key"
+                invalid={!!errors.action}
+                errorText={errors.action?.message}
+                label="action"
               >
                 <Input
-                  {...register("key", {
-                    required: "key is required",
+                  {...register("action", {
+                    required: "action is required",
                   })}
-                  placeholder="key"
-                  type="text"
-                />
-              </Field>
-              <Field
-                required
-                invalid={!!errors.value}
-                errorText={errors.value?.message}
-                label="value"
-              >
-                <Input
-                  {...register("value", {
-                    required: "value is required",
-                  })}
-                  placeholder="value"
+                  placeholder="action"
                   type="text"
                 />
               </Field>

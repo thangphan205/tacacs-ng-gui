@@ -40,6 +40,7 @@ const AddProfile = () => {
     criteriaMode: "all",
     defaultValues: {
       name: "",
+      action: "",
       description: "",
     },
   })
@@ -99,7 +100,20 @@ const AddProfile = () => {
                   type="text"
                 />
               </Field>
-
+              <Field
+                required
+                invalid={!!errors.action}
+                errorText={errors.action?.message}
+                label="action"
+              >
+                <Input
+                  {...register("action", {
+                    required: "action is required.",
+                  })}
+                  placeholder="action"
+                  type="text"
+                />
+              </Field>
               <Field
                 invalid={!!errors.description}
                 errorText={errors.description?.message}
