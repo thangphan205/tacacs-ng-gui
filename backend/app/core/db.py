@@ -2,7 +2,34 @@ from sqlmodel import Session, create_engine, select
 
 from app.crud import users
 from app.core.config import settings
-from app.models import User, UserCreate, TacacsNG, TacacsNGCreate, Mavis, MavisCreate
+from app.models import (
+    User,
+    UserCreate,
+    TacacsNG,
+    TacacsNGCreate,
+    Mavis,
+    MavisCreate,
+    Host,
+    HostCreate,
+    TacacsGroup,
+    TacacsGroupCreate,
+    TacacsUser,
+    TacacsUserCreate,
+    TacacsService,
+    TacacsServiceCreate,
+    Profile,
+    ProfileCreate,
+    ProfileScript,
+    ProfileScriptCreate,
+    ProfileScriptSet,
+    ProfileScriptSetCreate,
+    Ruleset,
+    RulesetCreate,
+    RulesetScript,
+    RulesetScriptCreate,
+    RulesetScriptSet,
+    RulesetScriptSetCreate,
+)
 
 engine = create_engine(str(settings.SQLALCHEMY_DATABASE_URI))
 
@@ -72,3 +99,232 @@ def init_db(session: Session) -> None:
         session.add(mavis_settings)
         session.commit()
         session.refresh(mavis_settings)
+
+    host = session.exec(select(Host)).first()
+    if not host:
+        host_in = HostCreate(
+            name="DEMO_HOSTS",
+            ipv4_address="192.168.0.0/16",
+            secret_key="change_this",
+            description="delete this after test",
+        )
+        host_settings = Host.model_validate(host_in)
+        session.add(host_settings)
+        session.commit()
+        session.refresh(host_settings)
+
+    tacacs_group = session.exec(select(TacacsGroup)).first()
+    if not tacacs_group:
+        tacacs_group_super_user_in = TacacsGroupCreate(
+            group_name="tacacs_super_user",
+            description="demo super user group",
+        )
+        tacacs_group_super_user_settings = TacacsGroup.model_validate(
+            tacacs_group_super_user_in
+        )
+        session.add(tacacs_group_super_user_settings)
+        session.commit()
+        session.refresh(tacacs_group_super_user_settings)
+        tacacs_group_read_only_in = TacacsGroupCreate(
+            group_name="tacacs_read_only",
+            description="demo read only group",
+        )
+        tacacs_group_read_only_settings = TacacsGroup.model_validate(
+            tacacs_group_read_only_in
+        )
+        session.add(tacacs_group_read_only_settings)
+        session.commit()
+        session.refresh(tacacs_group_read_only_settings)
+
+    tacacs_user = session.exec(select(TacacsUser)).first()
+    if not tacacs_user:
+        tacacs_user_in = TacacsUserCreate(
+            username="user_admin",
+            password_type="clear",
+            password="change_this",
+            member="tacacs_super_user",
+            description="demo admin user",
+        )
+        tacacs_user_settings = TacacsUser.model_validate(tacacs_user_in)
+        session.add(tacacs_user_settings)
+        session.commit()
+        session.refresh(tacacs_user_settings)
+        tacacs_user_in = TacacsUserCreate(
+            username="user_read_only",
+            password_type="clear",
+            password="change_this",
+            member="tacacs_read_only",
+            description="demo read only user",
+        )
+        tacacs_user_settings = TacacsUser.model_validate(tacacs_user_in)
+        session.add(tacacs_user_settings)
+        session.commit()
+        session.refresh(tacacs_user_settings)
+
+    tacacs_service = session.exec(select(TacacsService)).first()
+    if not tacacs_service:
+        tacacs_service_in = TacacsServiceCreate(
+            name="junos-exec",
+            description="Juniper service",
+        )
+        tacacs_service_settings = TacacsService.model_validate(tacacs_service_in)
+        session.add(tacacs_service_settings)
+        session.commit()
+        session.refresh(tacacs_service_settings)
+
+    # Begin Profile
+    profile = session.exec(select(Profile)).first()
+    if not profile:
+        profile_super_user_in = ProfileCreate(
+            name="tacacs_super_user_profile", action="deny"
+        )
+        profile_super_user_settings = Profile.model_validate(profile_super_user_in)
+        session.add(profile_super_user_settings)
+        session.commit()
+        session.refresh(profile_super_user_settings)
+
+        profile_read_only_in = ProfileCreate(
+            name="tacacs_read_only_profile", action="deny"
+        )
+        profile_read_only_settings = Profile.model_validate(profile_read_only_in)
+        session.add(profile_read_only_settings)
+        session.commit()
+        session.refresh(profile_read_only_settings)
+    # Begin Profile script
+    profile_script = session.exec(select(ProfileScript)).first()
+    if not profile_script:
+        profile_script_super_user_in = ProfileScriptCreate(
+            condition="if",
+            key="service",
+            value="junos-exec",
+            action="permit",
+            description="Allow junos-exec service for super user profile",
+            profile_id=profile_super_user_settings.id,
+        )
+        profile_script__super_user_settings = ProfileScript.model_validate(
+            profile_script_super_user_in
+        )
+        session.add(profile_script__super_user_settings)
+        session.commit()
+        session.refresh(profile_script__super_user_settings)
+
+        profile_script_read_only_in = ProfileScriptCreate(
+            condition="if",
+            key="service",
+            value="junos-exec",
+            action="permit",
+            description="Allow junos-exec service for read only profile",
+            profile_id=profile_read_only_settings.id,
+        )
+        profile_script_read_only_settings = ProfileScript.model_validate(
+            profile_script_read_only_in
+        )
+        session.add(profile_script_read_only_settings)
+        session.commit()
+        session.refresh(profile_script_read_only_settings)
+    # Begin profile script set
+    profile_script_set = session.exec(select(ProfileScriptSet)).first()
+    if not profile_script_set:
+        profile_script_set_super_user_in = ProfileScriptSetCreate(
+            key="local-user-name",
+            value="tacacs_super_user",
+            description="set local user name for super user",
+            profilescript_id=profile_script__super_user_settings.id,
+        )
+
+        profile_script_set_super_user_settings = ProfileScriptSet.model_validate(
+            profile_script_set_super_user_in
+        )
+        session.add(profile_script_set_super_user_settings)
+        session.commit()
+        session.refresh(profile_script_set_super_user_settings)
+
+        profile_script_set_read_only_in = ProfileScriptSetCreate(
+            key="local-user-name",
+            value="tacacs_read_only",
+            description="set local user name for super user",
+            profilescript_id=profile_script_read_only_settings.id,
+        )
+
+        profile_script_set_read_only_settings = ProfileScriptSet.model_validate(
+            profile_script_set_read_only_in
+        )
+        session.add(profile_script_set_read_only_settings)
+        session.commit()
+        session.refresh(profile_script_set_read_only_settings)
+
+    # Begin Ruleset
+    ruleset = session.exec(select(Ruleset)).first()
+    if not ruleset:
+        ruleset_in = RulesetCreate(
+            name="Juniper_rule",
+            enabled="yes",
+            action="deny",
+            description="demo Ruleset",
+        )
+        ruleset_settings = Ruleset.model_validate(ruleset_in)
+        session.add(ruleset_settings)
+        session.commit()
+        session.refresh(ruleset_settings)
+    # Begin Ruleset Script Juniper
+    rulesetscript = session.exec(select(RulesetScript)).first()
+    if not rulesetscript:
+        rulesetscript_super_user_in = RulesetScriptCreate(
+            condition="if",
+            key="group",
+            value="tacacs_super_user",
+            description="demo Ruleset",
+            action="permit",
+            ruleset_id=ruleset_settings.id,
+        )
+        rulesetscript_super_user_settings = RulesetScript.model_validate(
+            rulesetscript_super_user_in
+        )
+        session.add(rulesetscript_super_user_settings)
+        session.commit()
+        session.refresh(rulesetscript_super_user_settings)
+
+        rulesetscript_read_only_in = RulesetScriptCreate(
+            condition="if",
+            key="group",
+            value="tacacs_read_only",
+            description="demo Ruleset",
+            action="permit",
+            ruleset_id=ruleset_settings.id,
+        )
+        rulesetscript_read_only_settings = RulesetScript.model_validate(
+            rulesetscript_read_only_in
+        )
+        session.add(rulesetscript_read_only_settings)
+        session.commit()
+        session.refresh(rulesetscript_read_only_settings)
+
+    rulesetscriptset = session.exec(select(RulesetScriptSet)).first()
+    if not rulesetscriptset:
+        rulesetscriptset_super_user_in = RulesetScriptSetCreate(
+            key="profile",
+            value="tacacs_super_user_profile",
+            description="demo Ruleset",
+            action="permit",
+            rulesetscript_id=rulesetscript_super_user_settings.id,
+        )
+        rulesetscriptset_super_user_settings = RulesetScriptSet.model_validate(
+            rulesetscriptset_super_user_in
+        )
+        session.add(rulesetscriptset_super_user_settings)
+        session.commit()
+        session.refresh(rulesetscriptset_super_user_settings)
+
+        rulesetscriptset_read_only_in = RulesetScriptSetCreate(
+            key="profile",
+            value="tacacs_read_only_profile",
+            description="demo Ruleset",
+            action="permit",
+            rulesetscript_id=rulesetscript_read_only_settings.id,
+        )
+        rulesetscriptset_read_only_settings = RulesetScriptSet.model_validate(
+            rulesetscriptset_read_only_in
+        )
+        session.add(rulesetscriptset_read_only_settings)
+        session.commit()
+        session.refresh(rulesetscriptset_read_only_settings)

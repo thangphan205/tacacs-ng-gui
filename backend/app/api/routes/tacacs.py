@@ -64,6 +64,12 @@ def save_config(
     quá trình reload cấu hình trong container tacacs_ng thông qua SIGHUP.
     """
     tacacs_config = generate_tacacs_ng_config(session=session)
+    # with open("tacacs_config.cfg", "w") as f:
+    #     f.write(tacacs_config)
+    # f.close()
+    # return {
+    #     "message": "Configuration saved successfully.",
+    # }
     # 1. Lưu cấu hình mới
     try:
         # Ghi nội dung mới, ghi đè tệp cũ

@@ -27,7 +27,7 @@ router = APIRouter(prefix="/tacacs_users", tags=["tacacs_users"])
     dependencies=[Depends(get_current_active_superuser)],
     response_model=TacacsUsersPublic,
 )
-def read_users(session: SessionDep, skip: int = 0, limit: int = 100) -> Any:
+def read_tacacs_users(session: SessionDep, skip: int = 0, limit: int = 100) -> Any:
     """
     Retrieve users.
     """
@@ -46,23 +46,25 @@ def read_users(session: SessionDep, skip: int = 0, limit: int = 100) -> Any:
     dependencies=[Depends(get_current_active_superuser)],
     response_model=TacacsUserPublic,
 )
-def create_user(*, session: SessionDep, user_in: TacacsUserCreate) -> Any:
+def create_tacacs_user(*, session: SessionDep, user_in: TacacsUserCreate) -> Any:
     """
     Create new user.
     """
-    user = tacacs_users.get_user_by_username(session=session, username=user_in.username)
+    user = tacacs_users.get_tacacs_user_by_username(
+        session=session, username=user_in.username
+    )
     if user:
         raise HTTPException(
             status_code=400,
             detail="The user with this username already exists in the system.",
         )
 
-    user = tacacs_users.create_user(session=session, user_create=user_in)
+    user = tacacs_users.create_tacacs_user(session=session, user_create=user_in)
     return user
 
 
 @router.get("/{id}", response_model=TacacsUserPublic)
-def read_user_by_id(
+def read_tacacs_user_by_id(
     id: uuid.UUID, session: SessionDep, current_user: CurrentUser
 ) -> Any:
     """
@@ -79,12 +81,12 @@ def read_user_by_id(
     return user
 
 
-@router.patch(
+@router.put(
     "/{id}",
     dependencies=[Depends(get_current_active_superuser)],
     response_model=TacacsUserPublic,
 )
-def update_user(
+def update_tacacs_user(
     *,
     session: SessionDep,
     id: uuid.UUID,
@@ -101,15 +103,15 @@ def update_user(
             detail="The user with this id does not exist in the system",
         )
     if user_in.username:
-        existing_user = tacacs_users.get_user_by_username(
+        existing_user = tacacs_users.get_tacacs_user_by_username(
             session=session, username=user_in.username
         )
         if existing_user and existing_user.id != id:
             raise HTTPException(
-                status_code=409, detail="User with this email already exists"
+                status_code=409, detail="User with this username already exists"
             )
 
-    db_user = tacacs_users.update_user(
+    db_user = tacacs_users.update_tacacs_user(
         session=session, db_user=db_user, user_in=user_in
     )
     return db_user

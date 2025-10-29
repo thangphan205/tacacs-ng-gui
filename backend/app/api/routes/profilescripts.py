@@ -84,7 +84,7 @@ def read_profilescript_by_id(
     return profilescript
 
 
-@router.patch(
+@router.put(
     "/{id}",
     dependencies=[Depends(get_current_active_superuser)],
     response_model=ProfileScriptPublic,

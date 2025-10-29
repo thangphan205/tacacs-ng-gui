@@ -204,6 +204,7 @@ class HostBase(SQLModel):
     ipv4_address: Optional[str] = None
     ipv6_address: Optional[str] = None
     secret_key: str = Field(max_length=255)
+    description: Optional[str] = None
 
 
 class HostCreate(HostBase):
@@ -229,31 +230,31 @@ class HostsPublic(SQLModel):
     count: int
 
 
-class TacacsGroupUserBase(SQLModel):
+class TacacsGroupBase(SQLModel):
     group_name: str = Field(index=True, max_length=255)
     description: Optional[str] = None
 
 
-class TacacsGroupUserCreate(TacacsGroupUserBase):
+class TacacsGroupCreate(TacacsGroupBase):
     pass
 
 
-class TacacsGroupUserUpdate(TacacsGroupUserBase):
+class TacacsGroupUpdate(TacacsGroupBase):
     pass
 
 
 # Database model, database table inferred from class name
-class TacacsGroupUser(TacacsGroupUserBase, table=True):
+class TacacsGroup(TacacsGroupBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
 
 
 # Properties to return via API, id is always required
-class TacacsGroupUserPublic(TacacsGroupUserBase):
+class TacacsGroupPublic(TacacsGroupBase):
     id: uuid.UUID
 
 
-class TacacsGroupUsersPublic(SQLModel):
-    data: list[TacacsGroupUserPublic]
+class TacacsGroupsPublic(SQLModel):
+    data: list[TacacsGroupPublic]
     count: int
 
 
@@ -290,32 +291,32 @@ class TacacsUsersPublic(SQLModel):
     count: int
 
 
-# -- Service Table ---
-class ServiceBase(SQLModel):
+# -- TacacsService Table ---
+class TacacsServiceBase(SQLModel):
     name: str = Field(index=True, max_length=255)
     description: Optional[str] = None
 
 
-class ServiceCreate(ServiceBase):
+class TacacsServiceCreate(TacacsServiceBase):
     pass
 
 
-class ServiceUpdate(ServiceBase):
+class TacacsServiceUpdate(TacacsServiceBase):
     pass
 
 
 # Database model, database table inferred from class name
-class Service(ServiceBase, table=True):
+class TacacsService(TacacsServiceBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
 
 
 # Properties to return via API, id is always required
-class ServicePublic(ServiceBase):
+class TacacsServicePublic(TacacsServiceBase):
     id: uuid.UUID
 
 
-class ServicesPublic(SQLModel):
-    data: list[ServicePublic]
+class TacacsServicesPublic(SQLModel):
+    data: list[TacacsServicePublic]
     count: int
 
 
@@ -323,9 +324,6 @@ class ServicesPublic(SQLModel):
 # -- Profile Table ---
 class ProfileBase(SQLModel):
     name: str = Field(index=True, unique=True, max_length=255)
-    condition: str = Field(index=True, max_length=255)
-    key: str = Field(index=True, max_length=255)
-    value: str = Field(index=True, max_length=255)
     action: str = Field(index=True, max_length=255)
     description: Optional[str] = None
 
@@ -363,10 +361,11 @@ class ProfileScriptBase(SQLModel):
     value: str = Field(index=True, max_length=255)
     action: str = Field(index=True, max_length=255)
     description: Optional[str] = None
+    profile_id: uuid.UUID | None = None
 
 
 class ProfileScriptCreate(ProfileScriptBase):
-    profile_id: uuid.UUID = Field(foreign_key="profile.id", nullable=False)
+    pass
 
 
 class ProfileScriptUpdate(ProfileScriptBase):
@@ -380,6 +379,11 @@ class ProfileScript(ProfileScriptBase, table=True):
         foreign_key="profile.id", nullable=False, ondelete="CASCADE"
     )
     profile: Profile | None = Relationship(back_populates="profile_scripts")
+
+    profile_script_sets: List["ProfileScriptSet"] = Relationship(
+        back_populates="profile_script",
+        cascade_delete=True,
+    )
 
 
 # Properties to return via API, id is always required
@@ -397,7 +401,7 @@ class ProfileScriptSetBase(SQLModel):
     key: str = Field(index=True, max_length=255)
     value: str
     description: Optional[str] = None
-    profilescript_id: uuid.UUID = Field(foreign_key="profilescript.id", nullable=False)
+    profilescript_id: uuid.UUID
 
 
 class ProfileScriptSetCreate(ProfileScriptSetBase):
@@ -411,6 +415,12 @@ class ProfileScriptSetUpdate(ProfileScriptSetBase):
 # Database model, database table inferred from class name
 class ProfileScriptSet(ProfileScriptSetBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    profilescript_id: uuid.UUID = Field(
+        foreign_key="profilescript.id",
+        nullable=False,
+        ondelete="CASCADE",
+    )
+    profile_script: "ProfileScript" = Relationship(back_populates="profile_script_sets")
 
 
 # Properties to return via API, id is always required
@@ -427,10 +437,10 @@ class ProfileScriptSetsPublic(SQLModel):
 
 
 # -- Begin Ruleset Table --
-# -- Profile Table ---
+# -- Ruleset Table ---
 class RulesetBase(SQLModel):
     name: str = Field(index=True, max_length=255)
-    enabled: bool = Field(default=True)
+    enabled: str = Field(default="yes")
     action: str = Field(index=True, max_length=255)
     description: Optional[str] = None
 
@@ -464,11 +474,11 @@ class RulesetsPublic(SQLModel):
 # -- Ruleset Script  Table ---
 class RulesetScriptBase(SQLModel):
     condition: str = Field(index=True, max_length=255)
-    group_name: str = Field(index=True, max_length=255)
-    profile_name: str = Field(index=True, max_length=255)
+    key: str = Field(index=True, max_length=255)
+    value: str = Field(index=True, max_length=255)
     action: str = Field(index=True, max_length=255)
     description: Optional[str] = None
-    ruleset_id: uuid.UUID = Field(foreign_key="ruleset.id", nullable=False)
+    ruleset_id: uuid.UUID = Field(nullable=False)
 
 
 class RulesetScriptCreate(RulesetScriptBase):
@@ -487,6 +497,10 @@ class RulesetScript(RulesetScriptBase, table=True):
     )
     ruleset: Ruleset | None = Relationship(back_populates="ruleset_scripts")
 
+    ruleset_script_sets: List["RulesetScriptSet"] = Relationship(
+        back_populates="ruleset_script", cascade_delete=True
+    )
+
 
 # Properties to return via API, id is always required
 class RulesetScriptPublic(RulesetScriptBase):
@@ -495,6 +509,45 @@ class RulesetScriptPublic(RulesetScriptBase):
 
 class RulesetScriptsPublic(SQLModel):
     data: list[RulesetScriptPublic]
+    count: int
+
+
+# -- Ruleset Script Set  Table ---
+class RulesetScriptSetBase(SQLModel):
+    key: str = Field(index=True, max_length=255)
+    value: str = Field(index=True, max_length=255)
+    description: Optional[str] = None
+    rulesetscript_id: uuid.UUID
+
+
+class RulesetScriptSetCreate(RulesetScriptSetBase):
+    pass
+
+
+class RulesetScriptSetUpdate(RulesetScriptSetBase):
+    pass
+
+
+# Database model, database table inferred from class name
+class RulesetScriptSet(RulesetScriptSetBase, table=True):
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    rulesetscript_id: uuid.UUID = Field(
+        foreign_key="rulesetscript.id",
+        nullable=False,
+        ondelete="CASCADE",
+    )
+    ruleset_script: RulesetScript | None = Relationship(
+        back_populates="ruleset_script_sets"
+    )
+
+
+# Properties to return via API, id is always required
+class RulesetScriptSetPublic(RulesetScriptSetBase):
+    id: uuid.UUID
+
+
+class RulesetScriptSetsPublic(SQLModel):
+    data: list[RulesetScriptSetPublic]
     count: int
 
 

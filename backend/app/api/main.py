@@ -9,13 +9,14 @@ from app.api.routes import (
     tacacs,
     tacacs_users,
     tacacs_groups,
-    services,
+    tacacs_services,
     profiles,
     profilescripts,
     profilescriptsets,
     hosts,
     rulesets,
     rulesetscripts,
+    rulesetscriptsets,
 )
 from app.core.config import settings
 
@@ -27,13 +28,14 @@ api_router.include_router(items.router)
 api_router.include_router(tacacs.router)
 api_router.include_router(tacacs_users.router)
 api_router.include_router(tacacs_groups.router)
-api_router.include_router(services.router)
+api_router.include_router(tacacs_services.router)
 api_router.include_router(profiles.router)
 api_router.include_router(profilescripts.router)
 api_router.include_router(profilescriptsets.router)
 api_router.include_router(hosts.router)
 api_router.include_router(rulesets.router)
 api_router.include_router(rulesetscripts.router)
+api_router.include_router(rulesetscriptsets.router)
 
 
 if settings.ENVIRONMENT == "local":

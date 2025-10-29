@@ -4,7 +4,7 @@ from typing import Any
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import func, select
 
-from app.crud import profilescriptsets
+from app.crud import rulesetscriptsets
 from app.api.deps import (
     CurrentUser,
     SessionDep,
@@ -12,61 +12,61 @@ from app.api.deps import (
 )
 from app.models import (
     Message,
-    ProfileScriptSet,
-    ProfileScriptSetCreate,
-    ProfileScriptSetPublic,
-    ProfileScriptSetsPublic,
-    ProfileScriptSetUpdate,
+    RulesetScriptSet,
+    RulesetScriptSetCreate,
+    RulesetScriptSetPublic,
+    RulesetScriptSetsPublic,
+    RulesetScriptSetUpdate,
 )
 
-router = APIRouter(prefix="/profilescriptsets", tags=["profilescriptsets"])
+router = APIRouter(prefix="/rulesetscriptsets", tags=["rulesetscriptsets"])
 
 
 @router.get(
     "/",
     dependencies=[Depends(get_current_active_superuser)],
-    response_model=ProfileScriptSetsPublic,
+    response_model=RulesetScriptSetsPublic,
 )
-def read_profilescriptsets(session: SessionDep, skip: int = 0, limit: int = 100) -> Any:
+def read_rulesetscriptsets(session: SessionDep, skip: int = 0, limit: int = 100) -> Any:
     """
-    Retrieve profilescriptsets.
+    Retrieve rulesetscriptsets.
     """
 
-    count_statement = select(func.count()).select_from(ProfileScriptSet)
+    count_statement = select(func.count()).select_from(RulesetScriptSet)
     count = session.exec(count_statement).one()
 
-    statement = select(ProfileScriptSet).offset(skip).limit(limit)
-    profilescriptsets = session.exec(statement).all()
+    statement = select(RulesetScriptSet).offset(skip).limit(limit)
+    rulesetscriptsets = session.exec(statement).all()
 
-    return ProfileScriptSetsPublic(data=profilescriptsets, count=count)
+    return RulesetScriptSetsPublic(data=rulesetscriptsets, count=count)
 
 
 @router.post(
     "/",
     dependencies=[Depends(get_current_active_superuser)],
-    response_model=ProfileScriptSetPublic,
+    response_model=RulesetScriptSetPublic,
 )
 def create_profilescriptset(
-    *, session: SessionDep, profilescriptset_in: ProfileScriptSetCreate
+    *, session: SessionDep, profilescriptset_in: RulesetScriptSetCreate
 ) -> Any:
     """
     Create new profilescriptset.
     """
 
-    profilescriptset = profilescriptsets.create_profilescriptset(
+    profilescriptset = rulesetscriptsets.create_profilescriptset(
         session=session, profilescriptset_create=profilescriptset_in
     )
     return profilescriptset
 
 
-@router.get("/{id}", response_model=ProfileScriptSetPublic)
+@router.get("/{id}", response_model=RulesetScriptSetPublic)
 def read_profilescriptset_by_id(
     id: uuid.UUID, session: SessionDep, current_profilescriptset: CurrentUser
 ) -> Any:
     """
     Get a specific profilescriptset by id.
     """
-    profilescriptset = session.get(ProfileScriptSet, id)
+    profilescriptset = session.get(RulesetScriptSet, id)
 
     if not current_profilescriptset.is_superuser:
         raise HTTPException(
@@ -79,25 +79,25 @@ def read_profilescriptset_by_id(
 @router.put(
     "/{id}",
     dependencies=[Depends(get_current_active_superuser)],
-    response_model=ProfileScriptSetPublic,
+    response_model=RulesetScriptSetPublic,
 )
 def update_profilescriptset(
     *,
     session: SessionDep,
     id: uuid.UUID,
-    profilescriptset_in: ProfileScriptSetUpdate,
+    profilescriptset_in: RulesetScriptSetUpdate,
 ) -> Any:
     """
     Update a profilescriptset.
     """
 
-    db_profilescriptset = session.get(ProfileScriptSet, id)
+    db_profilescriptset = session.get(RulesetScriptSet, id)
     if not db_profilescriptset:
         raise HTTPException(
             status_code=404,
             detail="The profilescriptset with this id does not exist in the system",
         )
-    db_profilescriptset = profilescriptsets.update_profilescriptset(
+    db_profilescriptset = rulesetscriptsets.update_profilescriptset(
         session=session,
         db_profilescriptset=db_profilescriptset,
         profilescriptset_in=profilescriptset_in,
@@ -112,11 +112,11 @@ def delete_profilescriptset(
     """
     Delete an item.
     """
-    profilescriptset = session.get(ProfileScriptSet, id)
+    profilescriptset = session.get(RulesetScriptSet, id)
     if not profilescriptset:
         raise HTTPException(status_code=404, detail="User not found")
     if not current_profilescriptset.is_superuser:
         raise HTTPException(status_code=400, detail="Not enough permissions")
     session.delete(profilescriptset)
     session.commit()
-    return Message(message="ProfileScriptSet deleted successfully")
+    return Message(message="RulesetScriptSet deleted successfully")

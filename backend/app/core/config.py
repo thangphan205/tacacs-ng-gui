@@ -139,7 +139,7 @@ class Settings(BaseSettings):
     LDAP_HOSTS: str = "ipa.example.com"
     LDAP_BASE: str = "dc=example,dc=com"
     LDAP_USER: str = "uid=app_tacacs,cn=users,cn=accounts,dc=example,dc=com"
-    LDAP_PASSWD: str = "changethis"
+    LDAP_PASSWD: str = "change_this"
     REQUIRE_TACACS_GROUP_PREFIX: int = 0
     TACACS_GROUP_PREFIX: str = "tacacs_"
     LDAP_FILTER: str = "(&(objectClass=inetorgperson)(uid=%s))"

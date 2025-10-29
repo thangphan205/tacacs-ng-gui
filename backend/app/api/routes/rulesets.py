@@ -78,7 +78,7 @@ def read_ruleset_by_id(
     return ruleset
 
 
-@router.patch(
+@router.put(
     "/{id}",
     dependencies=[Depends(get_current_active_superuser)],
     response_model=RulesetPublic,

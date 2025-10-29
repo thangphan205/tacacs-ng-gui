@@ -4,19 +4,18 @@ from sqlmodel import Session, select
 from pathlib import Path
 import tempfile
 from app.models import (
-    TacacsGroupUser,
-    TacacsGroupUserCreate,
-    TacacsGroupUserUpdate,
+    TacacsGroup,
     TacacsNG,
     Mavis,
     Host,
-    TacacsGroupUser,
+    TacacsGroup,
     TacacsUser,
     Profile,
     ProfileScript,
     ProfileScriptSet,
     Ruleset,
     RulesetScript,
+    RulesetScriptSet,
 )
 import os
 
@@ -111,7 +110,7 @@ id = tac_plus-ng {{
             host_key=host_info["secret_key"],
         )
 
-    statement = select(TacacsGroupUser)
+    statement = select(TacacsGroup)
     tacacs_group_basic = session.exec(statement).all()
     tacacs_groups_template = ""
     for tacacs_group in tacacs_group_basic:
@@ -148,93 +147,10 @@ id = tac_plus-ng {{
                 member=tacacs_user_info["member"],
             )
 
-    statement = select(Profile)
-    tacacs_profiles_basic = session.exec(statement).all()
-    tacacs_profiles_template = ""
-    for tacacs_profile in tacacs_profiles_basic:
-        tacacs_profile_info = tacacs_profile.model_dump()
-        statement_script = select(ProfileScript).where(
-            ProfileScript.profile_id == tacacs_profile_info["id"]
-        )
-        tacacs_profilescripts_basic = session.exec(statement_script).all()
-
-        tacacs_profilescript_template = ""
-        for tacacs_profilescript in tacacs_profilescripts_basic:
-            tacacs_profilescript_info = tacacs_profilescript.model_dump()
-            statement_scriptset = select(ProfileScriptSet).where(
-                tacacs_profilescript_info["profile_id"] == tacacs_profile_info["id"]
-            )
-            tacacs_profilescriptsets_basic = session.exec(statement_scriptset).all()
-
-            tacacs_profilescriptset_template = ""
-            for tacacs_profilescriptset in tacacs_profilescriptsets_basic:
-                tacacs_profilescriptset_info = tacacs_profilescriptset.model_dump()
-                tacacs_profilescriptset_template += """
-                set {script_key} = {script_value}""".format(
-                    script_key=tacacs_profilescriptset_info["key"],
-                    script_value=tacacs_profilescriptset_info["value"],
-                )
-            tacacs_profilescript_template += """
-            if ( service == {value}) {{
-                {script_set}
-                {action}
-            }}""".format(
-                key=tacacs_profilescript_info["key"],
-                value=tacacs_profilescript_info["value"],
-                script_set=tacacs_profilescriptset_template,
-                action=tacacs_profilescript_info["action"],
-            )
-
-        tacacs_profiles_template += """
-    profile {profile_name} {{
-        script {{
-        {profile_scripts}
-        {action}
-        }}
-    }}""".format(
-            profile_name=tacacs_profile_info["name"],
-            profile_scripts=tacacs_profilescript_template,
-            action=tacacs_profile_info["action"],
-        )
-
+    # Begin profile
+    tacacs_profiles_template = profile_generator(session=session)
     # Begin ruleset
-    statement = select(Ruleset)
-    tacacs_rulesets_basic = session.exec(statement).all()
-    tacacs_rulesets_template = ""
-    for ruleset in tacacs_rulesets_basic:
-        ruleset_info = ruleset.model_dump()
-        statement_rulescript = select(RulesetScript).where(
-            RulesetScript.ruleset_id == ruleset_info["id"]
-        )
-        tacacs_rulescripts_basic = session.exec(statement_rulescript).all()
-
-        tacacs_rulescript_template = ""
-        for rulescript in tacacs_rulescripts_basic:
-            rulescript_info = rulescript.model_dump()
-            tacacs_rulescript_template += """
-                if ( group == {group_name} ) {{
-                    profile = {profile_name}
-                    {action}
-                }}""".format(
-                group_name=rulescript_info["group_name"],
-                profile_name=rulescript_info["profile_name"],
-                action=rulescript_info["action"],
-            )
-
-        tacacs_rulesets_template += """
-    ruleset {{
-        rule {ruleset_name} {{
-            enabled = yes
-            script {{
-            {ruleset_scripts}
-            deny
-            }}
-        }}
-    }}""".format(
-            ruleset_name=ruleset_info["name"],
-            ruleset_scripts=tacacs_rulescript_template,
-        )
-    # End ruleset
+    tacacs_rulesets_template = ruleset_generator(session=session)
 
     config_file_template += (
         hosts_template
@@ -259,31 +175,116 @@ id = tac_plus-ng {{
     return config_file_template
 
 
-def get_group_by_group_name(
-    *, session: Session, group_name: str
-) -> TacacsGroupUser | None:
-    statement = select(TacacsGroupUser).where(TacacsGroupUser.group_name == group_name)
-    session_user = session.exec(statement).first()
-    return session_user
+def profile_generator(session: Session) -> str:
+    profiles_db = session.exec(select(Profile)).all()
+    profile_template = ""
+    for profile_db in profiles_db:
+
+        statement = select(ProfileScript).where(
+            ProfileScript.profile_id == profile_db.id
+        )
+        script_in_profile = session.exec(statement).all()
+        if script_in_profile == []:
+            continue
+        profilescript_template = ""
+        for profilescript in script_in_profile:
+            scriptset_in_profilescript = session.exec(
+                select(ProfileScriptSet).where(
+                    ProfileScriptSet.profilescript_id == profilescript.id
+                )
+            ).all()
+            if scriptset_in_profilescript == []:
+                continue
+            profilescriptset_template = ""
+            for profilescriptset in scriptset_in_profilescript:
+                profilescriptset_info = profilescriptset.model_dump()
+                profilescriptset_template += """set {key}={value}""".format(
+                    key=profilescriptset_info["key"],
+                    value=profilescriptset_info["value"],
+                )
+
+            profilescript_info = profilescript.model_dump()
+            profilescript_template += """{condition} ({key}=={value}){{
+            {profilescriptset_template}
+            {action}
+            }}""".format(
+                condition=profilescript_info["condition"],
+                key=profilescript_info["key"],
+                value=profilescript_info["value"],
+                profilescriptset_template=profilescriptset_template,
+                action=profilescript_info["action"],
+            )
+        profile_template += """
+    profile {profile_name} {{
+        script {{
+        {profilescript_template}
+        {action}
+        }}
+    }}""".format(
+            profile_name=profile_db.name,
+            profilescript_template=profilescript_template,
+            action=profile_db.action,
+        )
+
+    return profile_template
 
 
-def create_group(
-    *, session: Session, user_create: TacacsGroupUserCreate
-) -> TacacsGroupUser:
-    db_obj = TacacsGroupUser.model_validate(user_create)
-    session.add(db_obj)
-    session.commit()
-    session.refresh(db_obj)
-    return db_obj
+def ruleset_generator(session: Session) -> str:
+    rulesets_db = session.exec(select(Ruleset)).all()
+    ruleset_template = ""
+    for ruleset_db in rulesets_db:
+        statement = select(RulesetScript).where(
+            RulesetScript.ruleset_id == ruleset_db.id
+        )
+        script_in_ruleset = session.exec(statement).all()
 
+        if script_in_ruleset == []:
+            continue
+        rulesetscript_template = ""
+        for rulesetscript in script_in_ruleset:
+            scriptset_in_ruleset = session.exec(
+                select(RulesetScriptSet).where(
+                    RulesetScriptSet.rulesetscript_id == rulesetscript.id
+                )
+            ).all()
+            if scriptset_in_ruleset == []:
+                continue
+            rulesetscriptset_template = ""
+            for rulesetscriptset in scriptset_in_ruleset:
+                rulesetscriptset_info = rulesetscriptset.model_dump()
+                rulesetscriptset_template += """{key}={value}""".format(
+                    key=rulesetscriptset_info["key"],
+                    value=rulesetscriptset_info["value"],
+                )
 
-def update_group(
-    *, session: Session, db_user: TacacsGroupUser, group_in: TacacsGroupUserUpdate
-) -> Any:
-    user_data = group_in.model_dump(exclude_unset=True)
-    extra_data = {}
-    db_user.sqlmodel_update(user_data, update=extra_data)
-    session.add(db_user)
-    session.commit()
-    session.refresh(db_user)
-    return db_user
+            rulesetscript_info = rulesetscript.model_dump()
+            rulesetscript_template += """{condition} ({key}=={value}){{
+                {rulesetscriptset_template}
+                {action}
+            }}
+            """.format(
+                condition=rulesetscript_info["condition"],
+                key=rulesetscript_info["key"],
+                value=rulesetscript_info["value"],
+                rulesetscriptset_template=rulesetscriptset_template,
+                action=rulesetscript_info["action"],
+            )
+        ruleset_template += """rule {rule_name} {{
+            enabled=yes
+            script {{
+                {rulesetscript_template}
+            {action}
+            }}
+        }}
+        """.format(
+            rule_name=ruleset_db.name,
+            rulesetscript_template=rulesetscript_template,
+            action=ruleset_db.action,
+        )
+    ruleset_all = """
+    ruleset {{
+        {ruleset_template}
+    }}""".format(
+        ruleset_template=ruleset_template
+    )
+    return ruleset_all

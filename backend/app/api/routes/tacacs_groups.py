@@ -12,11 +12,11 @@ from app.api.deps import (
 )
 from app.models import (
     Message,
-    TacacsGroupUser,
-    TacacsGroupUserCreate,
-    TacacsGroupUserPublic,
-    TacacsGroupUsersPublic,
-    TacacsGroupUserUpdate,
+    TacacsGroup,
+    TacacsGroupCreate,
+    TacacsGroupPublic,
+    TacacsGroupsPublic,
+    TacacsGroupUpdate,
 )
 
 router = APIRouter(prefix="/tacacs_groups", tags=["tacacs_groups"])
@@ -25,32 +25,32 @@ router = APIRouter(prefix="/tacacs_groups", tags=["tacacs_groups"])
 @router.get(
     "/",
     dependencies=[Depends(get_current_active_superuser)],
-    response_model=TacacsGroupUsersPublic,
+    response_model=TacacsGroupsPublic,
 )
-def read_groups(session: SessionDep, skip: int = 0, limit: int = 100) -> Any:
+def read_tacacs_groups(session: SessionDep, skip: int = 0, limit: int = 100) -> Any:
     """
     Retrieve groups.
     """
 
-    count_statement = select(func.count()).select_from(TacacsGroupUser)
+    count_statement = select(func.count()).select_from(TacacsGroup)
     count = session.exec(count_statement).one()
 
-    statement = select(TacacsGroupUser).offset(skip).limit(limit)
+    statement = select(TacacsGroup).offset(skip).limit(limit)
     groups = session.exec(statement).all()
 
-    return TacacsGroupUsersPublic(data=groups, count=count)
+    return TacacsGroupsPublic(data=groups, count=count)
 
 
 @router.post(
     "/",
     dependencies=[Depends(get_current_active_superuser)],
-    response_model=TacacsGroupUserPublic,
+    response_model=TacacsGroupPublic,
 )
-def create_group(*, session: SessionDep, group_in: TacacsGroupUserCreate) -> Any:
+def create_tacacs_group(*, session: SessionDep, group_in: TacacsGroupCreate) -> Any:
     """
     Create new group.
     """
-    group = tacacs_groups.get_group_by_group_name(
+    group = tacacs_groups.get_tacacs_group_by_group_name(
         session=session, group_name=group_in.group_name
     )
     if group:
@@ -59,18 +59,18 @@ def create_group(*, session: SessionDep, group_in: TacacsGroupUserCreate) -> Any
             detail="The user with this group name already exists in the system.",
         )
 
-    user = tacacs_groups.create_group(session=session, user_create=group_in)
+    user = tacacs_groups.create_tacacs_group(session=session, user_create=group_in)
     return user
 
 
-@router.get("/{id}", response_model=TacacsGroupUserPublic)
-def read_group_by_id(
+@router.get("/{id}", response_model=TacacsGroupPublic)
+def read_tacacs_group_by_id(
     id: uuid.UUID, session: SessionDep, current_user: CurrentUser
 ) -> Any:
     """
     Get a specific user by id.
     """
-    group = session.get(TacacsGroupUser, id)
+    group = session.get(TacacsGroup, id)
 
     if not current_user.is_superuser:
         raise HTTPException(
@@ -80,29 +80,29 @@ def read_group_by_id(
     return group
 
 
-@router.patch(
+@router.put(
     "/{id}",
     dependencies=[Depends(get_current_active_superuser)],
-    response_model=TacacsGroupUserPublic,
+    response_model=TacacsGroupPublic,
 )
-def update_group(
+def update_tacacs_group(
     *,
     session: SessionDep,
     id: uuid.UUID,
-    group_in: TacacsGroupUserUpdate,
+    group_in: TacacsGroupUpdate,
 ) -> Any:
     """
     Update a group.
     """
 
-    db_group = session.get(TacacsGroupUser, id)
-    if not db_group:
+    db_tacacs_group = session.get(TacacsGroup, id)
+    if not db_tacacs_group:
         raise HTTPException(
             status_code=404,
             detail="The user with this id does not exist in the system",
         )
     if group_in.group_name:
-        existing_user = tacacs_groups.get_group_by_group_name(
+        existing_user = tacacs_groups.get_tacacs_group_by_group_name(
             session=session, group_name=group_in.group_name
         )
         if existing_user and existing_user.id != id:
@@ -110,10 +110,10 @@ def update_group(
                 status_code=409, detail="User with this email already exists"
             )
 
-    db_group = tacacs_groups.update_group(
-        session=session, db_group=db_group, group_in=group_in
+    db_tacacs_group = tacacs_groups.update_tacacs_group(
+        session=session, db_tacacs_group=db_tacacs_group, group_in=group_in
     )
-    return db_group
+    return db_tacacs_group
 
 
 @router.delete("/{id}")
@@ -123,7 +123,7 @@ def delete_tacacs_group(
     """
     Delete an item.
     """
-    tacacs_group = session.get(TacacsGroupUser, id)
+    tacacs_group = session.get(TacacsGroup, id)
     if not tacacs_group:
         raise HTTPException(status_code=404, detail="User not found")
     if not current_user.is_superuser:
