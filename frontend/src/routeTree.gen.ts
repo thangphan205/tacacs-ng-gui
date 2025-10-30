@@ -19,6 +19,9 @@ import { Route as LayoutTacacs_usersRouteImport } from './routes/_layout/tacacs_
 import { Route as LayoutTacacs_servicesRouteImport } from './routes/_layout/tacacs_services'
 import { Route as LayoutTacacs_groupsRouteImport } from './routes/_layout/tacacs_groups'
 import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
+import { Route as LayoutRulesetscriptsetsRouteImport } from './routes/_layout/rulesetscriptsets'
+import { Route as LayoutRulesetscriptsRouteImport } from './routes/_layout/rulesetscripts'
+import { Route as LayoutRulesetsRouteImport } from './routes/_layout/rulesets'
 import { Route as LayoutProfilescriptsetsRouteImport } from './routes/_layout/profilescriptsets'
 import { Route as LayoutProfilescriptsRouteImport } from './routes/_layout/profilescripts'
 import { Route as LayoutProfilesRouteImport } from './routes/_layout/profiles'
@@ -75,6 +78,21 @@ const LayoutSettingsRoute = LayoutSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutRulesetscriptsetsRoute = LayoutRulesetscriptsetsRouteImport.update({
+  id: '/rulesetscriptsets',
+  path: '/rulesetscriptsets',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutRulesetscriptsRoute = LayoutRulesetscriptsRouteImport.update({
+  id: '/rulesetscripts',
+  path: '/rulesetscripts',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutRulesetsRoute = LayoutRulesetsRouteImport.update({
+  id: '/rulesets',
+  path: '/rulesets',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutProfilescriptsetsRoute = LayoutProfilescriptsetsRouteImport.update({
   id: '/profilescriptsets',
   path: '/profilescriptsets',
@@ -117,6 +135,9 @@ export interface FileRoutesByFullPath {
   '/profiles': typeof LayoutProfilesRoute
   '/profilescripts': typeof LayoutProfilescriptsRoute
   '/profilescriptsets': typeof LayoutProfilescriptsetsRoute
+  '/rulesets': typeof LayoutRulesetsRoute
+  '/rulesetscripts': typeof LayoutRulesetscriptsRoute
+  '/rulesetscriptsets': typeof LayoutRulesetscriptsetsRoute
   '/settings': typeof LayoutSettingsRoute
   '/tacacs_groups': typeof LayoutTacacs_groupsRoute
   '/tacacs_services': typeof LayoutTacacs_servicesRoute
@@ -134,6 +155,9 @@ export interface FileRoutesByTo {
   '/profiles': typeof LayoutProfilesRoute
   '/profilescripts': typeof LayoutProfilescriptsRoute
   '/profilescriptsets': typeof LayoutProfilescriptsetsRoute
+  '/rulesets': typeof LayoutRulesetsRoute
+  '/rulesetscripts': typeof LayoutRulesetscriptsRoute
+  '/rulesetscriptsets': typeof LayoutRulesetscriptsetsRoute
   '/settings': typeof LayoutSettingsRoute
   '/tacacs_groups': typeof LayoutTacacs_groupsRoute
   '/tacacs_services': typeof LayoutTacacs_servicesRoute
@@ -153,6 +177,9 @@ export interface FileRoutesById {
   '/_layout/profiles': typeof LayoutProfilesRoute
   '/_layout/profilescripts': typeof LayoutProfilescriptsRoute
   '/_layout/profilescriptsets': typeof LayoutProfilescriptsetsRoute
+  '/_layout/rulesets': typeof LayoutRulesetsRoute
+  '/_layout/rulesetscripts': typeof LayoutRulesetscriptsRoute
+  '/_layout/rulesetscriptsets': typeof LayoutRulesetscriptsetsRoute
   '/_layout/settings': typeof LayoutSettingsRoute
   '/_layout/tacacs_groups': typeof LayoutTacacs_groupsRoute
   '/_layout/tacacs_services': typeof LayoutTacacs_servicesRoute
@@ -172,6 +199,9 @@ export interface FileRouteTypes {
     | '/profiles'
     | '/profilescripts'
     | '/profilescriptsets'
+    | '/rulesets'
+    | '/rulesetscripts'
+    | '/rulesetscriptsets'
     | '/settings'
     | '/tacacs_groups'
     | '/tacacs_services'
@@ -189,6 +219,9 @@ export interface FileRouteTypes {
     | '/profiles'
     | '/profilescripts'
     | '/profilescriptsets'
+    | '/rulesets'
+    | '/rulesetscripts'
+    | '/rulesetscriptsets'
     | '/settings'
     | '/tacacs_groups'
     | '/tacacs_services'
@@ -207,6 +240,9 @@ export interface FileRouteTypes {
     | '/_layout/profiles'
     | '/_layout/profilescripts'
     | '/_layout/profilescriptsets'
+    | '/_layout/rulesets'
+    | '/_layout/rulesetscripts'
+    | '/_layout/rulesetscriptsets'
     | '/_layout/settings'
     | '/_layout/tacacs_groups'
     | '/_layout/tacacs_services'
@@ -294,6 +330,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutSettingsRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/rulesetscriptsets': {
+      id: '/_layout/rulesetscriptsets'
+      path: '/rulesetscriptsets'
+      fullPath: '/rulesetscriptsets'
+      preLoaderRoute: typeof LayoutRulesetscriptsetsRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/rulesetscripts': {
+      id: '/_layout/rulesetscripts'
+      path: '/rulesetscripts'
+      fullPath: '/rulesetscripts'
+      preLoaderRoute: typeof LayoutRulesetscriptsRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/rulesets': {
+      id: '/_layout/rulesets'
+      path: '/rulesets'
+      fullPath: '/rulesets'
+      preLoaderRoute: typeof LayoutRulesetsRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/profilescriptsets': {
       id: '/_layout/profilescriptsets'
       path: '/profilescriptsets'
@@ -346,6 +403,9 @@ interface LayoutRouteChildren {
   LayoutProfilesRoute: typeof LayoutProfilesRoute
   LayoutProfilescriptsRoute: typeof LayoutProfilescriptsRoute
   LayoutProfilescriptsetsRoute: typeof LayoutProfilescriptsetsRoute
+  LayoutRulesetsRoute: typeof LayoutRulesetsRoute
+  LayoutRulesetscriptsRoute: typeof LayoutRulesetscriptsRoute
+  LayoutRulesetscriptsetsRoute: typeof LayoutRulesetscriptsetsRoute
   LayoutSettingsRoute: typeof LayoutSettingsRoute
   LayoutTacacs_groupsRoute: typeof LayoutTacacs_groupsRoute
   LayoutTacacs_servicesRoute: typeof LayoutTacacs_servicesRoute
@@ -360,6 +420,9 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutProfilesRoute: LayoutProfilesRoute,
   LayoutProfilescriptsRoute: LayoutProfilescriptsRoute,
   LayoutProfilescriptsetsRoute: LayoutProfilescriptsetsRoute,
+  LayoutRulesetsRoute: LayoutRulesetsRoute,
+  LayoutRulesetscriptsRoute: LayoutRulesetscriptsRoute,
+  LayoutRulesetscriptsetsRoute: LayoutRulesetscriptsetsRoute,
   LayoutSettingsRoute: LayoutSettingsRoute,
   LayoutTacacs_groupsRoute: LayoutTacacs_groupsRoute,
   LayoutTacacs_servicesRoute: LayoutTacacs_servicesRoute,

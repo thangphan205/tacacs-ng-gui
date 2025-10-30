@@ -643,30 +643,30 @@ export type RulesetscriptsetsReadRulesetscriptsetsData = {
 
 export type RulesetscriptsetsReadRulesetscriptsetsResponse = (RulesetScriptSetsPublic);
 
-export type RulesetscriptsetsCreateProfilescriptsetData = {
+export type RulesetscriptsetsCreateRulesetscriptsetData = {
     requestBody: RulesetScriptSetCreate;
 };
 
-export type RulesetscriptsetsCreateProfilescriptsetResponse = (RulesetScriptSetPublic);
+export type RulesetscriptsetsCreateRulesetscriptsetResponse = (RulesetScriptSetPublic);
 
-export type RulesetscriptsetsReadProfilescriptsetByIdData = {
+export type RulesetscriptsetsReadRulesetscriptsetByIdData = {
     id: string;
 };
 
-export type RulesetscriptsetsReadProfilescriptsetByIdResponse = (RulesetScriptSetPublic);
+export type RulesetscriptsetsReadRulesetscriptsetByIdResponse = (RulesetScriptSetPublic);
 
-export type RulesetscriptsetsUpdateProfilescriptsetData = {
+export type RulesetscriptsetsUpdateRulesetscriptsetData = {
     id: string;
     requestBody: RulesetScriptSetUpdate;
 };
 
-export type RulesetscriptsetsUpdateProfilescriptsetResponse = (RulesetScriptSetPublic);
+export type RulesetscriptsetsUpdateRulesetscriptsetResponse = (RulesetScriptSetPublic);
 
-export type RulesetscriptsetsDeleteProfilescriptsetData = {
+export type RulesetscriptsetsDeleteRulesetscriptsetData = {
     id: string;
 };
 
-export type RulesetscriptsetsDeleteProfilescriptsetResponse = (Message);
+export type RulesetscriptsetsDeleteRulesetscriptsetResponse = (Message);
 
 export type TacacsGetConfigResponse = (unknown);
 

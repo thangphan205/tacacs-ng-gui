@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { HostsReadHostsData, HostsReadHostsResponse, HostsCreateHostData, HostsCreateHostResponse, HostsReadHostByIdData, HostsReadHostByIdResponse, HostsUpdateHostData, HostsUpdateHostResponse, HostsDeleteHostData, HostsDeleteHostResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, PrivateCreateUserData, PrivateCreateUserResponse, ProfilesReadProfilesData, ProfilesReadProfilesResponse, ProfilesCreateProfileData, ProfilesCreateProfileResponse, ProfilesReadProfileByIdData, ProfilesReadProfileByIdResponse, ProfilesUpdateProfileData, ProfilesUpdateProfileResponse, ProfilesDeleteProfileData, ProfilesDeleteProfileResponse, ProfilescriptsReadProfilescriptsData, ProfilescriptsReadProfilescriptsResponse, ProfilescriptsCreateProfilescriptData, ProfilescriptsCreateProfilescriptResponse, ProfilescriptsReadProfilescriptByIdData, ProfilescriptsReadProfilescriptByIdResponse, ProfilescriptsUpdateProfilescriptData, ProfilescriptsUpdateProfilescriptResponse, ProfilescriptsDeleteProfilescriptData, ProfilescriptsDeleteProfilescriptResponse, ProfilescriptsetsReadProfilescriptsetsData, ProfilescriptsetsReadProfilescriptsetsResponse, ProfilescriptsetsCreateProfilescriptsetData, ProfilescriptsetsCreateProfilescriptsetResponse, ProfilescriptsetsReadProfilescriptsetByIdData, ProfilescriptsetsReadProfilescriptsetByIdResponse, ProfilescriptsetsUpdateProfilescriptsetData, ProfilescriptsetsUpdateProfilescriptsetResponse, ProfilescriptsetsDeleteProfilescriptsetData, ProfilescriptsetsDeleteProfilescriptsetResponse, RulesetsReadRulesetsData, RulesetsReadRulesetsResponse, RulesetsCreateRulesetData, RulesetsCreateRulesetResponse, RulesetsReadRulesetByIdData, RulesetsReadRulesetByIdResponse, RulesetsUpdateRulesetData, RulesetsUpdateRulesetResponse, RulesetsDeleteRulesetData, RulesetsDeleteRulesetResponse, RulesetscriptsReadRulesetscriptsData, RulesetscriptsReadRulesetscriptsResponse, RulesetscriptsCreateRulesetscriptData, RulesetscriptsCreateRulesetscriptResponse, RulesetscriptsReadRulesetscriptByIdData, RulesetscriptsReadRulesetscriptByIdResponse, RulesetscriptsUpdateRulesetscriptData, RulesetscriptsUpdateRulesetscriptResponse, RulesetscriptsDeleteRulesetscriptData, RulesetscriptsDeleteRulesetscriptResponse, RulesetscriptsetsReadRulesetscriptsetsData, RulesetscriptsetsReadRulesetscriptsetsResponse, RulesetscriptsetsCreateProfilescriptsetData, RulesetscriptsetsCreateProfilescriptsetResponse, RulesetscriptsetsReadProfilescriptsetByIdData, RulesetscriptsetsReadProfilescriptsetByIdResponse, RulesetscriptsetsUpdateProfilescriptsetData, RulesetscriptsetsUpdateProfilescriptsetResponse, RulesetscriptsetsDeleteProfilescriptsetData, RulesetscriptsetsDeleteProfilescriptsetResponse, TacacsGetConfigResponse, TacacsSaveConfigResponse, TacacsGetAuthLogsData, TacacsGetAuthLogsResponse, TacacsGroupsReadTacacsGroupsData, TacacsGroupsReadTacacsGroupsResponse, TacacsGroupsCreateTacacsGroupData, TacacsGroupsCreateTacacsGroupResponse, TacacsGroupsReadTacacsGroupByIdData, TacacsGroupsReadTacacsGroupByIdResponse, TacacsGroupsUpdateTacacsGroupData, TacacsGroupsUpdateTacacsGroupResponse, TacacsGroupsDeleteTacacsGroupData, TacacsGroupsDeleteTacacsGroupResponse, TacacsServicesReadTacacsServicesData, TacacsServicesReadTacacsServicesResponse, TacacsServicesCreateTacacsServiceData, TacacsServicesCreateTacacsServiceResponse, TacacsServicesReadTacacsServiceByIdData, TacacsServicesReadTacacsServiceByIdResponse, TacacsServicesUpdateTacacsServiceData, TacacsServicesUpdateTacacsServiceResponse, TacacsServicesDeleteTacacsServiceData, TacacsServicesDeleteTacacsServiceResponse, TacacsUsersReadTacacsUsersData, TacacsUsersReadTacacsUsersResponse, TacacsUsersCreateTacacsUserData, TacacsUsersCreateTacacsUserResponse, TacacsUsersReadTacacsUserByIdData, TacacsUsersReadTacacsUserByIdResponse, TacacsUsersUpdateTacacsUserData, TacacsUsersUpdateTacacsUserResponse, TacacsUsersDeleteTacacsUserData, TacacsUsersDeleteTacacsUserResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse } from './types.gen';
+import type { HostsReadHostsData, HostsReadHostsResponse, HostsCreateHostData, HostsCreateHostResponse, HostsReadHostByIdData, HostsReadHostByIdResponse, HostsUpdateHostData, HostsUpdateHostResponse, HostsDeleteHostData, HostsDeleteHostResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, PrivateCreateUserData, PrivateCreateUserResponse, ProfilesReadProfilesData, ProfilesReadProfilesResponse, ProfilesCreateProfileData, ProfilesCreateProfileResponse, ProfilesReadProfileByIdData, ProfilesReadProfileByIdResponse, ProfilesUpdateProfileData, ProfilesUpdateProfileResponse, ProfilesDeleteProfileData, ProfilesDeleteProfileResponse, ProfilescriptsReadProfilescriptsData, ProfilescriptsReadProfilescriptsResponse, ProfilescriptsCreateProfilescriptData, ProfilescriptsCreateProfilescriptResponse, ProfilescriptsReadProfilescriptByIdData, ProfilescriptsReadProfilescriptByIdResponse, ProfilescriptsUpdateProfilescriptData, ProfilescriptsUpdateProfilescriptResponse, ProfilescriptsDeleteProfilescriptData, ProfilescriptsDeleteProfilescriptResponse, ProfilescriptsetsReadProfilescriptsetsData, ProfilescriptsetsReadProfilescriptsetsResponse, ProfilescriptsetsCreateProfilescriptsetData, ProfilescriptsetsCreateProfilescriptsetResponse, ProfilescriptsetsReadProfilescriptsetByIdData, ProfilescriptsetsReadProfilescriptsetByIdResponse, ProfilescriptsetsUpdateProfilescriptsetData, ProfilescriptsetsUpdateProfilescriptsetResponse, ProfilescriptsetsDeleteProfilescriptsetData, ProfilescriptsetsDeleteProfilescriptsetResponse, RulesetsReadRulesetsData, RulesetsReadRulesetsResponse, RulesetsCreateRulesetData, RulesetsCreateRulesetResponse, RulesetsReadRulesetByIdData, RulesetsReadRulesetByIdResponse, RulesetsUpdateRulesetData, RulesetsUpdateRulesetResponse, RulesetsDeleteRulesetData, RulesetsDeleteRulesetResponse, RulesetscriptsReadRulesetscriptsData, RulesetscriptsReadRulesetscriptsResponse, RulesetscriptsCreateRulesetscriptData, RulesetscriptsCreateRulesetscriptResponse, RulesetscriptsReadRulesetscriptByIdData, RulesetscriptsReadRulesetscriptByIdResponse, RulesetscriptsUpdateRulesetscriptData, RulesetscriptsUpdateRulesetscriptResponse, RulesetscriptsDeleteRulesetscriptData, RulesetscriptsDeleteRulesetscriptResponse, RulesetscriptsetsReadRulesetscriptsetsData, RulesetscriptsetsReadRulesetscriptsetsResponse, RulesetscriptsetsCreateRulesetscriptsetData, RulesetscriptsetsCreateRulesetscriptsetResponse, RulesetscriptsetsReadRulesetscriptsetByIdData, RulesetscriptsetsReadRulesetscriptsetByIdResponse, RulesetscriptsetsUpdateRulesetscriptsetData, RulesetscriptsetsUpdateRulesetscriptsetResponse, RulesetscriptsetsDeleteRulesetscriptsetData, RulesetscriptsetsDeleteRulesetscriptsetResponse, TacacsGetConfigResponse, TacacsSaveConfigResponse, TacacsGetAuthLogsData, TacacsGetAuthLogsResponse, TacacsGroupsReadTacacsGroupsData, TacacsGroupsReadTacacsGroupsResponse, TacacsGroupsCreateTacacsGroupData, TacacsGroupsCreateTacacsGroupResponse, TacacsGroupsReadTacacsGroupByIdData, TacacsGroupsReadTacacsGroupByIdResponse, TacacsGroupsUpdateTacacsGroupData, TacacsGroupsUpdateTacacsGroupResponse, TacacsGroupsDeleteTacacsGroupData, TacacsGroupsDeleteTacacsGroupResponse, TacacsServicesReadTacacsServicesData, TacacsServicesReadTacacsServicesResponse, TacacsServicesCreateTacacsServiceData, TacacsServicesCreateTacacsServiceResponse, TacacsServicesReadTacacsServiceByIdData, TacacsServicesReadTacacsServiceByIdResponse, TacacsServicesUpdateTacacsServiceData, TacacsServicesUpdateTacacsServiceResponse, TacacsServicesDeleteTacacsServiceData, TacacsServicesDeleteTacacsServiceResponse, TacacsUsersReadTacacsUsersData, TacacsUsersReadTacacsUsersResponse, TacacsUsersCreateTacacsUserData, TacacsUsersCreateTacacsUserResponse, TacacsUsersReadTacacsUserByIdData, TacacsUsersReadTacacsUserByIdResponse, TacacsUsersUpdateTacacsUserData, TacacsUsersUpdateTacacsUserResponse, TacacsUsersDeleteTacacsUserData, TacacsUsersDeleteTacacsUserResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse } from './types.gen';
 
 export class HostsService {
     /**
@@ -926,14 +926,14 @@ export class RulesetscriptsetsService {
     }
     
     /**
-     * Create Profilescriptset
-     * Create new profilescriptset.
+     * Create Rulesetscriptset
+     * Create new rulesetscriptset.
      * @param data The data for the request.
      * @param data.requestBody
      * @returns RulesetScriptSetPublic Successful Response
      * @throws ApiError
      */
-    public static createProfilescriptset(data: RulesetscriptsetsCreateProfilescriptsetData): CancelablePromise<RulesetscriptsetsCreateProfilescriptsetResponse> {
+    public static createRulesetscriptset(data: RulesetscriptsetsCreateRulesetscriptsetData): CancelablePromise<RulesetscriptsetsCreateRulesetscriptsetResponse> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/v1/rulesetscriptsets/',
@@ -946,14 +946,14 @@ export class RulesetscriptsetsService {
     }
     
     /**
-     * Read Profilescriptset By Id
-     * Get a specific profilescriptset by id.
+     * Read Rulesetscriptset By Id
+     * Get a specific rulesetscriptset by id.
      * @param data The data for the request.
      * @param data.id
      * @returns RulesetScriptSetPublic Successful Response
      * @throws ApiError
      */
-    public static readProfilescriptsetById(data: RulesetscriptsetsReadProfilescriptsetByIdData): CancelablePromise<RulesetscriptsetsReadProfilescriptsetByIdResponse> {
+    public static readRulesetscriptsetById(data: RulesetscriptsetsReadRulesetscriptsetByIdData): CancelablePromise<RulesetscriptsetsReadRulesetscriptsetByIdResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v1/rulesetscriptsets/{id}',
@@ -967,15 +967,15 @@ export class RulesetscriptsetsService {
     }
     
     /**
-     * Update Profilescriptset
-     * Update a profilescriptset.
+     * Update Rulesetscriptset
+     * Update a rulesetscriptset.
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
      * @returns RulesetScriptSetPublic Successful Response
      * @throws ApiError
      */
-    public static updateProfilescriptset(data: RulesetscriptsetsUpdateProfilescriptsetData): CancelablePromise<RulesetscriptsetsUpdateProfilescriptsetResponse> {
+    public static updateRulesetscriptset(data: RulesetscriptsetsUpdateRulesetscriptsetData): CancelablePromise<RulesetscriptsetsUpdateRulesetscriptsetResponse> {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/api/v1/rulesetscriptsets/{id}',
@@ -991,14 +991,14 @@ export class RulesetscriptsetsService {
     }
     
     /**
-     * Delete Profilescriptset
+     * Delete Rulesetscriptset
      * Delete an item.
      * @param data The data for the request.
      * @param data.id
      * @returns Message Successful Response
      * @throws ApiError
      */
-    public static deleteProfilescriptset(data: RulesetscriptsetsDeleteProfilescriptsetData): CancelablePromise<RulesetscriptsetsDeleteProfilescriptsetResponse> {
+    public static deleteRulesetscriptset(data: RulesetscriptsetsDeleteRulesetscriptsetData): CancelablePromise<RulesetscriptsetsDeleteRulesetscriptsetResponse> {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/api/v1/rulesetscriptsets/{id}',

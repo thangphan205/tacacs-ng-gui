@@ -7,16 +7,19 @@ import type { IconType } from "react-icons/lib"
 import type { UserPublic } from "@/client"
 
 const items = [
-  { icon: FiHome, title: "Dashboard", path: "/" },
-  { icon: FiBriefcase, title: "Items", path: "/items" },
-  { icon: FiBriefcase, title: "Hosts", path: "/hosts" },
-  { icon: FiBriefcase, title: "Tacacs Groups", path: "/tacacs_groups" },
-  { icon: FiBriefcase, title: "Tacacs Users", path: "/tacacs_users" },
-  { icon: FiBriefcase, title: "Tacacs Services", path: "/tacacs_services" },
-  { icon: FiBriefcase, title: "Profiles", path: "/profiles" },
-  { icon: FiBriefcase, title: "Profiles Script", path: "/profilescripts" },
-  { icon: FiBriefcase, title: "Profiles Script Set", path: "/profilescriptsets" },
-  { icon: FiSettings, title: "User Settings", path: "/settings" },
+  { icon: FiHome, title: "Dashboard", path: "/", level: 1 },
+  { icon: FiBriefcase, title: "Items", path: "/items", level: 1 },
+  { icon: FiBriefcase, title: "Hosts", path: "/hosts", level: 1 },
+  { icon: FiBriefcase, title: "Tacacs Groups", path: "/tacacs_groups", level: 1 },
+  { icon: FiBriefcase, title: "Tacacs Users", path: "/tacacs_users", level: 1 },
+  { icon: FiBriefcase, title: "Tacacs Services", path: "/tacacs_services", level: 1 },
+  { icon: FiBriefcase, title: "Profiles", path: "/profiles", level: 1 },
+  { icon: FiBriefcase, title: "Profiles Script", path: "/profilescripts", level: 2 },
+  { icon: FiBriefcase, title: "Profiles Script Set", path: "/profilescriptsets", level: 2 },
+  { icon: FiBriefcase, title: "Rulesets", path: "/rulesets", level: 1 },
+  { icon: FiBriefcase, title: "Rulesets Script", path: "/rulesetscripts", level: 2 },
+  { icon: FiBriefcase, title: "Rulesets Script Set", path: "/rulesetscriptsets", level: 2 },
+  { icon: FiSettings, title: "User Settings", path: "/settings", level: 1 },
 ]
 
 interface SidebarItemsProps {
@@ -27,6 +30,7 @@ interface Item {
   icon: IconType
   title: string
   path: string
+  level: number
 }
 
 const SidebarItems = ({ onClose }: SidebarItemsProps) => {
@@ -34,14 +38,14 @@ const SidebarItems = ({ onClose }: SidebarItemsProps) => {
   const currentUser = queryClient.getQueryData<UserPublic>(["currentUser"])
 
   const finalItems: Item[] = currentUser?.is_superuser
-    ? [...items, { icon: FiUsers, title: "Admin", path: "/admin" }]
+    ? [...items, { icon: FiUsers, title: "Admin", path: "/admin", level: 1 }]
     : items
 
-  const listItems = finalItems.map(({ icon, title, path }) => (
+  const listItems = finalItems.map(({ icon, title, path, level }) => (
     <RouterLink key={title} to={path} onClick={onClose}>
       <Flex
         gap={4}
-        px={4}
+        px={level === 1 ? 4 : 8}
         py={2}
         _hover={{
           background: "gray.subtle",
