@@ -19,6 +19,7 @@ const items = [
   { icon: FiBriefcase, title: "Rulesets", path: "/rulesets", level: 1 },
   { icon: FiBriefcase, title: "Rulesets Script", path: "/rulesetscripts", level: 2 },
   { icon: FiBriefcase, title: "Rulesets Script Set", path: "/rulesetscriptsets", level: 2 },
+  { icon: FiSettings, title: "Tacacs configs", path: "/tacacs_configs", level: 1 },
   { icon: FiSettings, title: "User Settings", path: "/settings", level: 1 },
 ]
 

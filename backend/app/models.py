@@ -552,3 +552,35 @@ class RulesetScriptSetsPublic(SQLModel):
 
 
 # --- End of TACACS+ Configuration Tables ---
+
+
+# -- Tacacs Config File Table ---
+class TacacsConfigBase(SQLModel):
+    filename: str = Field(index=True, unique=True, max_length=255)
+    description: Optional[str] = None
+
+
+class TacacsConfigCreate(TacacsConfigBase):
+    filename: str = Field(index=True, unique=True, max_length=30)
+
+
+class TacacsConfigUpdate(TacacsConfigBase):
+    description: str | None = Field(default=None)
+
+
+# Database model, database table inferred from class name
+class TacacsConfig(TacacsConfigBase, table=True):
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    active: bool = Field(default=False)
+
+
+# Properties to return via API, id is always required
+class TacacsConfigPublic(TacacsConfigBase):
+    id: uuid.UUID
+    active: bool
+    data: str | None = None
+
+
+class TacacsConfigsPublic(SQLModel):
+    data: list[TacacsConfigPublic]
+    count: int

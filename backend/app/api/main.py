@@ -6,7 +6,7 @@ from app.api.routes import (
     private,
     users,
     utils,
-    tacacs,
+    tacacs_configs,
     tacacs_users,
     tacacs_groups,
     tacacs_services,
@@ -25,7 +25,7 @@ api_router.include_router(login.router)
 api_router.include_router(users.router)
 api_router.include_router(utils.router)
 api_router.include_router(items.router)
-api_router.include_router(tacacs.router)
+api_router.include_router(tacacs_configs.router)
 api_router.include_router(tacacs_users.router)
 api_router.include_router(tacacs_groups.router)
 api_router.include_router(tacacs_services.router)

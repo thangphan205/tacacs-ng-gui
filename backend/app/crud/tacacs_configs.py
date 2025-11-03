@@ -1,9 +1,12 @@
-from typing import Any
-
-from sqlmodel import Session, select
+import os
 from pathlib import Path
+from typing import Any
 import tempfile
+from sqlmodel import Session, select
 from app.models import (
+    TacacsConfig,
+    TacacsConfigCreate,
+    TacacsConfigUpdate,
     TacacsGroup,
     TacacsNG,
     Mavis,
@@ -17,7 +20,11 @@ from app.models import (
     RulesetScript,
     RulesetScriptSet,
 )
-import os
+import logging
+from datetime import datetime
+from fastapi import HTTPException
+
+log = logging.getLogger(__name__)
 
 # Base path cho volume được mount bên trong container FastAPI:
 # Path này tương ứng với 'tacacs_data_volume' được mount vào /app/tacacs_config_and_logs
@@ -288,3 +295,151 @@ def ruleset_generator(session: Session) -> str:
         ruleset_template=ruleset_template
     )
     return ruleset_all
+
+
+def get_tacacs_config_by_name(*, session: Session, name: str) -> TacacsConfig | None:
+    statement = select(TacacsConfig).where(TacacsConfig.filename == name)
+    session_tacacs_config = session.exec(statement).first()
+    return session_tacacs_config
+
+
+def get_tacacs_config_by_filename(filename: str) -> str | None:
+    # Basic security check to prevent directory traversal
+    if ".." in filename or "/" in filename:
+        raise HTTPException(status_code=400, detail="Invalid filename.")
+
+    file_path = os.path.join(SHARED_BASE_PATH, "etc", filename + ".cfg")
+
+    if not os.path.exists(file_path) or not os.path.isfile(file_path):
+        raise HTTPException(
+            status_code=404,
+            detail=f"Configuration file '{filename}' not found.",
+        )
+
+    try:
+        with open(file_path, "r") as f:
+            content = f.read()
+        return content
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Error reading config file '{filename}': {e}"
+        )
+
+
+def create_tacacs_config(
+    *, session: Session, tacacs_config_create: TacacsConfigCreate
+) -> TacacsConfig:
+
+    tacacs_config = generate_tacacs_ng_config(session=session)
+
+    # 1. Create a unique filename and save the content
+
+    filepath = os.path.join(
+        SHARED_BASE_PATH, "etc", tacacs_config_create.filename + ".cfg"
+    )
+
+    try:
+        with open(filepath, "w") as f:
+            f.write(tacacs_config)
+    except Exception as e:
+        log.exception("Exception log: {}".format(e))
+        return False
+
+    # 2. Save the filename to the database
+    db_obj = TacacsConfig.model_validate(tacacs_config_create)
+    session.add(db_obj)
+    session.commit()
+    session.refresh(db_obj)
+    return db_obj
+
+
+def update_tacacs_config(
+    *,
+    session: Session,
+    db_tacacs_config: TacacsConfig,
+    tacacs_config_in: TacacsConfigUpdate,
+) -> Any:
+    filename = db_tacacs_config.filename + ".cfg"
+    # Basic security check to prevent directory traversal
+    if ".." in filename or "/" in filename:
+        return "Path traversal attack detected: {}".format(filename)
+
+    source_file_path = os.path.join(SHARED_BASE_PATH, "etc", filename)
+
+    # 1. Read the content from the specified source file
+    try:
+        if not os.path.exists(source_file_path) or not os.path.isfile(source_file_path):
+            return "Source file not found:{}".format(source_file_path)
+
+        with open(source_file_path, "r") as f:
+            config_data = f.read()
+    except Exception as e:
+        return "Error reading source file: {}".format(e)
+
+    # 2. Save the new configuration to the main config file and create a backup
+    try:
+        # Write new content, overwriting the old file
+        with open(CONFIG_FILE_PATH, "w") as f:
+            f.write("#!../../../sbin/tac_plus-ng\n")
+            f.write("# Tacacs config from {}\n".format(filename))
+            f.write("# Description: {}\n".format(db_tacacs_config.description))
+            f.write(config_data)
+
+        # Create a timestamped backup
+        backup_filename = f"tac_plus-ng_{datetime.now().strftime('%Y%m%d_%H%M%S')}.cfg"
+        with open(os.path.join(SHARED_BASE_PATH, "etc", backup_filename), "w") as f:
+            f.write(config_data)
+    except Exception as e:
+        log.exception("Exception log: {}".format(e))
+
+    # 3. Trigger automatic reload
+    try:
+        # Ensure the trigger file's directory exists
+        os.makedirs(os.path.dirname(RELOAD_TRIGGER_PATH), exist_ok=True)
+
+        # Update the timestamp ('touch') of the trigger file.
+        # The monitor script in the tacacs_ng container will detect this change.
+        os.utime(RELOAD_TRIGGER_PATH, None)
+
+    except Exception as e:
+        print(f"Warning: Failed to touch reload trigger file: {e}")
+
+    # 4. Set all other configs to inactive
+
+    statement = select(TacacsConfig).where(TacacsConfig.id != db_tacacs_config.id)
+    other_configs = session.exec(statement).all()
+    for config in other_configs:
+        if config.active:
+            config.active = False
+            session.add(config)
+
+    tacacs_config_data = tacacs_config_in.model_dump(exclude_unset=True)
+    extra_data = {"active": True}
+    db_tacacs_config.sqlmodel_update(tacacs_config_data, update=extra_data)
+    session.add(db_tacacs_config)
+    session.commit()
+    session.refresh(db_tacacs_config)
+
+    return db_tacacs_config
+
+
+def delete_tacacs_config(*, session: Session, db_tacacs_config: TacacsConfig) -> Any:
+    filename = db_tacacs_config.filename + ".cfg"
+    # Basic security check to prevent directory traversal
+    if ".." in filename or "/" in filename:
+        # This should ideally not happen if data is controlled, but as a safeguard.
+        log.error(f"Attempted to delete a file with an invalid path: {filename}")
+        return None
+
+    file_path = os.path.join(SHARED_BASE_PATH, "etc", filename)
+    if os.path.exists(file_path) and os.path.isfile(file_path):
+        try:
+            os.remove(file_path)
+        except OSError as e:
+            log.error(f"Error removing file {file_path}: {e}")
+            # Decide if you want to stop the DB deletion if file deletion fails.
+            # For now, we'll proceed to delete the DB record.
+
+    session.delete(db_tacacs_config)
+    session.commit()
+    return db_tacacs_config

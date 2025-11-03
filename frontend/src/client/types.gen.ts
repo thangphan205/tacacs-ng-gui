@@ -252,6 +252,29 @@ export type RulesetUpdate = {
     description?: (string | null);
 };
 
+export type TacacsConfigCreate = {
+    filename: string;
+    description?: (string | null);
+};
+
+export type TacacsConfigPublic = {
+    filename: string;
+    description?: (string | null);
+    id: string;
+    active: boolean;
+    data?: (string | null);
+};
+
+export type TacacsConfigsPublic = {
+    data: Array<TacacsConfigPublic>;
+    count: number;
+};
+
+export type TacacsConfigUpdate = {
+    filename: string;
+    description?: (string | null);
+};
+
 export type TacacsGroupCreate = {
     group_name: string;
     description?: (string | null);
@@ -668,15 +691,37 @@ export type RulesetscriptsetsDeleteRulesetscriptsetData = {
 
 export type RulesetscriptsetsDeleteRulesetscriptsetResponse = (Message);
 
-export type TacacsGetConfigResponse = (unknown);
-
-export type TacacsSaveConfigResponse = (unknown);
-
-export type TacacsGetAuthLogsData = {
-    lines?: number;
+export type TacacsConfigsReadTacacsConfigsData = {
+    limit?: number;
+    skip?: number;
 };
 
-export type TacacsGetAuthLogsResponse = (unknown);
+export type TacacsConfigsReadTacacsConfigsResponse = (TacacsConfigsPublic);
+
+export type TacacsConfigsCreateTacacsConfigData = {
+    requestBody: TacacsConfigCreate;
+};
+
+export type TacacsConfigsCreateTacacsConfigResponse = (TacacsConfigPublic);
+
+export type TacacsConfigsReadTacacsConfigByIdData = {
+    id: string;
+};
+
+export type TacacsConfigsReadTacacsConfigByIdResponse = (TacacsConfigPublic);
+
+export type TacacsConfigsUpdateTacacsConfigData = {
+    id: string;
+    requestBody: TacacsConfigUpdate;
+};
+
+export type TacacsConfigsUpdateTacacsConfigResponse = (TacacsConfigPublic);
+
+export type TacacsConfigsDeleteTacacsConfigData = {
+    id: string;
+};
+
+export type TacacsConfigsDeleteTacacsConfigResponse = (Message);
 
 export type TacacsGroupsReadTacacsGroupsData = {
     limit?: number;

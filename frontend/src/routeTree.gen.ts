@@ -18,6 +18,7 @@ import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutTacacs_usersRouteImport } from './routes/_layout/tacacs_users'
 import { Route as LayoutTacacs_servicesRouteImport } from './routes/_layout/tacacs_services'
 import { Route as LayoutTacacs_groupsRouteImport } from './routes/_layout/tacacs_groups'
+import { Route as LayoutTacacs_configsRouteImport } from './routes/_layout/tacacs_configs'
 import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
 import { Route as LayoutRulesetscriptsetsRouteImport } from './routes/_layout/rulesetscriptsets'
 import { Route as LayoutRulesetscriptsRouteImport } from './routes/_layout/rulesetscripts'
@@ -71,6 +72,11 @@ const LayoutTacacs_servicesRoute = LayoutTacacs_servicesRouteImport.update({
 const LayoutTacacs_groupsRoute = LayoutTacacs_groupsRouteImport.update({
   id: '/tacacs_groups',
   path: '/tacacs_groups',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutTacacs_configsRoute = LayoutTacacs_configsRouteImport.update({
+  id: '/tacacs_configs',
+  path: '/tacacs_configs',
   getParentRoute: () => LayoutRoute,
 } as any)
 const LayoutSettingsRoute = LayoutSettingsRouteImport.update({
@@ -139,6 +145,7 @@ export interface FileRoutesByFullPath {
   '/rulesetscripts': typeof LayoutRulesetscriptsRoute
   '/rulesetscriptsets': typeof LayoutRulesetscriptsetsRoute
   '/settings': typeof LayoutSettingsRoute
+  '/tacacs_configs': typeof LayoutTacacs_configsRoute
   '/tacacs_groups': typeof LayoutTacacs_groupsRoute
   '/tacacs_services': typeof LayoutTacacs_servicesRoute
   '/tacacs_users': typeof LayoutTacacs_usersRoute
@@ -159,6 +166,7 @@ export interface FileRoutesByTo {
   '/rulesetscripts': typeof LayoutRulesetscriptsRoute
   '/rulesetscriptsets': typeof LayoutRulesetscriptsetsRoute
   '/settings': typeof LayoutSettingsRoute
+  '/tacacs_configs': typeof LayoutTacacs_configsRoute
   '/tacacs_groups': typeof LayoutTacacs_groupsRoute
   '/tacacs_services': typeof LayoutTacacs_servicesRoute
   '/tacacs_users': typeof LayoutTacacs_usersRoute
@@ -181,6 +189,7 @@ export interface FileRoutesById {
   '/_layout/rulesetscripts': typeof LayoutRulesetscriptsRoute
   '/_layout/rulesetscriptsets': typeof LayoutRulesetscriptsetsRoute
   '/_layout/settings': typeof LayoutSettingsRoute
+  '/_layout/tacacs_configs': typeof LayoutTacacs_configsRoute
   '/_layout/tacacs_groups': typeof LayoutTacacs_groupsRoute
   '/_layout/tacacs_services': typeof LayoutTacacs_servicesRoute
   '/_layout/tacacs_users': typeof LayoutTacacs_usersRoute
@@ -203,6 +212,7 @@ export interface FileRouteTypes {
     | '/rulesetscripts'
     | '/rulesetscriptsets'
     | '/settings'
+    | '/tacacs_configs'
     | '/tacacs_groups'
     | '/tacacs_services'
     | '/tacacs_users'
@@ -223,6 +233,7 @@ export interface FileRouteTypes {
     | '/rulesetscripts'
     | '/rulesetscriptsets'
     | '/settings'
+    | '/tacacs_configs'
     | '/tacacs_groups'
     | '/tacacs_services'
     | '/tacacs_users'
@@ -244,6 +255,7 @@ export interface FileRouteTypes {
     | '/_layout/rulesetscripts'
     | '/_layout/rulesetscriptsets'
     | '/_layout/settings'
+    | '/_layout/tacacs_configs'
     | '/_layout/tacacs_groups'
     | '/_layout/tacacs_services'
     | '/_layout/tacacs_users'
@@ -321,6 +333,13 @@ declare module '@tanstack/react-router' {
       path: '/tacacs_groups'
       fullPath: '/tacacs_groups'
       preLoaderRoute: typeof LayoutTacacs_groupsRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/tacacs_configs': {
+      id: '/_layout/tacacs_configs'
+      path: '/tacacs_configs'
+      fullPath: '/tacacs_configs'
+      preLoaderRoute: typeof LayoutTacacs_configsRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/settings': {
@@ -407,6 +426,7 @@ interface LayoutRouteChildren {
   LayoutRulesetscriptsRoute: typeof LayoutRulesetscriptsRoute
   LayoutRulesetscriptsetsRoute: typeof LayoutRulesetscriptsetsRoute
   LayoutSettingsRoute: typeof LayoutSettingsRoute
+  LayoutTacacs_configsRoute: typeof LayoutTacacs_configsRoute
   LayoutTacacs_groupsRoute: typeof LayoutTacacs_groupsRoute
   LayoutTacacs_servicesRoute: typeof LayoutTacacs_servicesRoute
   LayoutTacacs_usersRoute: typeof LayoutTacacs_usersRoute
@@ -424,6 +444,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutRulesetscriptsRoute: LayoutRulesetscriptsRoute,
   LayoutRulesetscriptsetsRoute: LayoutRulesetscriptsetsRoute,
   LayoutSettingsRoute: LayoutSettingsRoute,
+  LayoutTacacs_configsRoute: LayoutTacacs_configsRoute,
   LayoutTacacs_groupsRoute: LayoutTacacs_groupsRoute,
   LayoutTacacs_servicesRoute: LayoutTacacs_servicesRoute,
   LayoutTacacs_usersRoute: LayoutTacacs_usersRoute,

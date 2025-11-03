@@ -1233,6 +1233,117 @@ export const RulesetsPublicSchema = {
     title: 'RulesetsPublic'
 } as const;
 
+export const TacacsConfigCreateSchema = {
+    properties: {
+        filename: {
+            type: 'string',
+            maxLength: 30,
+            title: 'Filename'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        }
+    },
+    type: 'object',
+    required: ['filename'],
+    title: 'TacacsConfigCreate'
+} as const;
+
+export const TacacsConfigPublicSchema = {
+    properties: {
+        filename: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Filename'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        },
+        active: {
+            type: 'boolean',
+            title: 'Active'
+        },
+        data: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Data'
+        }
+    },
+    type: 'object',
+    required: ['filename', 'id', 'active'],
+    title: 'TacacsConfigPublic'
+} as const;
+
+export const TacacsConfigUpdateSchema = {
+    properties: {
+        filename: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Filename'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        }
+    },
+    type: 'object',
+    required: ['filename'],
+    title: 'TacacsConfigUpdate'
+} as const;
+
+export const TacacsConfigsPublicSchema = {
+    properties: {
+        data: {
+            items: {
+                '$ref': '#/components/schemas/TacacsConfigPublic'
+            },
+            type: 'array',
+            title: 'Data'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['data', 'count'],
+    title: 'TacacsConfigsPublic'
+} as const;
+
 export const TacacsGroupCreateSchema = {
     properties: {
         group_name: {
