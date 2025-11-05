@@ -1,9 +1,12 @@
 import {
   Button,
+  Collapsible,
   DialogActionTrigger,
   DialogTitle,
   Input,
   Text,
+  SimpleGrid,
+  Textarea,
   VStack,
 } from "@chakra-ui/react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
@@ -39,8 +42,16 @@ const AddHost = () => {
     mode: "onBlur",
     criteriaMode: "all",
     defaultValues: {
-      name: "",
+      name: "demo",
+      ipv4_address: "192.168.1.0/24",
+      ipv6_address: "",
+      secret_key: "",
       description: "",
+      welcome_banner: "",
+      reject_banner: "",
+      motd_banner: "",
+      failed_authentication_banner: "",
+      parent: "",
     },
   })
 
@@ -66,7 +77,7 @@ const AddHost = () => {
 
   return (
     <DialogRoot
-      size={{ base: "xs", md: "md" }}
+      size={{ base: "md", md: "md" }}
       placement="center"
       open={isOpen}
       onOpenChange={({ open }) => setIsOpen(open)}
@@ -84,7 +95,7 @@ const AddHost = () => {
           </DialogHeader>
           <DialogBody>
             <Text mb={4}>Fill in the details to add a new item.</Text>
-            <VStack gap={4}>
+            <VStack gap={4} as="section">
               <Field
                 required
                 invalid={!!errors.name}
@@ -99,45 +110,102 @@ const AddHost = () => {
                   type="text"
                 />
               </Field>
-              <Field
-                required
-                invalid={!!errors.ipv4_address}
-                errorText={errors.ipv4_address?.message}
-                label="ipv4_address"
-              >
-                <Input
-                  {...register("ipv4_address", {
-                    required: "ipv4_address is required.",
-                  })}
-                  placeholder="ipv4_address"
-                  type="text"
-                />
-              </Field>
-              <Field
-                required
-                invalid={!!errors.secret_key}
-                errorText={errors.secret_key?.message}
-                label="secret_key"
-              >
-                <Input
-                  {...register("secret_key", {
-                    required: "secret_key is required.",
-                  })}
-                  placeholder="secret_key"
-                  type="text"
-                />
-              </Field>
-              <Field
-                invalid={!!errors.description}
-                errorText={errors.description?.message}
-                label="Description"
-              >
-                <Input
-                  {...register("description")}
-                  placeholder="Description"
-                  type="text"
-                />
-              </Field>
+              <SimpleGrid columns={2} gap={4} w="full">
+                <Field
+                  required
+                  invalid={!!errors.ipv4_address}
+                  errorText={errors.ipv4_address?.message}
+                  label="ipv4_address"
+                >
+                  <Input
+                    {...register("ipv4_address", {
+                      required: "ipv4_address is required.",
+                    })}
+                    placeholder="ipv4_address"
+                    type="text"
+                  />
+                </Field>
+                <Field
+                  required
+                  invalid={!!errors.secret_key}
+                  errorText={errors.secret_key?.message}
+                  label="secret_key"
+                >
+                  <Input
+                    {...register("secret_key", {
+                      required: "secret_key is required.",
+                    })}
+                    placeholder="secret_key"
+                    type="text"
+                  />
+                </Field>
+                <Field
+                  invalid={!!errors.description}
+                  errorText={errors.description?.message}
+                  label="Description"
+                >
+                  <Input
+                    {...register("description")}
+                    placeholder="Description"
+                    type="text"
+                  />
+                </Field>
+                <Field invalid={!!errors.parent} errorText={errors.parent?.message} label="parent">
+                  <Input {...register("parent")} placeholder="parent" type="text" />
+                </Field>
+              </SimpleGrid>
+              <Collapsible.Root style={{ width: "100%" }}>
+                <Collapsible.Trigger asChild><Button w="full" variant="outline">Configure Banner Messages</Button></Collapsible.Trigger>
+                <Collapsible.Content>
+
+                  <Field
+                    invalid={!!errors.welcome_banner}
+                    errorText={errors.welcome_banner?.message}
+                    label="welcome_banner"
+                  >
+                    <Textarea
+                      {...register("welcome_banner")}
+                      placeholder="welcome_banner"
+
+                    />
+                  </Field>
+                  <Field
+                    invalid={!!errors.reject_banner}
+                    errorText={errors.reject_banner?.message}
+                    label="reject_banner"
+                  >
+                    <Textarea
+                      {...register("reject_banner")}
+                      placeholder="reject_banner"
+
+                    />
+                  </Field>
+                  <Field
+                    invalid={!!errors.motd_banner}
+                    errorText={errors.motd_banner?.message}
+                    label="motd_banner"
+                  >
+                    <Textarea
+                      {...register("motd_banner")}
+                      placeholder="motd_banner"
+
+                    />
+                  </Field>
+                  <Field
+                    invalid={!!errors.failed_authentication_banner}
+                    errorText={errors.failed_authentication_banner?.message}
+                    label="failed_authentication_banner"
+                  >
+                    <Textarea
+                      {...register("failed_authentication_banner")}
+                      placeholder="failed_authentication_banner"
+
+                    />
+                  </Field>
+
+                </Collapsible.Content>
+              </Collapsible.Root>
+
             </VStack>
           </DialogBody>
 

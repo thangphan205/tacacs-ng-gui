@@ -103,6 +103,61 @@ export const HostCreateSchema = {
             maxLength: 255,
             title: 'Secret Key'
         },
+        welcome_banner: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Welcome Banner'
+        },
+        reject_banner: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Reject Banner'
+        },
+        motd_banner: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Motd Banner'
+        },
+        failed_authentication_banner: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Failed Authentication Banner'
+        },
+        parent: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Parent'
+        },
         description: {
             anyOf: [
                 {
@@ -153,6 +208,61 @@ export const HostPublicSchema = {
             type: 'string',
             maxLength: 255,
             title: 'Secret Key'
+        },
+        welcome_banner: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Welcome Banner'
+        },
+        reject_banner: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Reject Banner'
+        },
+        motd_banner: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Motd Banner'
+        },
+        failed_authentication_banner: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Failed Authentication Banner'
+        },
+        parent: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Parent'
         },
         description: {
             anyOf: [
@@ -209,6 +319,61 @@ export const HostUpdateSchema = {
             type: 'string',
             maxLength: 255,
             title: 'Secret Key'
+        },
+        welcome_banner: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Welcome Banner'
+        },
+        reject_banner: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Reject Banner'
+        },
+        motd_banner: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Motd Banner'
+        },
+        failed_authentication_banner: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Failed Authentication Banner'
+        },
+        parent: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Parent'
         },
         description: {
             anyOf: [

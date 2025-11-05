@@ -14,6 +14,11 @@ export type HostCreate = {
     ipv4_address?: (string | null);
     ipv6_address?: (string | null);
     secret_key: string;
+    welcome_banner?: (string | null);
+    reject_banner?: (string | null);
+    motd_banner?: (string | null);
+    failed_authentication_banner?: (string | null);
+    parent?: (string | null);
     description?: (string | null);
 };
 
@@ -22,6 +27,11 @@ export type HostPublic = {
     ipv4_address?: (string | null);
     ipv6_address?: (string | null);
     secret_key: string;
+    welcome_banner?: (string | null);
+    reject_banner?: (string | null);
+    motd_banner?: (string | null);
+    failed_authentication_banner?: (string | null);
+    parent?: (string | null);
     description?: (string | null);
     id: string;
 };
@@ -36,6 +46,11 @@ export type HostUpdate = {
     ipv4_address?: (string | null);
     ipv6_address?: (string | null);
     secret_key: string;
+    welcome_banner?: (string | null);
+    reject_banner?: (string | null);
+    motd_banner?: (string | null);
+    failed_authentication_banner?: (string | null);
+    parent?: (string | null);
     description?: (string | null);
 };
 

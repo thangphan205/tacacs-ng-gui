@@ -204,6 +204,11 @@ class HostBase(SQLModel):
     ipv4_address: Optional[str] = None
     ipv6_address: Optional[str] = None
     secret_key: str = Field(max_length=255)
+    welcome_banner: Optional[str] = None
+    reject_banner: Optional[str] = None
+    motd_banner: Optional[str] = None
+    failed_authentication_banner: Optional[str] = None
+    parent: Optional[str] = None
     description: Optional[str] = None
 
 
