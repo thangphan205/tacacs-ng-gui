@@ -54,7 +54,7 @@ def generate_tacacs_ng_config(*, session: Session) -> Any:
     mavis_basic = session.exec(statement).first()
     mavis_info = mavis_basic.model_dump()
 
-    statement = select(Host).limit(1)
+    statement = select(Host)
     host_basic = session.exec(statement).all()
 
     config_file_template = """#!../../../sbin/tac_plus-ng
@@ -88,7 +88,10 @@ id = tac_plus-ng {{
         setenv TACACS_GROUP_PREFIX = "tacacs_"
 
         exec = /usr/local/lib/mavis/mavis_tacplus-ng_ldap.pl
-    }}""".format(
+    }}
+    login backend = mavis
+    user backend = mavis
+    pap backend = mavis""".format(
         addr=tacacs_ng_info["ipv4_address"],
         port=tacacs_ng_info["ipv4_port"],
         inst_min=tacacs_ng_info["instances_min"],
