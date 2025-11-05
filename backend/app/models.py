@@ -117,7 +117,7 @@ class NewPassword(SQLModel):
 # --- TACACS+ Configuration Tables ---
 
 
-class TacacsNGBase(SQLModel):
+class TacacsNgSettingBase(SQLModel):
     ipv4_enabled: bool = Field(default=True)
     ipv4_address: str = Field(default="0.0.0.0")
     ipv4_port: int = Field(default=49)
@@ -141,26 +141,26 @@ class TacacsNGBase(SQLModel):
     pap_backend: str = Field(default="mavis")
 
 
-class TacacsNGCreate(TacacsNGBase):
+class TacacsNgSettingCreate(TacacsNgSettingBase):
     pass
 
 
-class TacacsNGUpdate(TacacsNGBase):
+class TacacsNgSettingUpdate(TacacsNgSettingBase):
     pass
 
 
 # Database model, database table inferred from class name
-class TacacsNG(TacacsNGBase, table=True):
+class TacacsNgSetting(TacacsNgSettingBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
 
 
 # Properties to return via API, id is always required
-class TacacsNGPublic(TacacsNGBase):
+class TacacsNgSettingPublic(TacacsNgSettingBase):
     id: uuid.UUID
 
 
-class TacacsNGsPublic(SQLModel):
-    data: list[TacacsNGPublic]
+class TacacsNgSettingsPublic(SQLModel):
+    data: list[TacacsNgSettingPublic]
     count: int
 
 

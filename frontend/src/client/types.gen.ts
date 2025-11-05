@@ -65,6 +65,31 @@ export type ItemUpdate = {
     description?: (string | null);
 };
 
+export type MavisPublic = {
+    ldap_server_type?: string;
+    ldap_hosts?: string;
+    ldap_base?: string;
+    ldap_user?: string;
+    ldap_passwd?: string;
+    ldap_filter?: string;
+    ldap_timeout?: number;
+    require_tacacs_group_prefix?: number;
+    tacacs_group_prefix?: string;
+    id: string;
+};
+
+export type MavisUpdate = {
+    ldap_server_type?: string;
+    ldap_hosts?: string;
+    ldap_base?: string;
+    ldap_user?: string;
+    ldap_passwd?: string;
+    ldap_filter?: string;
+    ldap_timeout?: number;
+    require_tacacs_group_prefix?: number;
+    tacacs_group_prefix?: string;
+};
+
 export type Message = {
     message: string;
 };
@@ -296,6 +321,43 @@ export type TacacsGroupUpdate = {
     description?: (string | null);
 };
 
+export type TacacsNgSettingPublic = {
+    ipv4_enabled?: boolean;
+    ipv4_address?: string;
+    ipv4_port?: number;
+    ipv6_enabled?: boolean;
+    ipv6_address?: string;
+    ipv6_port?: number;
+    instances_min?: number;
+    instances_max?: number;
+    background?: string;
+    access_logfile_destination?: string;
+    accounting_logfile_destination?: string;
+    authentication_logfile_destination?: string;
+    login_backend?: string;
+    user_backend?: string;
+    pap_backend?: string;
+    id: string;
+};
+
+export type TacacsNgSettingUpdate = {
+    ipv4_enabled?: boolean;
+    ipv4_address?: string;
+    ipv4_port?: number;
+    ipv6_enabled?: boolean;
+    ipv6_address?: string;
+    ipv6_port?: number;
+    instances_min?: number;
+    instances_max?: number;
+    background?: string;
+    access_logfile_destination?: string;
+    accounting_logfile_destination?: string;
+    authentication_logfile_destination?: string;
+    login_backend?: string;
+    user_backend?: string;
+    pap_backend?: string;
+};
+
 export type TacacsServiceCreate = {
     name: string;
     description?: (string | null);
@@ -492,6 +554,14 @@ export type LoginRecoverPasswordHtmlContentData = {
 };
 
 export type LoginRecoverPasswordHtmlContentResponse = (string);
+
+export type MavisReadMavisSettingsResponse = (MavisPublic);
+
+export type MavisUpdateMavisSettingsData = {
+    requestBody: MavisUpdate;
+};
+
+export type MavisUpdateMavisSettingsResponse = (MavisPublic);
 
 export type PrivateCreateUserData = {
     requestBody: PrivateUserCreate;
@@ -754,6 +824,14 @@ export type TacacsGroupsDeleteTacacsGroupData = {
 };
 
 export type TacacsGroupsDeleteTacacsGroupResponse = (Message);
+
+export type TacacsNgSettingsReadTacacsNgSettingsResponse = (TacacsNgSettingPublic);
+
+export type TacacsNgSettingsUpdateTacacsNgSettingsData = {
+    requestBody: TacacsNgSettingUpdate;
+};
+
+export type TacacsNgSettingsUpdateTacacsNgSettingsResponse = (TacacsNgSettingPublic);
 
 export type TacacsServicesReadTacacsServicesData = {
     limit?: number;

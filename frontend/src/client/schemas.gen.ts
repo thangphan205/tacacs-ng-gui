@@ -359,6 +359,116 @@ export const ItemsPublicSchema = {
     title: 'ItemsPublic'
 } as const;
 
+export const MavisPublicSchema = {
+    properties: {
+        ldap_server_type: {
+            type: 'string',
+            title: 'Ldap Server Type',
+            default: 'openldap'
+        },
+        ldap_hosts: {
+            type: 'string',
+            title: 'Ldap Hosts',
+            default: 'ldaps://ldap-server'
+        },
+        ldap_base: {
+            type: 'string',
+            title: 'Ldap Base',
+            default: 'dc=example,dc=com'
+        },
+        ldap_user: {
+            type: 'string',
+            title: 'Ldap User',
+            default: 'cn=admin,dc=example,dc=com'
+        },
+        ldap_passwd: {
+            type: 'string',
+            title: 'Ldap Passwd',
+            default: 'admin_password'
+        },
+        ldap_filter: {
+            type: 'string',
+            title: 'Ldap Filter',
+            default: '(objectClass=person)'
+        },
+        ldap_timeout: {
+            type: 'integer',
+            title: 'Ldap Timeout',
+            default: 5
+        },
+        require_tacacs_group_prefix: {
+            type: 'integer',
+            title: 'Require Tacacs Group Prefix',
+            default: 0
+        },
+        tacacs_group_prefix: {
+            type: 'string',
+            title: 'Tacacs Group Prefix',
+            default: 'tacacs_'
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        }
+    },
+    type: 'object',
+    required: ['id'],
+    title: 'MavisPublic'
+} as const;
+
+export const MavisUpdateSchema = {
+    properties: {
+        ldap_server_type: {
+            type: 'string',
+            title: 'Ldap Server Type',
+            default: 'openldap'
+        },
+        ldap_hosts: {
+            type: 'string',
+            title: 'Ldap Hosts',
+            default: 'ldaps://ldap-server'
+        },
+        ldap_base: {
+            type: 'string',
+            title: 'Ldap Base',
+            default: 'dc=example,dc=com'
+        },
+        ldap_user: {
+            type: 'string',
+            title: 'Ldap User',
+            default: 'cn=admin,dc=example,dc=com'
+        },
+        ldap_passwd: {
+            type: 'string',
+            title: 'Ldap Passwd',
+            default: 'admin_password'
+        },
+        ldap_filter: {
+            type: 'string',
+            title: 'Ldap Filter',
+            default: '(objectClass=person)'
+        },
+        ldap_timeout: {
+            type: 'integer',
+            title: 'Ldap Timeout',
+            default: 5
+        },
+        require_tacacs_group_prefix: {
+            type: 'integer',
+            title: 'Require Tacacs Group Prefix',
+            default: 0
+        },
+        tacacs_group_prefix: {
+            type: 'string',
+            title: 'Tacacs Group Prefix',
+            default: 'tacacs_'
+        }
+    },
+    type: 'object',
+    title: 'MavisUpdate'
+} as const;
+
 export const MessageSchema = {
     properties: {
         message: {
@@ -1438,6 +1548,176 @@ export const TacacsGroupsPublicSchema = {
     type: 'object',
     required: ['data', 'count'],
     title: 'TacacsGroupsPublic'
+} as const;
+
+export const TacacsNgSettingPublicSchema = {
+    properties: {
+        ipv4_enabled: {
+            type: 'boolean',
+            title: 'Ipv4 Enabled',
+            default: true
+        },
+        ipv4_address: {
+            type: 'string',
+            title: 'Ipv4 Address',
+            default: '0.0.0.0'
+        },
+        ipv4_port: {
+            type: 'integer',
+            title: 'Ipv4 Port',
+            default: 49
+        },
+        ipv6_enabled: {
+            type: 'boolean',
+            title: 'Ipv6 Enabled',
+            default: false
+        },
+        ipv6_address: {
+            type: 'string',
+            title: 'Ipv6 Address',
+            default: '::'
+        },
+        ipv6_port: {
+            type: 'integer',
+            title: 'Ipv6 Port',
+            default: 49
+        },
+        instances_min: {
+            type: 'integer',
+            title: 'Instances Min',
+            default: 1
+        },
+        instances_max: {
+            type: 'integer',
+            title: 'Instances Max',
+            default: 10
+        },
+        background: {
+            type: 'string',
+            title: 'Background',
+            default: 'no'
+        },
+        access_logfile_destination: {
+            type: 'string',
+            title: 'Access Logfile Destination',
+            default: '/var/log/tac_plus/%Y/access-%m-%d-%Y.txt'
+        },
+        accounting_logfile_destination: {
+            type: 'string',
+            title: 'Accounting Logfile Destination',
+            default: '/var/log/tac_plus/%Y/accounting-%m-%d-%Y.txt'
+        },
+        authentication_logfile_destination: {
+            type: 'string',
+            title: 'Authentication Logfile Destination',
+            default: '/var/log/tac_plus/%Y/authentication-%m-%d-%Y.txt'
+        },
+        login_backend: {
+            type: 'string',
+            title: 'Login Backend',
+            default: 'mavis'
+        },
+        user_backend: {
+            type: 'string',
+            title: 'User Backend',
+            default: 'mavis'
+        },
+        pap_backend: {
+            type: 'string',
+            title: 'Pap Backend',
+            default: 'mavis'
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        }
+    },
+    type: 'object',
+    required: ['id'],
+    title: 'TacacsNgSettingPublic'
+} as const;
+
+export const TacacsNgSettingUpdateSchema = {
+    properties: {
+        ipv4_enabled: {
+            type: 'boolean',
+            title: 'Ipv4 Enabled',
+            default: true
+        },
+        ipv4_address: {
+            type: 'string',
+            title: 'Ipv4 Address',
+            default: '0.0.0.0'
+        },
+        ipv4_port: {
+            type: 'integer',
+            title: 'Ipv4 Port',
+            default: 49
+        },
+        ipv6_enabled: {
+            type: 'boolean',
+            title: 'Ipv6 Enabled',
+            default: false
+        },
+        ipv6_address: {
+            type: 'string',
+            title: 'Ipv6 Address',
+            default: '::'
+        },
+        ipv6_port: {
+            type: 'integer',
+            title: 'Ipv6 Port',
+            default: 49
+        },
+        instances_min: {
+            type: 'integer',
+            title: 'Instances Min',
+            default: 1
+        },
+        instances_max: {
+            type: 'integer',
+            title: 'Instances Max',
+            default: 10
+        },
+        background: {
+            type: 'string',
+            title: 'Background',
+            default: 'no'
+        },
+        access_logfile_destination: {
+            type: 'string',
+            title: 'Access Logfile Destination',
+            default: '/var/log/tac_plus/%Y/access-%m-%d-%Y.txt'
+        },
+        accounting_logfile_destination: {
+            type: 'string',
+            title: 'Accounting Logfile Destination',
+            default: '/var/log/tac_plus/%Y/accounting-%m-%d-%Y.txt'
+        },
+        authentication_logfile_destination: {
+            type: 'string',
+            title: 'Authentication Logfile Destination',
+            default: '/var/log/tac_plus/%Y/authentication-%m-%d-%Y.txt'
+        },
+        login_backend: {
+            type: 'string',
+            title: 'Login Backend',
+            default: 'mavis'
+        },
+        user_backend: {
+            type: 'string',
+            title: 'User Backend',
+            default: 'mavis'
+        },
+        pap_backend: {
+            type: 'string',
+            title: 'Pap Backend',
+            default: 'mavis'
+        }
+    },
+    type: 'object',
+    title: 'TacacsNgSettingUpdate'
 } as const;
 
 export const TacacsServiceCreateSchema = {

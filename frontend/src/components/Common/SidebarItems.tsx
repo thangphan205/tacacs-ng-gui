@@ -1,24 +1,41 @@
 import { Box, Flex, Icon, Text } from "@chakra-ui/react"
 import { useQueryClient } from "@tanstack/react-query"
 import { Link as RouterLink } from "@tanstack/react-router"
-import { FiBriefcase, FiHome, FiSettings, FiUsers } from "react-icons/fi"
+import {
+  FiFileText,
+  FiGrid,
+  FiHardDrive,
+  FiHome,
+  FiLayers,
+  FiSettings,
+  FiShield,
+  FiTerminal,
+  FiUser,
+  FiUsers,
+} from "react-icons/fi"
 import type { IconType } from "react-icons/lib"
 
 import type { UserPublic } from "@/client"
 
 const items = [
   { icon: FiHome, title: "Dashboard", path: "/", level: 1 },
-  { icon: FiBriefcase, title: "Items", path: "/items", level: 1 },
-  { icon: FiBriefcase, title: "Hosts", path: "/hosts", level: 1 },
-  { icon: FiBriefcase, title: "Tacacs Groups", path: "/tacacs_groups", level: 1 },
-  { icon: FiBriefcase, title: "Tacacs Users", path: "/tacacs_users", level: 1 },
-  { icon: FiBriefcase, title: "Tacacs Services", path: "/tacacs_services", level: 1 },
-  { icon: FiBriefcase, title: "Profiles", path: "/profiles", level: 1 },
-  { icon: FiBriefcase, title: "Profiles Script", path: "/profilescripts", level: 2 },
-  { icon: FiBriefcase, title: "Profiles Script Set", path: "/profilescriptsets", level: 2 },
-  { icon: FiBriefcase, title: "Rulesets", path: "/rulesets", level: 1 },
-  { icon: FiBriefcase, title: "Rulesets Script", path: "/rulesetscripts", level: 2 },
-  { icon: FiBriefcase, title: "Rulesets Script Set", path: "/rulesetscriptsets", level: 2 },
+  {
+    icon: FiSettings,
+    title: "Tacacs-ng Settings",
+    path: "/tacacs_ng_settings",
+    level: 1,
+  },
+  { icon: FiSettings, title: "Mavis Settings", path: "/mavis_settings", level: 1 },
+  { icon: FiHardDrive, title: "Hosts", path: "/hosts", level: 1 },
+  { icon: FiUsers, title: "Tacacs Groups", path: "/tacacs_groups", level: 1 },
+  { icon: FiUser, title: "Tacacs Users", path: "/tacacs_users", level: 1 },
+  { icon: FiGrid, title: "Tacacs Services", path: "/tacacs_services", level: 1 },
+  { icon: FiFileText, title: "Profiles", path: "/profiles", level: 1 },
+  { icon: FiTerminal, title: "Profiles Script", path: "/profilescripts", level: 2 },
+  { icon: FiLayers, title: "Profiles Script Set", path: "/profilescriptsets", level: 2 },
+  { icon: FiShield, title: "Rulesets", path: "/rulesets", level: 1 },
+  { icon: FiTerminal, title: "Rulesets Script", path: "/rulesetscripts", level: 2 },
+  { icon: FiLayers, title: "Rulesets Script Set", path: "/rulesetscriptsets", level: 2 },
   { icon: FiSettings, title: "Tacacs configs", path: "/tacacs_configs", level: 1 },
   { icon: FiSettings, title: "User Settings", path: "/settings", level: 1 },
 ]

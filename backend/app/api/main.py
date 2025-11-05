@@ -6,11 +6,13 @@ from app.api.routes import (
     private,
     users,
     utils,
+    tacacs_ng_settings,
     tacacs_configs,
     tacacs_users,
     tacacs_groups,
     tacacs_services,
     profiles,
+    mavis,
     profilescripts,
     profilescriptsets,
     hosts,
@@ -25,10 +27,12 @@ api_router.include_router(login.router)
 api_router.include_router(users.router)
 api_router.include_router(utils.router)
 api_router.include_router(items.router)
+api_router.include_router(tacacs_ng_settings.router)
 api_router.include_router(tacacs_configs.router)
 api_router.include_router(tacacs_users.router)
 api_router.include_router(tacacs_groups.router)
 api_router.include_router(tacacs_services.router)
+api_router.include_router(mavis.router)
 api_router.include_router(profiles.router)
 api_router.include_router(profilescripts.router)
 api_router.include_router(profilescriptsets.router)

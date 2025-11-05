@@ -8,7 +8,7 @@ from app.models import (
     TacacsConfigCreate,
     TacacsConfigUpdate,
     TacacsGroup,
-    TacacsNG,
+    TacacsNgSetting,
     Mavis,
     Host,
     TacacsGroup,
@@ -46,7 +46,7 @@ def generate_tacacs_ng_config(*, session: Session) -> Any:
     Bạn có thể tùy chỉnh cấu hình mặc định theo yêu cầu của mình.
     """
 
-    statement = select(TacacsNG).limit(1)
+    statement = select(TacacsNgSetting).limit(1)
     tacacs_ng_basic = session.exec(statement).first()
     tacacs_ng_info = tacacs_ng_basic.model_dump()
 

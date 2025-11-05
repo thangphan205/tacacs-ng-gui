@@ -5,8 +5,8 @@ from app.core.config import settings
 from app.models import (
     User,
     UserCreate,
-    TacacsNG,
-    TacacsNGCreate,
+    TacacsNgSetting,
+    TacacsNgSettingCreate,
     Mavis,
     MavisCreate,
     Host,
@@ -59,9 +59,9 @@ def init_db(session: Session) -> None:
         )
         user = users.create_user(session=session, user_create=user_in)
 
-    tacacs_settings = session.exec(select(TacacsNG)).first()
+    tacacs_settings = session.exec(select(TacacsNgSetting)).first()
     if not tacacs_settings:
-        tacacs_in = TacacsNGCreate(
+        tacacs_in = TacacsNgSettingCreate(
             ipv4_enabled=settings.IPV4_ENABLED,
             ipv4_address=settings.IPV4_ADDRESS,
             ipv4_port=settings.IPV4_PORT,
@@ -78,7 +78,7 @@ def init_db(session: Session) -> None:
             user_backend=settings.USER_BACKEND,
             pap_backend=settings.PAP_BACKEND,
         )
-        tacacs_settings = TacacsNG.model_validate(tacacs_in)
+        tacacs_settings = TacacsNgSetting.model_validate(tacacs_in)
         session.add(tacacs_settings)
         session.commit()
         session.refresh(tacacs_settings)
