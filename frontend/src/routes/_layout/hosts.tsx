@@ -90,7 +90,7 @@ function HostsTable() {
             <Table.ColumnHeader w="sm">ID</Table.ColumnHeader>
             <Table.ColumnHeader w="sm">Name</Table.ColumnHeader>
             <Table.ColumnHeader w="sm">Address</Table.ColumnHeader>
-            <Table.ColumnHeader w="sm">Secret</Table.ColumnHeader>
+            <Table.ColumnHeader w="sm">Parent</Table.ColumnHeader>
             <Table.ColumnHeader w="sm">Description</Table.ColumnHeader>
             <Table.ColumnHeader w="sm">Actions</Table.ColumnHeader>
           </Table.Row>
@@ -108,7 +108,7 @@ function HostsTable() {
                 {host.ipv4_address}
               </Table.Cell>
               <Table.Cell truncate maxW="sm">
-                **SECRET-DATA**
+                {host.parent || "None"}
               </Table.Cell>
               <Table.Cell
                 color={!host.description ? "gray" : "inherit"}

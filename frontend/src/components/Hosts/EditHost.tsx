@@ -5,9 +5,11 @@ import {
   DialogActionTrigger,
   Input,
   SimpleGrid,
+  Select,
   Text,
   VStack,
   Textarea,
+  createListCollection,
 } from "@chakra-ui/react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
@@ -15,6 +17,7 @@ import { type SubmitHandler, useForm } from "react-hook-form"
 import { FaExchangeAlt } from "react-icons/fa"
 
 import { type ApiError, type HostPublic, HostsService } from "@/client"
+import { useQuery } from "@tanstack/react-query"
 import useCustomToast from "@/hooks/useCustomToast"
 import { handleError } from "@/utils"
 import {
@@ -56,6 +59,7 @@ const EditHost = ({ host }: EditHostProps) => {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<HostUpdateForm>({
     mode: "onBlur",
@@ -73,6 +77,11 @@ const EditHost = ({ host }: EditHostProps) => {
       failed_authentication_banner: host.failed_authentication_banner ?? undefined,
       parent: host.parent ?? undefined,
     },
+  })
+
+  const { data: hostsData } = useQuery({
+    queryKey: ["hosts"],
+    queryFn: () => HostsService.readHosts({ limit: 1000 }),
   })
 
   const mutation = useMutation({
@@ -94,7 +103,15 @@ const EditHost = ({ host }: EditHostProps) => {
   const onSubmit: SubmitHandler<HostUpdateForm> = async (data) => {
     mutation.mutate(data)
   }
-
+  let items_hosts = createListCollection<{ value: string; label: string }>({ items: [] });
+  if (hostsData && hostsData.data.length > 0) {
+    hostsData.data.forEach((hostData) => {
+      items_hosts.items.push({
+        value: hostData.name,
+        label: hostData.name,
+      });
+    });
+  }
   return (
     <DialogRoot
       size={{ base: "xs", md: "md" }}
@@ -171,7 +188,29 @@ const EditHost = ({ host }: EditHostProps) => {
                   />
                 </Field>
                 <Field invalid={!!errors.parent} errorText={errors.parent?.message} label="parent">
-                  <Input {...register("parent")} placeholder="parent" type="text" />
+                  <Select.Root
+                    collection={items_hosts}
+                    size="sm"
+                    onSelect={(selection) => {
+                      setValue("parent", selection.value);
+                    }}
+                  >
+                    <Select.Trigger>
+                      <Select.ValueText placeholder="Select Host Parent" />
+                    </Select.Trigger>
+                    <Select.Positioner>
+                      <Select.Content>
+                        <Select.ItemGroup>
+                          {items_hosts.items.map((item) => (
+                            <Select.Item key={item.value} item={item.value}>
+                              {item.label}
+                              <Select.ItemIndicator />
+                            </Select.Item>
+                          ))}
+                        </Select.ItemGroup>
+                      </Select.Content>
+                    </Select.Positioner>
+                  </Select.Root>
                 </Field>
               </SimpleGrid>
               <Collapsible.Root style={{ width: "100%" }}>

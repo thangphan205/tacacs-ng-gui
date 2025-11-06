@@ -1715,6 +1715,64 @@ export const TacacsGroupsPublicSchema = {
     title: 'TacacsGroupsPublic'
 } as const;
 
+export const TacacsLogPublicSchema = {
+    properties: {
+        filename: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Filename'
+        },
+        filepath: {
+            type: 'string',
+            maxLength: 1024,
+            title: 'Filepath'
+        },
+        created_at: {
+            type: 'string',
+            format: 'date-time',
+            title: 'Created At'
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        },
+        data: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Data'
+        }
+    },
+    type: 'object',
+    required: ['filename', 'filepath', 'id'],
+    title: 'TacacsLogPublic'
+} as const;
+
+export const TacacsLogsPublicSchema = {
+    properties: {
+        data: {
+            items: {
+                '$ref': '#/components/schemas/TacacsLogPublic'
+            },
+            type: 'array',
+            title: 'Data'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['data', 'count'],
+    title: 'TacacsLogsPublic'
+} as const;
+
 export const TacacsNgSettingPublicSchema = {
     properties: {
         ipv4_enabled: {

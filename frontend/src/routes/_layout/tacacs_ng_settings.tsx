@@ -102,107 +102,65 @@ function TacacsNgSettingsForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box mt={4} p={4} borderWidth="1px" borderRadius="lg">
-        <VStack align="stretch">
-          <SimpleGrid columns={2} >
-            <Box>
-              <Field
-                label="IPv4 Address"
-                required
-                invalid={!!errors.ipv4_address}
-                errorText={errors.ipv4_address?.message}
-              >
-                <Input
-                  {...register("ipv4_address", {
-                    required: "IPv4 Address is required.",
-                  })}
-                  type="text"
-                />
-              </Field>
-            </Box>
-            <Box>
-              <Field
-                label="IPv4 Port"
-                required
-                invalid={!!errors.ipv4_port}
-                errorText={errors.ipv4_port?.message}
-              >
-                <Input
-                  {...register("ipv4_port", {
-                    required: "IPv4 Port is required.",
-                    valueAsNumber: true,
-                  })}
-                  type="number"
-                />
-              </Field>
-            </Box>
-            <Box>
-              <Field
-                label="Min Instances"
-                required
-                invalid={!!errors.instances_min}
-                errorText={errors.instances_min?.message}
-              >
-                <Input
-                  {...register("instances_min", {
-                    required: "instances_min is required.",
-                    valueAsNumber: true,
-                  })}
-                  type="number"
-                />
-              </Field>
-            </Box>
-            <Box>
-              <Field
-                label="Max Instances"
-                required
-                invalid={!!errors.instances_max}
-                errorText={errors.instances_max?.message}
-              >
-                <Input
-                  {...register("instances_max", {
-                    required: "instances_max is required.",
-                    valueAsNumber: true,
-                  })}
-                  type="number"
-                />
-              </Field>
-            </Box>
+        <VStack align="stretch" spacing={4}>
+          <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
             <Field
-              label="Access Log Destination"
+              label="IPv4 Address"
               required
-              invalid={!!errors.access_logfile_destination}
-              errorText={errors.access_logfile_destination?.message}
+              errorText={errors.ipv4_address?.message}
             >
               <Input
-                {...register("access_logfile_destination", {
-                  required: "Access Log Destination is required.",
+                {...register("ipv4_address", {
+                  required: "IPv4 Address is required.",
                 })}
                 type="text"
               />
             </Field>
             <Field
-              label="Accounting Log Destination"
+              label="IPv4 Port"
               required
-              invalid={!!errors.accounting_logfile_destination}
-              errorText={errors.accounting_logfile_destination?.message}
+              errorText={errors.ipv4_port?.message}
             >
               <Input
-                {...register("accounting_logfile_destination", {
-                  required: "Accounting Log Destination is required.",
+                {...register("ipv4_port", {
+                  required: "IPv4 Port is required.",
+                  valueAsNumber: true,
                 })}
-                type="text"
+                type="number"
               />
             </Field>
             <Field
-              label="Authentication Log Destination"
+              label="Min Instances"
               required
-              invalid={!!errors.authentication_logfile_destination}
-              errorText={errors.authentication_logfile_destination?.message}
+              errorText={errors.instances_min?.message}
             >
               <Input
-                {...register("authentication_logfile_destination", {
-                  required: "Authentication Log Destination is required.",
+                {...register("instances_min", {
+                  required: "Min instances is required.",
+                  valueAsNumber: true,
                 })}
+                type="number"
+              />
+            </Field>
+            <Field
+              label="Max Instances"
+              required
+              errorText={errors.instances_max?.message}
+            >
+              <Input
+                {...register("instances_max", {
+                  required: "Max instances is required.",
+                  valueAsNumber: true,
+                })}
+                type="number"
+              />
+            </Field>
+            <Field
+              label="Login Backend"
+              errorText={errors.login_backend?.message}
+            >
+              <Input
+                {...register("login_backend")}
                 type="text"
               />
             </Field>

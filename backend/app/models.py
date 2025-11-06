@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime
 
 from pydantic import EmailStr
 from sqlmodel import Field, Relationship, SQLModel
@@ -588,4 +589,35 @@ class TacacsConfigPublic(TacacsConfigBase):
 
 class TacacsConfigsPublic(SQLModel):
     data: list[TacacsConfigPublic]
+    count: int
+
+
+# -- Tacacs Log File Table ---
+class TacacsLogBase(SQLModel):
+    filename: str = Field(index=True, max_length=255)
+    filepath: str = Field(index=True, max_length=1024)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+class TacacsLogCreate(TacacsLogBase):
+    pass
+
+
+class TacacsLogUpdate(TacacsLogBase):
+    pass
+
+
+# Database model, database table inferred from class name
+class TacacsLog(TacacsLogBase, table=True):
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+
+
+# Properties to return via API, id is always required
+class TacacsLogPublic(TacacsLogBase):
+    id: uuid.UUID
+    data: str | None = None
+
+
+class TacacsLogsPublic(SQLModel):
+    data: list[TacacsLogPublic]
     count: int

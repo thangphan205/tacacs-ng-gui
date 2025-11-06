@@ -336,6 +336,19 @@ export type TacacsGroupUpdate = {
     description?: (string | null);
 };
 
+export type TacacsLogPublic = {
+    filename: string;
+    filepath: string;
+    created_at?: string;
+    id: string;
+    data?: (string | null);
+};
+
+export type TacacsLogsPublic = {
+    data: Array<TacacsLogPublic>;
+    count: number;
+};
+
 export type TacacsNgSettingPublic = {
     ipv4_enabled?: boolean;
     ipv4_address?: string;
@@ -839,6 +852,22 @@ export type TacacsGroupsDeleteTacacsGroupData = {
 };
 
 export type TacacsGroupsDeleteTacacsGroupResponse = (Message);
+
+export type TacacsLogsListLogFilesData = {
+    limit?: number;
+    search?: (string | null);
+    skip?: number;
+    sortBy?: string;
+    sortOrder?: string;
+};
+
+export type TacacsLogsListLogFilesResponse = (TacacsLogsPublic);
+
+export type TacacsLogsReadLogFileData = {
+    id: string;
+};
+
+export type TacacsLogsReadLogFileResponse = (TacacsLogPublic);
 
 export type TacacsNgSettingsReadTacacsNgSettingsResponse = (TacacsNgSettingPublic);
 

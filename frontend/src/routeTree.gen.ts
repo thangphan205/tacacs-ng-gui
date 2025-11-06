@@ -18,6 +18,7 @@ import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutTacacs_usersRouteImport } from './routes/_layout/tacacs_users'
 import { Route as LayoutTacacs_servicesRouteImport } from './routes/_layout/tacacs_services'
 import { Route as LayoutTacacs_ng_settingsRouteImport } from './routes/_layout/tacacs_ng_settings'
+import { Route as LayoutTacacs_logsRouteImport } from './routes/_layout/tacacs_logs'
 import { Route as LayoutTacacs_groupsRouteImport } from './routes/_layout/tacacs_groups'
 import { Route as LayoutTacacs_configsRouteImport } from './routes/_layout/tacacs_configs'
 import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
@@ -77,6 +78,11 @@ const LayoutTacacs_ng_settingsRoute =
     path: '/tacacs_ng_settings',
     getParentRoute: () => LayoutRoute,
   } as any)
+const LayoutTacacs_logsRoute = LayoutTacacs_logsRouteImport.update({
+  id: '/tacacs_logs',
+  path: '/tacacs_logs',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutTacacs_groupsRoute = LayoutTacacs_groupsRouteImport.update({
   id: '/tacacs_groups',
   path: '/tacacs_groups',
@@ -161,6 +167,7 @@ export interface FileRoutesByFullPath {
   '/settings': typeof LayoutSettingsRoute
   '/tacacs_configs': typeof LayoutTacacs_configsRoute
   '/tacacs_groups': typeof LayoutTacacs_groupsRoute
+  '/tacacs_logs': typeof LayoutTacacs_logsRoute
   '/tacacs_ng_settings': typeof LayoutTacacs_ng_settingsRoute
   '/tacacs_services': typeof LayoutTacacs_servicesRoute
   '/tacacs_users': typeof LayoutTacacs_usersRoute
@@ -184,6 +191,7 @@ export interface FileRoutesByTo {
   '/settings': typeof LayoutSettingsRoute
   '/tacacs_configs': typeof LayoutTacacs_configsRoute
   '/tacacs_groups': typeof LayoutTacacs_groupsRoute
+  '/tacacs_logs': typeof LayoutTacacs_logsRoute
   '/tacacs_ng_settings': typeof LayoutTacacs_ng_settingsRoute
   '/tacacs_services': typeof LayoutTacacs_servicesRoute
   '/tacacs_users': typeof LayoutTacacs_usersRoute
@@ -209,6 +217,7 @@ export interface FileRoutesById {
   '/_layout/settings': typeof LayoutSettingsRoute
   '/_layout/tacacs_configs': typeof LayoutTacacs_configsRoute
   '/_layout/tacacs_groups': typeof LayoutTacacs_groupsRoute
+  '/_layout/tacacs_logs': typeof LayoutTacacs_logsRoute
   '/_layout/tacacs_ng_settings': typeof LayoutTacacs_ng_settingsRoute
   '/_layout/tacacs_services': typeof LayoutTacacs_servicesRoute
   '/_layout/tacacs_users': typeof LayoutTacacs_usersRoute
@@ -234,6 +243,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/tacacs_configs'
     | '/tacacs_groups'
+    | '/tacacs_logs'
     | '/tacacs_ng_settings'
     | '/tacacs_services'
     | '/tacacs_users'
@@ -257,6 +267,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/tacacs_configs'
     | '/tacacs_groups'
+    | '/tacacs_logs'
     | '/tacacs_ng_settings'
     | '/tacacs_services'
     | '/tacacs_users'
@@ -281,6 +292,7 @@ export interface FileRouteTypes {
     | '/_layout/settings'
     | '/_layout/tacacs_configs'
     | '/_layout/tacacs_groups'
+    | '/_layout/tacacs_logs'
     | '/_layout/tacacs_ng_settings'
     | '/_layout/tacacs_services'
     | '/_layout/tacacs_users'
@@ -358,6 +370,13 @@ declare module '@tanstack/react-router' {
       path: '/tacacs_ng_settings'
       fullPath: '/tacacs_ng_settings'
       preLoaderRoute: typeof LayoutTacacs_ng_settingsRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/tacacs_logs': {
+      id: '/_layout/tacacs_logs'
+      path: '/tacacs_logs'
+      fullPath: '/tacacs_logs'
+      preLoaderRoute: typeof LayoutTacacs_logsRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/tacacs_groups': {
@@ -468,6 +487,7 @@ interface LayoutRouteChildren {
   LayoutSettingsRoute: typeof LayoutSettingsRoute
   LayoutTacacs_configsRoute: typeof LayoutTacacs_configsRoute
   LayoutTacacs_groupsRoute: typeof LayoutTacacs_groupsRoute
+  LayoutTacacs_logsRoute: typeof LayoutTacacs_logsRoute
   LayoutTacacs_ng_settingsRoute: typeof LayoutTacacs_ng_settingsRoute
   LayoutTacacs_servicesRoute: typeof LayoutTacacs_servicesRoute
   LayoutTacacs_usersRoute: typeof LayoutTacacs_usersRoute
@@ -488,6 +508,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutSettingsRoute: LayoutSettingsRoute,
   LayoutTacacs_configsRoute: LayoutTacacs_configsRoute,
   LayoutTacacs_groupsRoute: LayoutTacacs_groupsRoute,
+  LayoutTacacs_logsRoute: LayoutTacacs_logsRoute,
   LayoutTacacs_ng_settingsRoute: LayoutTacacs_ng_settingsRoute,
   LayoutTacacs_servicesRoute: LayoutTacacs_servicesRoute,
   LayoutTacacs_usersRoute: LayoutTacacs_usersRoute,
