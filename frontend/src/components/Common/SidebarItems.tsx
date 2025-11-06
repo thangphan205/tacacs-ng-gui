@@ -13,7 +13,6 @@ import {
   FiSettings,
   FiServer,
   FiShield,
-  FiTerminal,
   FiUser,
   FiUsers,
 } from "react-icons/fi"

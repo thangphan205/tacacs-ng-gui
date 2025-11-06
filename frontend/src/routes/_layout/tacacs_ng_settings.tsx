@@ -102,8 +102,8 @@ function TacacsNgSettingsForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box mt={4} p={4} borderWidth="1px" borderRadius="lg">
-        <VStack align="stretch" spacing={4}>
-          <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
+        <VStack align="stretch" >
+          <SimpleGrid columns={{ base: 1, md: 2 }} >
             <Field
               label="IPv4 Address"
               required

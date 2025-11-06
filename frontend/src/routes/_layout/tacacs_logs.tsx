@@ -11,8 +11,8 @@ import {
 } from "@chakra-ui/react"
 import { useQuery } from "@tanstack/react-query"
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
-import { FiSearch, FiEye, FiArrowDown, FiArrowUp } from "react-icons/fi"
-import { z, type ZodType } from "zod"
+import { FiSearch, FiEye } from "react-icons/fi"
+import { z } from "zod"
 
 import { TacacsLogsService } from "@/client"
 import ShowTacacsLog from "@/components/TacacsLogs/ShowTacacsLog"
@@ -26,28 +26,25 @@ import { useState } from "react"
 
 interface TacacsLogsSearch {
   page: number
-  sort_order: "asc" | "desc"
   search?: string
 }
 
-const tacacs_logsSearchSchema: ZodType<TacacsLogsSearch> = z.object({
+const tacacs_logsSearchSchema = z.object({
   page: z.number().catch(1),
-  sort_order: z.enum(["asc", "desc"]).catch("desc"),
   search: z.string().optional(),
 })
 
 const PER_PAGE = 5
 
-function getTacacsLogsQueryOptions({ page, sort_order, search }: TacacsLogsSearch) {
+function getTacacsLogsQueryOptions({ page, search }: TacacsLogsSearch) {
   return {
     queryFn: () =>
       TacacsLogsService.listLogFiles({
         skip: (page - 1) * PER_PAGE,
         limit: PER_PAGE,
-        sortOrder: sort_order,
         search: search,
       }),
-    queryKey: ["tacacs_logs", { page, sort_order, search }],
+    queryKey: ["tacacs_logs", { page, search }],
   }
 }
 
@@ -58,10 +55,10 @@ export const Route = createFileRoute("/_layout/tacacs_logs")({
 
 function TacacsLogsTable() {
   const navigate = useNavigate({ from: Route.fullPath })
-  const { page, sort_order, search } = Route.useSearch()
+  const { page, search } = Route.useSearch()
   const [searchString, setSearchString] = useState("")
   const { data, isLoading } = useQuery({
-    ...getTacacsLogsQueryOptions({ page, sort_order, search: searchString }),
+    ...getTacacsLogsQueryOptions({ page, search: searchString }),
     placeholderData: (prevData) => prevData,
   })
 
