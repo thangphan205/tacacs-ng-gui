@@ -1,23 +1,12 @@
 services:
-  # ----------------------------------------
-  # 1. TACACS-NG SERVICE (Dịch vụ TACACS+)
-  # ----------------------------------------
   tacacs_ng:
     image: christianbecker/tac_plus-ng:latest
     container_name: tac_plus-ng
-    # Mở cổng 49 ra máy host để kiểm tra trực tiếp
     ports:
       - "49:49"
-
-    # Định nghĩa điểm khởi chạy là script monitor và reload
     entrypoint: ["/usr/local/bin/tac_plus-ng_start.sh"]
-
     volumes:
-      # 1. Mount volume chia sẻ chính (chứa config, log, trigger)
-      # /opt/tacacs_shared_data/ là đường dẫn nội bộ của container tacacs_ng (xem script start)
       - tacacs_data_volume:/opt/tacacs_shared_data/
-
-      # 2. Mount script khởi động/monitor vào container
       - ./tacacs-ng/tac_plus-ng_start.sh:/usr/local/bin/tac_plus-ng_start.sh:ro
 
     restart: always
