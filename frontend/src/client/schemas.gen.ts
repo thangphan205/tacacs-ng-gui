@@ -279,10 +279,15 @@ export const HostPublicSchema = {
             type: 'string',
             format: 'uuid',
             title: 'Id'
+        },
+        created_at: {
+            type: 'string',
+            format: 'date-time',
+            title: 'Created At'
         }
     },
     type: 'object',
-    required: ['name', 'secret_key', 'id'],
+    required: ['name', 'secret_key', 'id', 'created_at'],
     title: 'HostPublic'
 } as const;
 
@@ -466,10 +471,15 @@ export const ItemPublicSchema = {
             type: 'string',
             format: 'uuid',
             title: 'Owner Id'
+        },
+        created_at: {
+            type: 'string',
+            format: 'date-time',
+            title: 'Created At'
         }
     },
     type: 'object',
-    required: ['title', 'id', 'owner_id'],
+    required: ['title', 'id', 'owner_id', 'created_at'],
     title: 'ItemPublic'
 } as const;
 
@@ -575,10 +585,15 @@ export const MavisPublicSchema = {
             type: 'string',
             format: 'uuid',
             title: 'Id'
+        },
+        created_at: {
+            type: 'string',
+            format: 'date-time',
+            title: 'Created At'
         }
     },
     type: 'object',
-    required: ['id'],
+    required: ['id', 'created_at'],
     title: 'MavisPublic'
 } as const;
 
@@ -745,10 +760,15 @@ export const ProfilePublicSchema = {
             type: 'string',
             format: 'uuid',
             title: 'Id'
+        },
+        created_at: {
+            type: 'string',
+            format: 'date-time',
+            title: 'Created At'
         }
     },
     type: 'object',
-    required: ['name', 'action', 'id'],
+    required: ['name', 'action', 'id', 'created_at'],
     title: 'ProfilePublic'
 } as const;
 
@@ -852,10 +872,15 @@ export const ProfileScriptPublicSchema = {
             type: 'string',
             format: 'uuid',
             title: 'Id'
+        },
+        created_at: {
+            type: 'string',
+            format: 'date-time',
+            title: 'Created At'
         }
     },
     type: 'object',
-    required: ['condition', 'key', 'value', 'action', 'id'],
+    required: ['condition', 'key', 'value', 'action', 'id', 'created_at'],
     title: 'ProfileScriptPublic'
 } as const;
 
@@ -923,10 +948,15 @@ export const ProfileScriptSetPublicSchema = {
             type: 'string',
             format: 'uuid',
             title: 'Id'
+        },
+        created_at: {
+            type: 'string',
+            format: 'date-time',
+            title: 'Created At'
         }
     },
     type: 'object',
-    required: ['key', 'value', 'profilescript_id', 'id'],
+    required: ['key', 'value', 'profilescript_id', 'id', 'created_at'],
     title: 'ProfileScriptSetPublic'
 } as const;
 
@@ -1166,10 +1196,15 @@ export const RulesetPublicSchema = {
             type: 'string',
             format: 'uuid',
             title: 'Id'
+        },
+        created_at: {
+            type: 'string',
+            format: 'date-time',
+            title: 'Created At'
         }
     },
     type: 'object',
-    required: ['name', 'action', 'id'],
+    required: ['name', 'action', 'id', 'created_at'],
     title: 'RulesetPublic'
 } as const;
 
@@ -1259,10 +1294,15 @@ export const RulesetScriptPublicSchema = {
             type: 'string',
             format: 'uuid',
             title: 'Id'
+        },
+        created_at: {
+            type: 'string',
+            format: 'date-time',
+            title: 'Created At'
         }
     },
     type: 'object',
-    required: ['condition', 'key', 'value', 'action', 'ruleset_id', 'id'],
+    required: ['condition', 'key', 'value', 'action', 'ruleset_id', 'id', 'created_at'],
     title: 'RulesetScriptPublic'
 } as const;
 
@@ -1332,10 +1372,15 @@ export const RulesetScriptSetPublicSchema = {
             type: 'string',
             format: 'uuid',
             title: 'Id'
+        },
+        created_at: {
+            type: 'string',
+            format: 'date-time',
+            title: 'Created At'
         }
     },
     type: 'object',
-    required: ['key', 'value', 'rulesetscript_id', 'id'],
+    required: ['key', 'value', 'rulesetscript_id', 'id', 'created_at'],
     title: 'RulesetScriptSetPublic'
 } as const;
 
@@ -1559,6 +1604,11 @@ export const TacacsConfigPublicSchema = {
             type: 'boolean',
             title: 'Active'
         },
+        created_at: {
+            type: 'string',
+            format: 'date-time',
+            title: 'Created At'
+        },
         data: {
             anyOf: [
                 {
@@ -1572,7 +1622,7 @@ export const TacacsConfigPublicSchema = {
         }
     },
     type: 'object',
-    required: ['filename', 'id', 'active'],
+    required: ['filename', 'id', 'active', 'created_at'],
     title: 'TacacsConfigPublic'
 } as const;
 
@@ -1665,10 +1715,15 @@ export const TacacsGroupPublicSchema = {
             type: 'string',
             format: 'uuid',
             title: 'Id'
+        },
+        created_at: {
+            type: 'string',
+            format: 'date-time',
+            title: 'Created At'
         }
     },
     type: 'object',
-    required: ['group_name', 'id'],
+    required: ['group_name', 'id', 'created_at'],
     title: 'TacacsGroupPublic'
 } as const;
 
@@ -1854,10 +1909,15 @@ export const TacacsNgSettingPublicSchema = {
             type: 'string',
             format: 'uuid',
             title: 'Id'
+        },
+        created_at: {
+            type: 'string',
+            format: 'date-time',
+            title: 'Created At'
         }
     },
     type: 'object',
-    required: ['id'],
+    required: ['id', 'created_at'],
     title: 'TacacsNgSettingPublic'
 } as const;
 
@@ -1989,10 +2049,15 @@ export const TacacsServicePublicSchema = {
             type: 'string',
             format: 'uuid',
             title: 'Id'
+        },
+        created_at: {
+            type: 'string',
+            format: 'date-time',
+            title: 'Created At'
         }
     },
     type: 'object',
-    required: ['name', 'id'],
+    required: ['name', 'id', 'created_at'],
     title: 'TacacsServicePublic'
 } as const;
 
@@ -2128,10 +2193,15 @@ export const TacacsUserPublicSchema = {
             type: 'string',
             format: 'uuid',
             title: 'Id'
+        },
+        created_at: {
+            type: 'string',
+            format: 'date-time',
+            title: 'Created At'
         }
     },
     type: 'object',
-    required: ['username', 'password_type', 'member', 'id'],
+    required: ['username', 'password_type', 'member', 'id', 'created_at'],
     title: 'TacacsUserPublic'
 } as const;
 
@@ -2313,10 +2383,15 @@ export const UserPublicSchema = {
             type: 'string',
             format: 'uuid',
             title: 'Id'
+        },
+        created_at: {
+            type: 'string',
+            format: 'date-time',
+            title: 'Created At'
         }
     },
     type: 'object',
-    required: ['email', 'id'],
+    required: ['email', 'id', 'created_at'],
     title: 'UserPublic'
 } as const;
 

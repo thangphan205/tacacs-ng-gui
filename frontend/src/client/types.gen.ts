@@ -34,6 +34,7 @@ export type HostPublic = {
     parent?: (string | null);
     description?: (string | null);
     id: string;
+    created_at: string;
 };
 
 export type HostsPublic = {
@@ -68,6 +69,7 @@ export type ItemPublic = {
     description?: (string | null);
     id: string;
     owner_id: string;
+    created_at: string;
 };
 
 export type ItemsPublic = {
@@ -91,6 +93,7 @@ export type MavisPublic = {
     require_tacacs_group_prefix?: number;
     tacacs_group_prefix?: string;
     id: string;
+    created_at: string;
 };
 
 export type MavisUpdate = {
@@ -132,6 +135,7 @@ export type ProfilePublic = {
     action: string;
     description?: (string | null);
     id: string;
+    created_at: string;
 };
 
 export type ProfileScriptCreate = {
@@ -151,6 +155,7 @@ export type ProfileScriptPublic = {
     description?: (string | null);
     profile_id?: (string | null);
     id: string;
+    created_at: string;
 };
 
 export type ProfileScriptSetCreate = {
@@ -166,6 +171,7 @@ export type ProfileScriptSetPublic = {
     description?: (string | null);
     profilescript_id: string;
     id: string;
+    created_at: string;
 };
 
 export type ProfileScriptSetsPublic = {
@@ -218,6 +224,7 @@ export type RulesetPublic = {
     action: string;
     description?: (string | null);
     id: string;
+    created_at: string;
 };
 
 export type RulesetScriptCreate = {
@@ -237,6 +244,7 @@ export type RulesetScriptPublic = {
     description?: (string | null);
     ruleset_id: string;
     id: string;
+    created_at: string;
 };
 
 export type RulesetScriptSetCreate = {
@@ -252,6 +260,7 @@ export type RulesetScriptSetPublic = {
     description?: (string | null);
     rulesetscript_id: string;
     id: string;
+    created_at: string;
 };
 
 export type RulesetScriptSetsPublic = {
@@ -302,6 +311,7 @@ export type TacacsConfigPublic = {
     description?: (string | null);
     id: string;
     active: boolean;
+    created_at: string;
     data?: (string | null);
 };
 
@@ -324,6 +334,7 @@ export type TacacsGroupPublic = {
     group_name: string;
     description?: (string | null);
     id: string;
+    created_at: string;
 };
 
 export type TacacsGroupsPublic = {
@@ -366,6 +377,7 @@ export type TacacsNgSettingPublic = {
     user_backend?: string;
     pap_backend?: string;
     id: string;
+    created_at: string;
 };
 
 export type TacacsNgSettingUpdate = {
@@ -395,6 +407,7 @@ export type TacacsServicePublic = {
     name: string;
     description?: (string | null);
     id: string;
+    created_at: string;
 };
 
 export type TacacsServicesPublic = {
@@ -422,6 +435,7 @@ export type TacacsUserPublic = {
     description?: (string | null);
     password?: (string | null);
     id: string;
+    created_at: string;
 };
 
 export type TacacsUsersPublic = {
@@ -461,6 +475,7 @@ export type UserPublic = {
     is_superuser?: boolean;
     full_name?: (string | null);
     id: string;
+    created_at: string;
 };
 
 export type UserRegister = {
@@ -792,6 +807,8 @@ export type RulesetscriptsetsDeleteRulesetscriptsetResponse = (Message);
 export type TacacsConfigsReadTacacsConfigsData = {
     limit?: number;
     skip?: number;
+    sortBy?: string;
+    sortOrder?: string;
 };
 
 export type TacacsConfigsReadTacacsConfigsResponse = (TacacsConfigsPublic);

@@ -14,6 +14,7 @@ import { InputGroup } from "@/components/ui/input-group"
 import { PasswordInput } from "@/components/ui/password-input"
 import useAuth, { isLoggedIn } from "@/hooks/useAuth"
 import Logo from "/assets/images/tacacs-logo.svg"
+import { version } from "../../package.json"
 import { emailPattern, passwordRules } from "../utils"
 
 export const Route = createFileRoute("/login")({
@@ -106,6 +107,9 @@ function Login() {
         <RouterLink to="/signup" className="main-link">
           Sign Up
         </RouterLink>
+      </Text>
+      <Text fontSize="sm" color="gray.500" mt={2}>
+        Version {version}
       </Text>
     </Container>
   )

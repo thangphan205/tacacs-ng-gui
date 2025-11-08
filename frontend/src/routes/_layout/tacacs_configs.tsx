@@ -7,6 +7,7 @@ import {
   Heading,
   Table,
   VStack,
+  Code
 } from "@chakra-ui/react"
 import { useQuery } from "@tanstack/react-query"
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
@@ -94,6 +95,7 @@ function TacacsConfigsTable() {
             <Table.ColumnHeader w="sm">Filename</Table.ColumnHeader>
             <Table.ColumnHeader w="sm">Active</Table.ColumnHeader>
             <Table.ColumnHeader w="sm">Description</Table.ColumnHeader>
+            <Table.ColumnHeader w="sm">Created At</Table.ColumnHeader>
             <Table.ColumnHeader w="sm">Actions</Table.ColumnHeader>
           </Table.Row>
         </Table.Header>
@@ -126,6 +128,9 @@ function TacacsConfigsTable() {
               >
                 {tacacs_config.description || "N/A"}
               </Table.Cell>
+              <Table.Cell truncate maxW="sm">
+                {new Date(tacacs_config.created_at).toLocaleDateString()}
+              </Table.Cell>
               <Table.Cell>
                 <TacacsConfigActionsMenu tacacs_config={tacacs_config} />
               </Table.Cell>
@@ -156,8 +161,11 @@ function TacacsConfigs() {
       <Heading size="lg" pt={12}>
         TacacsConfigs Management
       </Heading>
+      <Code size="md" colorPalette="red" variant="subtle" >
+        Whenever you change the TACACS configuration, you must generate and activate the new configuration.
+      </Code>
       <AddTacacsConfig />
       <TacacsConfigsTable />
-    </Container>
+    </Container >
   )
 }

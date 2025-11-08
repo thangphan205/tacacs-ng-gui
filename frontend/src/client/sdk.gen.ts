@@ -1054,6 +1054,8 @@ export class TacacsConfigsService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.limit
+     * @param data.sortBy
+     * @param data.sortOrder
      * @returns TacacsConfigsPublic Successful Response
      * @throws ApiError
      */
@@ -1063,7 +1065,9 @@ export class TacacsConfigsService {
             url: '/api/v1/tacacs_configs/',
             query: {
                 skip: data.skip,
-                limit: data.limit
+                limit: data.limit,
+                sort_by: data.sortBy,
+                sort_order: data.sortOrder
             },
             errors: {
                 422: 'Validation Error'

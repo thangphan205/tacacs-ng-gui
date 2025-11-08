@@ -27,15 +27,24 @@ router = APIRouter(prefix="/tacacs_configs", tags=["tacacs_configs"])
     dependencies=[Depends(get_current_active_superuser)],
     response_model=TacacsConfigsPublic,
 )
-def read_tacacs_configs(session: SessionDep, skip: int = 0, limit: int = 100) -> Any:
+def read_tacacs_configs(
+    session: SessionDep,
+    skip: int = 0,
+    limit: int = 100,
+    sort_by: str = "created_at",
+    sort_order: str = "desc",
+) -> Any:
     """
     Retrieve tacacs_configs.
     """
 
     count_statement = select(func.count()).select_from(TacacsConfig)
     count = session.exec(count_statement).one()
-
-    statement = select(TacacsConfig).offset(skip).limit(limit)
+    sort_column = getattr(TacacsConfig, sort_by, None)
+    if sort_column is None:
+        raise HTTPException(status_code=400, detail=f"Invalid sort column: {sort_by}")
+    order = sort_column.desc() if sort_order == "desc" else sort_column.asc()
+    statement = select(TacacsConfig).order_by(order).offset(skip).limit(limit)
     tacacs_configs = session.exec(statement).all()
 
     return TacacsConfigsPublic(data=tacacs_configs, count=count)

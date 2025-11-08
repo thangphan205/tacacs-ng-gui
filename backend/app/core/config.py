@@ -126,10 +126,12 @@ class Settings(BaseSettings):
     INSTANCES_MAX: int = 10
     BACKGROUND: str = "no"
 
-    ACCESS_LOG_DESTINATION: str = "/var/log/tac_plus/%Y/access-%m-%d-%Y.txt"
-    ACCOUNTING_LOG_DESTINATION: str = "/var/log/tac_plus/%Y/accounting-%m-%d-%Y.txt"
+    ACCESS_LOG_DESTINATION: str = "/opt/tacacs_shared_data/log/%Y/access-%m-%d-%Y.txt"
+    ACCOUNTING_LOG_DESTINATION: str = (
+        "/opt/tacacs_shared_data/log/%Y/accounting-%m-%d-%Y.txt"
+    )
     AUTHENTICATION_LOG_DESTINATION: str = (
-        "/var/log/tac_plus/%Y/authentication-%m-%d-%Y.txt"
+        "/opt/tacacs_shared_data/log/%Y/authentication-%m-%d-%Y.txt"
     )
     LOGIN_BACKEND: str = "mavis"
     USER_BACKEND: str = "mavis"

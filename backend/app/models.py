@@ -45,12 +45,14 @@ class UpdatePassword(SQLModel):
 class User(UserBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     hashed_password: str
+    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
     items: list["Item"] = Relationship(back_populates="owner", cascade_delete=True)
 
 
 # Properties to return via API, id is always required
 class UserPublic(UserBase):
     id: uuid.UUID
+    created_at: datetime
 
 
 class UsersPublic(SQLModel):
@@ -77,6 +79,7 @@ class ItemUpdate(ItemBase):
 # Database model, database table inferred from class name
 class Item(ItemBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
     owner_id: uuid.UUID = Field(
         foreign_key="user.id", nullable=False, ondelete="CASCADE"
     )
@@ -87,6 +90,7 @@ class Item(ItemBase, table=True):
 class ItemPublic(ItemBase):
     id: uuid.UUID
     owner_id: uuid.UUID
+    created_at: datetime
 
 
 class ItemsPublic(SQLModel):
@@ -153,11 +157,13 @@ class TacacsNgSettingUpdate(TacacsNgSettingBase):
 # Database model, database table inferred from class name
 class TacacsNgSetting(TacacsNgSettingBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
 
 
 # Properties to return via API, id is always required
 class TacacsNgSettingPublic(TacacsNgSettingBase):
     id: uuid.UUID
+    created_at: datetime
 
 
 class TacacsNgSettingsPublic(SQLModel):
@@ -188,11 +194,13 @@ class MavisUpdate(MavisBase):
 # Database model, database table inferred from class name
 class Mavis(MavisBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
 
 
 # Properties to return via API, id is always required
 class MavisPublic(MavisBase):
     id: uuid.UUID
+    created_at: datetime
 
 
 class MavisesPublic(SQLModel):
@@ -224,11 +232,13 @@ class HostUpdate(HostBase):
 # Database model, database table inferred from class name
 class Host(HostBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
 
 
 # Properties to return via API, id is always required
 class HostPublic(HostBase):
     id: uuid.UUID
+    created_at: datetime
 
 
 class HostsPublic(SQLModel):
@@ -252,11 +262,13 @@ class TacacsGroupUpdate(TacacsGroupBase):
 # Database model, database table inferred from class name
 class TacacsGroup(TacacsGroupBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
 
 
 # Properties to return via API, id is always required
 class TacacsGroupPublic(TacacsGroupBase):
     id: uuid.UUID
+    created_at: datetime
 
 
 class TacacsGroupsPublic(SQLModel):
@@ -284,12 +296,14 @@ class TacacsUserUpdate(TacacsUserBase):
 # Database model, database table inferred from class name
 class TacacsUser(TacacsUserBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
     password: str | None = Field(default=None, max_length=255)
 
 
 # Properties to return via API, id is always required
 class TacacsUserPublic(TacacsUserBase):
     id: uuid.UUID
+    created_at: datetime
 
 
 class TacacsUsersPublic(SQLModel):
@@ -314,11 +328,13 @@ class TacacsServiceUpdate(TacacsServiceBase):
 # Database model, database table inferred from class name
 class TacacsService(TacacsServiceBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
 
 
 # Properties to return via API, id is always required
 class TacacsServicePublic(TacacsServiceBase):
     id: uuid.UUID
+    created_at: datetime
 
 
 class TacacsServicesPublic(SQLModel):
@@ -345,6 +361,7 @@ class ProfileUpdate(ProfileBase):
 # Database model, database table inferred from class name
 class Profile(ProfileBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
     profile_scripts: List["ProfileScript"] = Relationship(
         back_populates="profile", cascade_delete=True
     )
@@ -353,6 +370,7 @@ class Profile(ProfileBase, table=True):
 # Properties to return via API, id is always required
 class ProfilePublic(ProfileBase):
     id: uuid.UUID
+    created_at: datetime
 
 
 class ProfilesPublic(SQLModel):
@@ -381,6 +399,7 @@ class ProfileScriptUpdate(ProfileScriptBase):
 # Database model, database table inferred from class name
 class ProfileScript(ProfileScriptBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
     profile_id: uuid.UUID = Field(
         foreign_key="profile.id", nullable=False, ondelete="CASCADE"
     )
@@ -395,6 +414,7 @@ class ProfileScript(ProfileScriptBase, table=True):
 # Properties to return via API, id is always required
 class ProfileScriptPublic(ProfileScriptBase):
     id: uuid.UUID
+    created_at: datetime
 
 
 class ProfileScriptsPublic(SQLModel):
@@ -421,6 +441,7 @@ class ProfileScriptSetUpdate(ProfileScriptSetBase):
 # Database model, database table inferred from class name
 class ProfileScriptSet(ProfileScriptSetBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
     profilescript_id: uuid.UUID = Field(
         foreign_key="profilescript.id",
         nullable=False,
@@ -432,6 +453,7 @@ class ProfileScriptSet(ProfileScriptSetBase, table=True):
 # Properties to return via API, id is always required
 class ProfileScriptSetPublic(ProfileScriptSetBase):
     id: uuid.UUID
+    created_at: datetime
 
 
 class ProfileScriptSetsPublic(SQLModel):
@@ -462,6 +484,7 @@ class RulesetUpdate(RulesetBase):
 # Database model, database table inferred from class name
 class Ruleset(RulesetBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
     ruleset_scripts: List["RulesetScript"] = Relationship(
         back_populates="ruleset", cascade_delete=True
     )
@@ -470,6 +493,7 @@ class Ruleset(RulesetBase, table=True):
 # Properties to return via API, id is always required
 class RulesetPublic(RulesetBase):
     id: uuid.UUID
+    created_at: datetime
 
 
 class RulesetsPublic(SQLModel):
@@ -498,6 +522,7 @@ class RulesetScriptUpdate(RulesetScriptBase):
 # Database model, database table inferred from class name
 class RulesetScript(RulesetScriptBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
     ruleset_id: uuid.UUID = Field(
         foreign_key="ruleset.id", nullable=False, ondelete="CASCADE"
     )
@@ -511,6 +536,7 @@ class RulesetScript(RulesetScriptBase, table=True):
 # Properties to return via API, id is always required
 class RulesetScriptPublic(RulesetScriptBase):
     id: uuid.UUID
+    created_at: datetime
 
 
 class RulesetScriptsPublic(SQLModel):
@@ -537,6 +563,7 @@ class RulesetScriptSetUpdate(RulesetScriptSetBase):
 # Database model, database table inferred from class name
 class RulesetScriptSet(RulesetScriptSetBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
     rulesetscript_id: uuid.UUID = Field(
         foreign_key="rulesetscript.id",
         nullable=False,
@@ -550,6 +577,7 @@ class RulesetScriptSet(RulesetScriptSetBase, table=True):
 # Properties to return via API, id is always required
 class RulesetScriptSetPublic(RulesetScriptSetBase):
     id: uuid.UUID
+    created_at: datetime
 
 
 class RulesetScriptSetsPublic(SQLModel):
@@ -577,6 +605,7 @@ class TacacsConfigUpdate(TacacsConfigBase):
 # Database model, database table inferred from class name
 class TacacsConfig(TacacsConfigBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
     active: bool = Field(default=False)
 
 
@@ -584,6 +613,7 @@ class TacacsConfig(TacacsConfigBase, table=True):
 class TacacsConfigPublic(TacacsConfigBase):
     id: uuid.UUID
     active: bool
+    created_at: datetime
     data: str | None = None
 
 

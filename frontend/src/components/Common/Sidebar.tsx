@@ -1,10 +1,11 @@
-import { Box, Flex, IconButton, Text } from "@chakra-ui/react"
+import { Box, Flex, IconButton, Spacer, Text, VStack } from "@chakra-ui/react"
 import { useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
 import { FaBars } from "react-icons/fa"
 import { FiLogOut } from "react-icons/fi"
 
 import type { UserPublic } from "@/client"
+import { version } from "../../../package.json"
 import useAuth from "@/hooks/useAuth"
 import {
   DrawerBackdrop,
@@ -47,7 +48,7 @@ const Sidebar = () => {
         <DrawerContent maxW="xs">
           <DrawerCloseTrigger />
           <DrawerBody>
-            <Flex flexDir="column" justify="space-between">
+            <Flex flexDir="column" justify="space-between" h="full">
               <Box>
                 <SidebarItems onClose={() => setOpen(false)} />
                 <Flex
@@ -64,11 +65,14 @@ const Sidebar = () => {
                   <Text>Log Out</Text>
                 </Flex>
               </Box>
-              {currentUser?.email && (
-                <Text fontSize="sm" p={2} truncate maxW="sm">
-                  Logged in as: {currentUser.email}
-                </Text>
-              )}
+              <VStack align="start" p={2}>
+                {currentUser?.email && (
+                  <Text fontSize="sm" truncate maxW="full">
+                    Logged in as: {currentUser.email}
+                  </Text>
+                )}
+                <Text fontSize="sm">Version {version}</Text>
+              </VStack>
             </Flex>
           </DrawerBody>
           <DrawerCloseTrigger />
@@ -86,9 +90,17 @@ const Sidebar = () => {
         h="100vh"
         p={4}
       >
-        <Box w="100%">
-          <SidebarItems />
-        </Box>
+        <Flex direction="column" w="100%">
+          <Box>
+            <SidebarItems />
+          </Box>
+          <VStack align="start" >
+            {currentUser?.email && (
+              <Text fontSize="sm">Logged in as: {currentUser.email}</Text>
+            )}
+            <Text fontSize="sm">Version {version}</Text>
+          </VStack>
+        </Flex>
       </Box>
     </>
   )

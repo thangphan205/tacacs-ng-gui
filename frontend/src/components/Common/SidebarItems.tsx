@@ -22,7 +22,7 @@ import type { UserPublic } from "@/client"
 
 const items = [
   { icon: FiHome, title: "Dashboard", path: "/", level: 1 },
-
+  { icon: FiArchive, title: "Tacacs configs", path: "/tacacs_configs", level: 1 },
   { icon: FiServer, title: "Hosts", path: "/hosts", level: 1 },
   { icon: FiUsers, title: "Tacacs Groups", path: "/tacacs_groups", level: 1 },
   { icon: FiUser, title: "Tacacs Users", path: "/tacacs_users", level: 1 },
@@ -33,7 +33,6 @@ const items = [
   { icon: FiShield, title: "Rulesets", path: "/rulesets", level: 1 },
   { icon: FiCode, title: "Rulesets Script", path: "/rulesetscripts", level: 2 },
   { icon: FiLayers, title: "Rulesets Script Set", path: "/rulesetscriptsets", level: 2 },
-  { icon: FiArchive, title: "Tacacs configs", path: "/tacacs_configs", level: 1 },
   {
     icon: FiSettings,
     title: "Tacacs-ng Settings",

@@ -143,10 +143,7 @@ const AddTacacsUser = () => {
                   collection={items_password_type}
                   onSelect={(selection) => {
                     setValue("password_type", selection.value);
-                    if (selection.value === "mavis") {
-                      // setValue("password", "");
-                      setIsSelectMavis(true);
-                    }
+                    setIsSelectMavis(selection.value === "mavis");
                   }}
                   size="sm"
                 >
@@ -167,21 +164,22 @@ const AddTacacsUser = () => {
                   </Select.Positioner>
                 </Select.Root>
               </Field>
-              <Field
-                required
-                invalid={!!errors.password}
-                errorText={errors.password?.message}
-                label="password"
-                disabled={isSelectMavis}
-              >
-                <Input
-                  {...register("password", {
-                    required: "password is required.",
-                  })}
-                  placeholder="password"
-                  type="text"
-                />
-              </Field>
+              {!isSelectMavis && (
+                <Field
+                  required
+                  invalid={!!errors.password}
+                  errorText={errors.password?.message}
+                  label="password"
+                >
+                  <Input
+                    {...register("password", {
+                      required: isSelectMavis ? false : "password is required.",
+                    })}
+                    placeholder="password"
+                    type="password"
+                  />
+                </Field>
+              )}
               <Field
                 required
                 invalid={!!errors.member}
