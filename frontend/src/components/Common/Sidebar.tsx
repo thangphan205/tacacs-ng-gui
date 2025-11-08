@@ -1,4 +1,4 @@
-import { Box, Flex, IconButton, Spacer, Text, VStack } from "@chakra-ui/react"
+import { Box, Flex, IconButton, Text, VStack } from "@chakra-ui/react"
 import { useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
 import { FaBars } from "react-icons/fa"
