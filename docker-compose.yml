@@ -1,6 +1,8 @@
 services:
   tacacs_ng:
-    image: christianbecker/tac_plus-ng:latest
+    build:
+      context: ./tac_plus-ng
+    image: "tac_plus-ng:latest"
     container_name: tac_plus-ng
     ports:
       - "49:49"
