@@ -89,6 +89,7 @@ const ShowTacacsConfig = ({
           value={data.data}
           rows={20}
           fontFamily="monospace"
+          colorPalette={data.active ? "green" : "gray"}
         />
       )
     }

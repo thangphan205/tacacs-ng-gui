@@ -1577,6 +1577,30 @@ export const TacacsConfigCreateSchema = {
     title: 'TacacsConfigCreate'
 } as const;
 
+export const TacacsConfigPreviewPublicSchema = {
+    properties: {
+        created_at: {
+            type: 'string',
+            format: 'date-time',
+            title: 'Created At'
+        },
+        data: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Data'
+        }
+    },
+    type: 'object',
+    required: ['created_at'],
+    title: 'TacacsConfigPreviewPublic'
+} as const;
+
 export const TacacsConfigPublicSchema = {
     properties: {
         filename: {

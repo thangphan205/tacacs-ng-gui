@@ -1,6 +1,6 @@
 import uuid
 from typing import Any
-
+from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import func, select
 
@@ -39,6 +39,21 @@ def read_profiles(session: SessionDep, skip: int = 0, limit: int = 100) -> Any:
     profiles = session.exec(statement).all()
 
     return ProfilesPublic(data=profiles, count=count)
+
+
+@router.get(
+    "/preview",
+    dependencies=[Depends(get_current_active_superuser)],
+)
+def preview_profiles(session: SessionDep) -> Any:
+    """
+    Preview profiles.
+    Generate candidate profile configuration preview.
+    """
+
+    profile_template = profiles.profile_generator(session=session)
+
+    return {"data": profile_template, "created_at": datetime.utcnow()}
 
 
 @router.post(

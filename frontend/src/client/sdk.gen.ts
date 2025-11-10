@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { HostsReadHostsData, HostsReadHostsResponse, HostsCreateHostData, HostsCreateHostResponse, HostsReadHostByIdData, HostsReadHostByIdResponse, HostsUpdateHostData, HostsUpdateHostResponse, HostsDeleteHostData, HostsDeleteHostResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, MavisReadMavisSettingsResponse, MavisUpdateMavisSettingsData, MavisUpdateMavisSettingsResponse, PrivateCreateUserData, PrivateCreateUserResponse, ProfilesReadProfilesData, ProfilesReadProfilesResponse, ProfilesCreateProfileData, ProfilesCreateProfileResponse, ProfilesReadProfileByIdData, ProfilesReadProfileByIdResponse, ProfilesUpdateProfileData, ProfilesUpdateProfileResponse, ProfilesDeleteProfileData, ProfilesDeleteProfileResponse, ProfilescriptsReadProfilescriptsData, ProfilescriptsReadProfilescriptsResponse, ProfilescriptsCreateProfilescriptData, ProfilescriptsCreateProfilescriptResponse, ProfilescriptsReadProfilescriptByIdData, ProfilescriptsReadProfilescriptByIdResponse, ProfilescriptsUpdateProfilescriptData, ProfilescriptsUpdateProfilescriptResponse, ProfilescriptsDeleteProfilescriptData, ProfilescriptsDeleteProfilescriptResponse, ProfilescriptsetsReadProfilescriptsetsData, ProfilescriptsetsReadProfilescriptsetsResponse, ProfilescriptsetsCreateProfilescriptsetData, ProfilescriptsetsCreateProfilescriptsetResponse, ProfilescriptsetsReadProfilescriptsetByIdData, ProfilescriptsetsReadProfilescriptsetByIdResponse, ProfilescriptsetsUpdateProfilescriptsetData, ProfilescriptsetsUpdateProfilescriptsetResponse, ProfilescriptsetsDeleteProfilescriptsetData, ProfilescriptsetsDeleteProfilescriptsetResponse, RulesetsReadRulesetsData, RulesetsReadRulesetsResponse, RulesetsCreateRulesetData, RulesetsCreateRulesetResponse, RulesetsReadRulesetByIdData, RulesetsReadRulesetByIdResponse, RulesetsUpdateRulesetData, RulesetsUpdateRulesetResponse, RulesetsDeleteRulesetData, RulesetsDeleteRulesetResponse, RulesetscriptsReadRulesetscriptsData, RulesetscriptsReadRulesetscriptsResponse, RulesetscriptsCreateRulesetscriptData, RulesetscriptsCreateRulesetscriptResponse, RulesetscriptsReadRulesetscriptByIdData, RulesetscriptsReadRulesetscriptByIdResponse, RulesetscriptsUpdateRulesetscriptData, RulesetscriptsUpdateRulesetscriptResponse, RulesetscriptsDeleteRulesetscriptData, RulesetscriptsDeleteRulesetscriptResponse, RulesetscriptsetsReadRulesetscriptsetsData, RulesetscriptsetsReadRulesetscriptsetsResponse, RulesetscriptsetsCreateRulesetscriptsetData, RulesetscriptsetsCreateRulesetscriptsetResponse, RulesetscriptsetsReadRulesetscriptsetByIdData, RulesetscriptsetsReadRulesetscriptsetByIdResponse, RulesetscriptsetsUpdateRulesetscriptsetData, RulesetscriptsetsUpdateRulesetscriptsetResponse, RulesetscriptsetsDeleteRulesetscriptsetData, RulesetscriptsetsDeleteRulesetscriptsetResponse, TacacsConfigsReadTacacsConfigsData, TacacsConfigsReadTacacsConfigsResponse, TacacsConfigsCreateTacacsConfigData, TacacsConfigsCreateTacacsConfigResponse, TacacsConfigsReadTacacsConfigByIdData, TacacsConfigsReadTacacsConfigByIdResponse, TacacsConfigsUpdateTacacsConfigData, TacacsConfigsUpdateTacacsConfigResponse, TacacsConfigsDeleteTacacsConfigData, TacacsConfigsDeleteTacacsConfigResponse, TacacsGroupsReadTacacsGroupsData, TacacsGroupsReadTacacsGroupsResponse, TacacsGroupsCreateTacacsGroupData, TacacsGroupsCreateTacacsGroupResponse, TacacsGroupsReadTacacsGroupByIdData, TacacsGroupsReadTacacsGroupByIdResponse, TacacsGroupsUpdateTacacsGroupData, TacacsGroupsUpdateTacacsGroupResponse, TacacsGroupsDeleteTacacsGroupData, TacacsGroupsDeleteTacacsGroupResponse, TacacsLogsListLogFilesData, TacacsLogsListLogFilesResponse, TacacsLogsReadLogFileData, TacacsLogsReadLogFileResponse, TacacsNgSettingsReadTacacsNgSettingsResponse, TacacsNgSettingsUpdateTacacsNgSettingsData, TacacsNgSettingsUpdateTacacsNgSettingsResponse, TacacsServicesReadTacacsServicesData, TacacsServicesReadTacacsServicesResponse, TacacsServicesCreateTacacsServiceData, TacacsServicesCreateTacacsServiceResponse, TacacsServicesReadTacacsServiceByIdData, TacacsServicesReadTacacsServiceByIdResponse, TacacsServicesUpdateTacacsServiceData, TacacsServicesUpdateTacacsServiceResponse, TacacsServicesDeleteTacacsServiceData, TacacsServicesDeleteTacacsServiceResponse, TacacsUsersReadTacacsUsersData, TacacsUsersReadTacacsUsersResponse, TacacsUsersCreateTacacsUserData, TacacsUsersCreateTacacsUserResponse, TacacsUsersReadTacacsUserByIdData, TacacsUsersReadTacacsUserByIdResponse, TacacsUsersUpdateTacacsUserData, TacacsUsersUpdateTacacsUserResponse, TacacsUsersDeleteTacacsUserData, TacacsUsersDeleteTacacsUserResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse } from './types.gen';
+import type { HostsReadHostsData, HostsReadHostsResponse, HostsCreateHostData, HostsCreateHostResponse, HostsReadHostByIdData, HostsReadHostByIdResponse, HostsUpdateHostData, HostsUpdateHostResponse, HostsDeleteHostData, HostsDeleteHostResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, MavisReadMavisSettingsResponse, MavisUpdateMavisSettingsData, MavisUpdateMavisSettingsResponse, PrivateCreateUserData, PrivateCreateUserResponse, ProfilesReadProfilesData, ProfilesReadProfilesResponse, ProfilesCreateProfileData, ProfilesCreateProfileResponse, ProfilesPreviewProfilesResponse, ProfilesReadProfileByIdData, ProfilesReadProfileByIdResponse, ProfilesUpdateProfileData, ProfilesUpdateProfileResponse, ProfilesDeleteProfileData, ProfilesDeleteProfileResponse, ProfilescriptsReadProfilescriptsData, ProfilescriptsReadProfilescriptsResponse, ProfilescriptsCreateProfilescriptData, ProfilescriptsCreateProfilescriptResponse, ProfilescriptsReadProfilescriptByIdData, ProfilescriptsReadProfilescriptByIdResponse, ProfilescriptsUpdateProfilescriptData, ProfilescriptsUpdateProfilescriptResponse, ProfilescriptsDeleteProfilescriptData, ProfilescriptsDeleteProfilescriptResponse, ProfilescriptsetsReadProfilescriptsetsData, ProfilescriptsetsReadProfilescriptsetsResponse, ProfilescriptsetsCreateProfilescriptsetData, ProfilescriptsetsCreateProfilescriptsetResponse, ProfilescriptsetsReadProfilescriptsetByIdData, ProfilescriptsetsReadProfilescriptsetByIdResponse, ProfilescriptsetsUpdateProfilescriptsetData, ProfilescriptsetsUpdateProfilescriptsetResponse, ProfilescriptsetsDeleteProfilescriptsetData, ProfilescriptsetsDeleteProfilescriptsetResponse, RulesetsReadRulesetsData, RulesetsReadRulesetsResponse, RulesetsCreateRulesetData, RulesetsCreateRulesetResponse, RulesetsPreviewRulesetsResponse, RulesetsReadRulesetByIdData, RulesetsReadRulesetByIdResponse, RulesetsUpdateRulesetData, RulesetsUpdateRulesetResponse, RulesetsDeleteRulesetData, RulesetsDeleteRulesetResponse, RulesetscriptsReadRulesetscriptsData, RulesetscriptsReadRulesetscriptsResponse, RulesetscriptsCreateRulesetscriptData, RulesetscriptsCreateRulesetscriptResponse, RulesetscriptsReadRulesetscriptByIdData, RulesetscriptsReadRulesetscriptByIdResponse, RulesetscriptsUpdateRulesetscriptData, RulesetscriptsUpdateRulesetscriptResponse, RulesetscriptsDeleteRulesetscriptData, RulesetscriptsDeleteRulesetscriptResponse, RulesetscriptsetsReadRulesetscriptsetsData, RulesetscriptsetsReadRulesetscriptsetsResponse, RulesetscriptsetsCreateRulesetscriptsetData, RulesetscriptsetsCreateRulesetscriptsetResponse, RulesetscriptsetsReadRulesetscriptsetByIdData, RulesetscriptsetsReadRulesetscriptsetByIdResponse, RulesetscriptsetsUpdateRulesetscriptsetData, RulesetscriptsetsUpdateRulesetscriptsetResponse, RulesetscriptsetsDeleteRulesetscriptsetData, RulesetscriptsetsDeleteRulesetscriptsetResponse, TacacsConfigsReadTacacsConfigsData, TacacsConfigsReadTacacsConfigsResponse, TacacsConfigsCreateTacacsConfigData, TacacsConfigsCreateTacacsConfigResponse, TacacsConfigsGeneratePreviewTacacsConfigResponse, TacacsConfigsGetActiveTacacsConfigResponse, TacacsConfigsReadTacacsConfigByIdData, TacacsConfigsReadTacacsConfigByIdResponse, TacacsConfigsUpdateTacacsConfigData, TacacsConfigsUpdateTacacsConfigResponse, TacacsConfigsDeleteTacacsConfigData, TacacsConfigsDeleteTacacsConfigResponse, TacacsGroupsReadTacacsGroupsData, TacacsGroupsReadTacacsGroupsResponse, TacacsGroupsCreateTacacsGroupData, TacacsGroupsCreateTacacsGroupResponse, TacacsGroupsReadTacacsGroupByIdData, TacacsGroupsReadTacacsGroupByIdResponse, TacacsGroupsUpdateTacacsGroupData, TacacsGroupsUpdateTacacsGroupResponse, TacacsGroupsDeleteTacacsGroupData, TacacsGroupsDeleteTacacsGroupResponse, TacacsLogsListLogFilesData, TacacsLogsListLogFilesResponse, TacacsLogsReadLogFileData, TacacsLogsReadLogFileResponse, TacacsNgSettingsReadTacacsNgSettingsResponse, TacacsNgSettingsUpdateTacacsNgSettingsData, TacacsNgSettingsUpdateTacacsNgSettingsResponse, TacacsServicesReadTacacsServicesData, TacacsServicesReadTacacsServicesResponse, TacacsServicesCreateTacacsServiceData, TacacsServicesCreateTacacsServiceResponse, TacacsServicesReadTacacsServiceByIdData, TacacsServicesReadTacacsServiceByIdResponse, TacacsServicesUpdateTacacsServiceData, TacacsServicesUpdateTacacsServiceResponse, TacacsServicesDeleteTacacsServiceData, TacacsServicesDeleteTacacsServiceResponse, TacacsUsersReadTacacsUsersData, TacacsUsersReadTacacsUsersResponse, TacacsUsersCreateTacacsUserData, TacacsUsersCreateTacacsUserResponse, TacacsUsersReadTacacsUserByIdData, TacacsUsersReadTacacsUserByIdResponse, TacacsUsersUpdateTacacsUserData, TacacsUsersUpdateTacacsUserResponse, TacacsUsersDeleteTacacsUserData, TacacsUsersDeleteTacacsUserResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse } from './types.gen';
 
 export class HostsService {
     /**
@@ -426,6 +426,20 @@ export class ProfilesService {
     }
     
     /**
+     * Preview Profiles
+     * Preview profiles.
+     * Generate candidate profile configuration preview.
+     * @returns unknown Successful Response
+     * @throws ApiError
+     */
+    public static previewProfiles(): CancelablePromise<ProfilesPreviewProfilesResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/profiles/preview'
+        });
+    }
+    
+    /**
      * Read Profile By Id
      * Get a specific profile by id.
      * @param data The data for the request.
@@ -755,6 +769,20 @@ export class RulesetsService {
             errors: {
                 422: 'Validation Error'
             }
+        });
+    }
+    
+    /**
+     * Preview Rulesets
+     * Preview rulesets.
+     * Generate candidate ruleset configuration preview.
+     * @returns unknown Successful Response
+     * @throws ApiError
+     */
+    public static previewRulesets(): CancelablePromise<RulesetsPreviewRulesetsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/rulesets/preview'
         });
     }
     
@@ -1092,6 +1120,32 @@ export class TacacsConfigsService {
             errors: {
                 422: 'Validation Error'
             }
+        });
+    }
+    
+    /**
+     * Generate Preview Tacacs Config
+     * Preview candidate tacacs_config.
+     * @returns TacacsConfigPreviewPublic Successful Response
+     * @throws ApiError
+     */
+    public static generatePreviewTacacsConfig(): CancelablePromise<TacacsConfigsGeneratePreviewTacacsConfigResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/tacacs_configs/preview'
+        });
+    }
+    
+    /**
+     * Get Active Tacacs Config
+     * Preview candidate tacacs_config.
+     * @returns TacacsConfigPublic Successful Response
+     * @throws ApiError
+     */
+    public static getActiveTacacsConfig(): CancelablePromise<TacacsConfigsGetActiveTacacsConfigResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/tacacs_configs/active'
         });
     }
     

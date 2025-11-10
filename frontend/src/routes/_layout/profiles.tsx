@@ -15,6 +15,7 @@ import { ProfilesService } from "@/client"
 import { ProfileActionsMenu } from "@/components/Common/ProfileActionsMenu"
 import AddProfile from "@/components/Profiles/AddProfile"
 import PendingProfiles from "@/components/Pending/PendingProfiles"
+import PreviewProfile from "@/components/Profiles/PreviewProfile"
 import {
   PaginationItems,
   PaginationNextTrigger,
@@ -143,7 +144,10 @@ function Profiles() {
       <Heading size="lg" pt={12}>
         Profiles Management
       </Heading>
-      <AddProfile />
+      <Flex gap={2}>
+        <AddProfile />
+        <PreviewProfile />
+      </Flex>
       <ProfilesTable />
     </Container>
   )

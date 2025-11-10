@@ -13,16 +13,12 @@ from app.models import (
     Host,
     TacacsGroup,
     TacacsUser,
-    Profile,
-    ProfileScript,
-    ProfileScriptSet,
-    Ruleset,
-    RulesetScript,
-    RulesetScriptSet,
+    TacacsConfigPublic,
 )
 import logging
 from datetime import datetime
 from fastapi import HTTPException
+from app.crud import profiles, rulesets
 
 log = logging.getLogger(__name__)
 
@@ -158,9 +154,9 @@ id = tac_plus-ng {{
             )
 
     # Begin profile
-    tacacs_profiles_template = profile_generator(session=session)
+    tacacs_profiles_template = profiles.profile_generator(session=session)
     # Begin ruleset
-    tacacs_rulesets_template = ruleset_generator(session=session)
+    tacacs_rulesets_template = rulesets.ruleset_generator(session=session)
 
     config_file_template += (
         hosts_template
@@ -183,121 +179,6 @@ id = tac_plus-ng {{
         config_path = Path(tf.name)
 
     return config_file_template
-
-
-def profile_generator(session: Session) -> str:
-    profiles_db = session.exec(select(Profile)).all()
-    profile_template = ""
-    for profile_db in profiles_db:
-
-        statement = select(ProfileScript).where(
-            ProfileScript.profile_id == profile_db.id
-        )
-        script_in_profile = session.exec(statement).all()
-        if script_in_profile == []:
-            continue
-        profilescript_template = ""
-        for profilescript in script_in_profile:
-            scriptset_in_profilescript = session.exec(
-                select(ProfileScriptSet).where(
-                    ProfileScriptSet.profilescript_id == profilescript.id
-                )
-            ).all()
-            if scriptset_in_profilescript == []:
-                continue
-            profilescriptset_template = ""
-            for profilescriptset in scriptset_in_profilescript:
-                profilescriptset_info = profilescriptset.model_dump()
-                profilescriptset_template += """set {key}={value}""".format(
-                    key=profilescriptset_info["key"],
-                    value=profilescriptset_info["value"],
-                )
-
-            profilescript_info = profilescript.model_dump()
-            profilescript_template += """{condition} ({key}=={value}){{
-            {profilescriptset_template}
-            {action}
-            }}""".format(
-                condition=profilescript_info["condition"],
-                key=profilescript_info["key"],
-                value=profilescript_info["value"],
-                profilescriptset_template=profilescriptset_template,
-                action=profilescript_info["action"],
-            )
-        profile_template += """
-    profile {profile_name} {{
-        script {{
-        {profilescript_template}
-        {action}
-        }}
-    }}""".format(
-            profile_name=profile_db.name,
-            profilescript_template=profilescript_template,
-            action=profile_db.action,
-        )
-
-    return profile_template
-
-
-def ruleset_generator(session: Session) -> str:
-    rulesets_db = session.exec(select(Ruleset)).all()
-    ruleset_template = ""
-    for ruleset_db in rulesets_db:
-        statement = select(RulesetScript).where(
-            RulesetScript.ruleset_id == ruleset_db.id
-        )
-        script_in_ruleset = session.exec(statement).all()
-
-        if script_in_ruleset == []:
-            continue
-        rulesetscript_template = ""
-        for rulesetscript in script_in_ruleset:
-            scriptset_in_ruleset = session.exec(
-                select(RulesetScriptSet).where(
-                    RulesetScriptSet.rulesetscript_id == rulesetscript.id
-                )
-            ).all()
-            if scriptset_in_ruleset == []:
-                continue
-            rulesetscriptset_template = ""
-            for rulesetscriptset in scriptset_in_ruleset:
-                rulesetscriptset_info = rulesetscriptset.model_dump()
-                rulesetscriptset_template += """{key}={value}""".format(
-                    key=rulesetscriptset_info["key"],
-                    value=rulesetscriptset_info["value"],
-                )
-
-            rulesetscript_info = rulesetscript.model_dump()
-            rulesetscript_template += """{condition} ({key}=={value}){{
-                {rulesetscriptset_template}
-                {action}
-            }}
-            """.format(
-                condition=rulesetscript_info["condition"],
-                key=rulesetscript_info["key"],
-                value=rulesetscript_info["value"],
-                rulesetscriptset_template=rulesetscriptset_template,
-                action=rulesetscript_info["action"],
-            )
-        ruleset_template += """rule {rule_name} {{
-            enabled=yes
-            script {{
-                {rulesetscript_template}
-            {action}
-            }}
-        }}
-        """.format(
-            rule_name=ruleset_db.name,
-            rulesetscript_template=rulesetscript_template,
-            action=ruleset_db.action,
-        )
-    ruleset_all = """
-    ruleset {{
-        {ruleset_template}
-    }}""".format(
-        ruleset_template=ruleset_template
-    )
-    return ruleset_all
 
 
 def get_tacacs_config_by_name(*, session: Session, name: str) -> TacacsConfig | None:
@@ -327,6 +208,11 @@ def get_tacacs_config_by_filename(filename: str) -> str | None:
         raise HTTPException(
             status_code=500, detail=f"Error reading config file '{filename}': {e}"
         )
+
+
+def generate_preview_tacacs_config(*, session: Session) -> Any:
+    tacacs_config = generate_tacacs_ng_config(session=session)
+    return tacacs_config
 
 
 def create_tacacs_config(
@@ -446,3 +332,10 @@ def delete_tacacs_config(*, session: Session, db_tacacs_config: TacacsConfig) ->
     session.delete(db_tacacs_config)
     session.commit()
     return db_tacacs_config
+
+
+def get_active_tacacs_config(*, session: Session) -> TacacsConfig | None:
+    statement = select(TacacsConfig).where(TacacsConfig.active == True)
+    active_tacacs_config = session.exec(statement).first()
+
+    return active_tacacs_config

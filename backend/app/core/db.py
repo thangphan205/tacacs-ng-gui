@@ -71,7 +71,7 @@ def init_db(session: Session) -> None:
             instances_min=settings.INSTANCES_MIN,
             instances_max=settings.INSTANCES_MAX,
             background=settings.BACKGROUND,
-            access_log_destination=settings.ACCESS_LOG_DESTINATION,
+            access_logfile_destination=settings.ACCESS_LOG_DESTINATION,
             accounting_logfile_destination=settings.ACCOUNTING_LOG_DESTINATION,
             authentication_logfile_destination=settings.AUTHENTICATION_LOG_DESTINATION,
             login_backend=settings.LOGIN_BACKEND,

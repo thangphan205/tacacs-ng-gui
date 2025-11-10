@@ -18,6 +18,8 @@ import { TacacsConfigsService } from "@/client"
 import { TacacsConfigActionsMenu } from "@/components/Common/TacacsConfigActionsMenu"
 import AddTacacsConfig from "@/components/TacacsConfigs/AddTacacsConfig"
 import ShowTacacsConfig from "@/components/TacacsConfigs/ShowTacacsConfig"
+import PreviewTacacsConfig from "@/components/TacacsConfigs/PreviewTacacsConfig"
+import ShowActiveTacacsConfig from "@/components/TacacsConfigs/ShowActiveTacacsConfig"
 import PendingTacacsConfigs from "@/components/Pending/PendingTacacsConfigs"
 import {
   PaginationItems,
@@ -164,7 +166,11 @@ function TacacsConfigs() {
       <Code size="md" colorPalette="red" variant="subtle" >
         Whenever you change the TACACS configuration, you must generate and activate the new configuration.
       </Code>
-      <AddTacacsConfig />
+      <Flex gap={2}>
+        <AddTacacsConfig />
+        <PreviewTacacsConfig />
+        <ShowActiveTacacsConfig />
+      </Flex>
       <TacacsConfigsTable />
     </Container >
   )

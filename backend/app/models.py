@@ -368,6 +368,11 @@ class Profile(ProfileBase, table=True):
 
 
 # Properties to return via API, id is always required
+class ProfilePreviewPublic(SQLModel):
+    created_at: datetime
+    data: str | None = None
+
+
 class ProfilePublic(ProfileBase):
     id: uuid.UUID
     created_at: datetime
@@ -491,6 +496,11 @@ class Ruleset(RulesetBase, table=True):
 
 
 # Properties to return via API, id is always required
+class RulesetPreviewPublic(SQLModel):
+    created_at: datetime
+    data: str | None = None
+
+
 class RulesetPublic(RulesetBase):
     id: uuid.UUID
     created_at: datetime
@@ -610,6 +620,11 @@ class TacacsConfig(TacacsConfigBase, table=True):
 
 
 # Properties to return via API, id is always required
+class TacacsConfigPreviewPublic(SQLModel):
+    created_at: datetime
+    data: str | None = None
+
+
 class TacacsConfigPublic(TacacsConfigBase):
     id: uuid.UUID
     active: bool

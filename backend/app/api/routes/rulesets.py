@@ -1,6 +1,6 @@
 import uuid
 from typing import Any
-
+from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import func, select
 
@@ -39,6 +39,23 @@ def read_rulesets(session: SessionDep, skip: int = 0, limit: int = 100) -> Any:
     rulesets = session.exec(statement).all()
 
     return RulesetsPublic(data=rulesets, count=count)
+
+
+@router.get(
+    "/preview",
+    dependencies=[Depends(get_current_active_superuser)],
+)
+def preview_rulesets(
+    session: SessionDep,
+) -> Any:
+    """
+    Preview rulesets.
+    Generate candidate ruleset configuration preview.
+    """
+
+    preview_rulesets_section = rulesets.ruleset_generator(session=session)
+
+    return {"data": preview_rulesets_section, "created_at": datetime.utcnow()}
 
 
 @router.post(

@@ -306,6 +306,11 @@ export type TacacsConfigCreate = {
     description?: (string | null);
 };
 
+export type TacacsConfigPreviewPublic = {
+    created_at: string;
+    data?: (string | null);
+};
+
 export type TacacsConfigPublic = {
     filename: string;
     description?: (string | null);
@@ -625,6 +630,8 @@ export type ProfilesCreateProfileData = {
 
 export type ProfilesCreateProfileResponse = (ProfilePublic);
 
+export type ProfilesPreviewProfilesResponse = (unknown);
+
 export type ProfilesReadProfileByIdData = {
     id: string;
 };
@@ -720,6 +727,8 @@ export type RulesetsCreateRulesetData = {
 };
 
 export type RulesetsCreateRulesetResponse = (RulesetPublic);
+
+export type RulesetsPreviewRulesetsResponse = (unknown);
 
 export type RulesetsReadRulesetByIdData = {
     id: string;
@@ -818,6 +827,10 @@ export type TacacsConfigsCreateTacacsConfigData = {
 };
 
 export type TacacsConfigsCreateTacacsConfigResponse = (TacacsConfigPublic);
+
+export type TacacsConfigsGeneratePreviewTacacsConfigResponse = (TacacsConfigPreviewPublic);
+
+export type TacacsConfigsGetActiveTacacsConfigResponse = (TacacsConfigPublic);
 
 export type TacacsConfigsReadTacacsConfigByIdData = {
     id: string;

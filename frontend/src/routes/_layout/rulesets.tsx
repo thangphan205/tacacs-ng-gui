@@ -14,6 +14,7 @@ import { z } from "zod"
 import { RulesetsService } from "@/client"
 import { RulesetActionsMenu } from "@/components/Common/RulesetActionsMenu"
 import AddRuleset from "@/components/Rulesets/AddRuleset"
+import PreviewRuleset from "@/components/Rulesets/PreviewRuleset"
 import PendingRulesets from "@/components/Pending/PendingRulesets"
 import {
   PaginationItems,
@@ -143,7 +144,10 @@ function Rulesets() {
       <Heading size="lg" pt={12}>
         Rulesets Management
       </Heading>
-      <AddRuleset />
+      <Flex gap={2}>
+        <AddRuleset />
+        <PreviewRuleset />
+      </Flex>
       <RulesetsTable />
     </Container>
   )

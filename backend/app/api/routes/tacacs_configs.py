@@ -1,6 +1,6 @@
 import uuid
 from typing import Any
-
+from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import func, select
 
@@ -17,6 +17,7 @@ from app.models import (
     TacacsConfigPublic,
     TacacsConfigsPublic,
     TacacsConfigUpdate,
+    TacacsConfigPreviewPublic,
 )
 
 router = APIRouter(prefix="/tacacs_configs", tags=["tacacs_configs"])
@@ -50,6 +51,38 @@ def read_tacacs_configs(
     return TacacsConfigsPublic(data=tacacs_configs, count=count)
 
 
+@router.get(
+    "/preview",
+    dependencies=[Depends(get_current_active_superuser)],
+    response_model=TacacsConfigPreviewPublic,
+)
+def generate_preview_tacacs_config(*, session: SessionDep) -> Any:
+    """
+    Preview candidate tacacs_config.
+    """
+
+    tacacs_config = tacacs_configs.generate_preview_tacacs_config(session=session)
+    return {"data": tacacs_config, "created_at": datetime.utcnow()}
+
+
+@router.get(
+    "/active",
+    dependencies=[Depends(get_current_active_superuser)],
+    response_model=TacacsConfigPublic,
+)
+def get_active_tacacs_config(*, session: SessionDep) -> Any:
+    """
+    Preview candidate tacacs_config.
+    """
+
+    tacacs_config = tacacs_configs.get_active_tacacs_config(session=session)
+    tacacs_config_return = TacacsConfigPublic.model_validate(tacacs_config)
+    tacacs_config_return.data = tacacs_configs.get_tacacs_config_by_filename(
+        filename="tac_plus-ng"
+    )
+    return tacacs_config_return
+
+
 @router.post(
     "/",
     dependencies=[Depends(get_current_active_superuser)],
@@ -64,7 +97,7 @@ def create_tacacs_config(
     tacacs_config = tacacs_configs.get_tacacs_config_by_name(
         session=session, name=tacacs_config_in.filename
     )
-    if tacacs_config:
+    if tacacs_config or tacacs_config_in.filename == "tac_plus-ng":
         raise HTTPException(
             status_code=400,
             detail="The tacacs_config with this tacacs_config name already exists in the system.",
